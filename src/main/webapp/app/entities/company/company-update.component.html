@@ -1,0 +1,122 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-company-heading" jhiTranslate="smartCpdApp.company.home.createOrEditLabel">Create or edit a Company</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!company.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="company.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="company.name" required/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="company.description" required/>
+                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.notes" for="field_notes">Notes</label>
+                    <input type="text" class="form-control" name="notes" id="field_notes"
+                        [(ngModel)]="company.notes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.phone" for="field_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        [(ngModel)]="company.phone" required pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$"/>
+                    <div [hidden]="!(editForm.controls.phone?.dirty && editForm.controls.phone?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.phone?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.phone?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Phone' }">
+                            This field should follow pattern for "Phone".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <label class="form-control-label">Enter Your Address</label>
+                    <!--<input type="text" placeholder="Search for Location" autocomplete="foo" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>-->
+                    <input ngx-google-places-autocomplete type="text" class="form-control" placeholder="Search for Location" #placesRef="ngx-places" (onAddressChange)="onChange($event)"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.streetAddress" for="field_streetAddress">Street Address</label>
+                    <input type="text" class="form-control" name="streetAddress" id="field_streetAddress"
+                        [(ngModel)]="company.streetAddress" placeholder=" {{addr}}" disabled="true" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.postalCode" for="field_postalCode">Postal Code</label>
+                    <input type="text" class="form-control" name="postalCode" id="field_postalCode"
+                        [(ngModel)]="company.postalCode" placeholder=" {{postCode}}" disabled="true" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="company.city" placeholder=" {{city}}" disabled="true" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.stateProvince" for="field_stateProvince">State Province</label>
+                    <input type="text" class="form-control" name="stateProvince" id="field_stateProvince"
+                        [(ngModel)]="company.stateProvince" placeholder=" {{state}}" disabled="true" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.country" for="field_country">Country</label>
+                    <input type="text" class="form-control" name="country" id="field_country"
+                        [(ngModel)]="company.country" placeholder=" {{country}}" disabled="true" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.url" for="field_url">Url</label>
+                    <input type="text" class="form-control" name="url" id="field_url"
+                        [(ngModel)]="company.url" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.show" for="field_show">Show</label>
+                    <input type="checkbox" class="form-control" name="show" id="field_show"
+                        [(ngModel)]="company.show" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.company.licenceCycle" for="field_licenceCycle">Licence Cycle</label>
+                    <select class="form-control" name="licenceCycle" [(ngModel)]="company.licenceCycle" id="field_licenceCycle" required>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

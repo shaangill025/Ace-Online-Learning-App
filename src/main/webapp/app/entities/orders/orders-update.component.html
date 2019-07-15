@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-orders-heading" jhiTranslate="smartCpdApp.orders.home.createOrEditLabel">Create or edit a Orders</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!orders.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="orders.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.createddate" for="field_createddate">Createddate</label>
+                    <div class="d-flex">
+                        <input id="field_createddate" type="datetime-local" class="form-control" name="createddate" [(ngModel)]="createddate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="orders.amount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" [(ngModel)]="orders.status" id="field_status" >
+                        <option value="ORDERPROCESSING">{{'smartCpdApp.NOTIFICATIONS.ORDERPROCESSING' | translate}}</option>
+                        <option value="COMPLETE">{{'smartCpdApp.NOTIFICATIONS.COMPLETE' | translate}}</option>
+                        <option value="CANCELLLED">{{'smartCpdApp.NOTIFICATIONS.CANCELLLED' | translate}}</option>
+                        <option value="REFUND">{{'smartCpdApp.NOTIFICATIONS.REFUND' | translate}}</option>
+                        <option value="ONHOLD">{{'smartCpdApp.NOTIFICATIONS.ONHOLD' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.payment" for="field_payment">Payment</label>
+                    <select class="form-control" name="payment" [(ngModel)]="orders.payment" id="field_payment" >
+                        <option value="PAYPAL">{{'smartCpdApp.PAYMENT.PAYPAL' | translate}}</option>
+                        <option value="STRIPE">{{'smartCpdApp.PAYMENT.STRIPE' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.gateway_id" for="field_gateway_id">Gateway Id</label>
+                    <input type="text" class="form-control" name="gateway_id" id="field_gateway_id"
+                        [(ngModel)]="orders.gateway_id" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.seller_message" for="field_seller_message">Seller Message</label>
+                    <input type="text" class="form-control" name="seller_message" id="field_seller_message"
+                        [(ngModel)]="orders.seller_message" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.network_status" for="field_network_status">Network Status</label>
+                    <input type="text" class="form-control" name="network_status" id="field_network_status"
+                        [(ngModel)]="orders.network_status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.seller_status" for="field_seller_status">Seller Status</label>
+                    <input type="text" class="form-control" name="seller_status" id="field_seller_status"
+                        [(ngModel)]="orders.seller_status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.gateway_amt" for="field_gateway_amt">Gateway Amt</label>
+                    <input type="text" class="form-control" name="gateway_amt" id="field_gateway_amt"
+                        [(ngModel)]="orders.gateway_amt" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.seller_type" for="field_seller_type">Seller Type</label>
+                    <input type="text" class="form-control" name="seller_type" id="field_seller_type"
+                        [(ngModel)]="orders.seller_type" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.card_type" for="field_card_type">Card Type</label>
+                    <input type="text" class="form-control" name="card_type" id="field_card_type"
+                        [(ngModel)]="orders.card_type" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.last4" for="field_last4">Last 4</label>
+                    <input type="text" class="form-control" name="last4" id="field_last4"
+                        [(ngModel)]="orders.last4" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.orders.cart" for="field_cart">Cart</label>
+                    <select class="form-control" id="field_cart" name="cart" [(ngModel)]="orders.cart">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="cartOption.id === orders.cart?.id ? orders.cart : cartOption" *ngFor="let cartOption of carts; trackBy: trackCartById">{{cartOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

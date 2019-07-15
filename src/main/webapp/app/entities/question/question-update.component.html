@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-question-heading" jhiTranslate="smartCpdApp.question.home.createOrEditLabel">Create or edit a Question</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!question.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="question.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.question.textQuestion" for="field_textQuestion">Text Question</label>
+                    <input type="text" class="form-control" name="textQuestion" id="field_textQuestion"
+                        [(ngModel)]="question.textQuestion" required/>
+                    <div [hidden]="!(editForm.controls.textQuestion?.dirty && editForm.controls.textQuestion?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.textQuestion?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.question.difficulty" for="field_difficulty">Difficulty</label>
+                    <input type="text" class="form-control" name="difficulty" id="field_difficulty"
+                        [(ngModel)]="question.difficulty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.question.restudy" for="field_restudy">Restudy</label>
+                    <input type="text" class="form-control" name="restudy" id="field_restudy"
+                        [(ngModel)]="question.restudy" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.question.used" for="field_used">Used</label>
+                    <input type="checkbox" class="form-control" name="used" id="field_used"
+                        [(ngModel)]="question.used" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.question.quiz" for="field_quiz">Quiz</label>
+                    <select class="form-control" id="field_quiz" name="quiz" [(ngModel)]="question.quiz" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="quizOption.id === question.quiz?.id ? question.quiz : quizOption" *ngFor="let quizOption of quizzes; trackBy: trackQuizById">{{quizOption.id}} : {{quizOption.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

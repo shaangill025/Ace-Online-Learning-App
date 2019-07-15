@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-cart-heading" jhiTranslate="smartCpdApp.cart.home.createOrEditLabel">Create or edit a Cart</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!cart.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="cart.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.normCart" for="field_normCart">Norm Cart</label>
+                    <input type="text" class="form-control" name="normCart" id="field_normCart"
+                        [(ngModel)]="cart.normCart" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.createddate" for="field_createddate">Createddate</label>
+                    <div class="d-flex">
+                        <input id="field_createddate" type="datetime-local" class="form-control" name="createddate" [(ngModel)]="createddate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.lastactivedate" for="field_lastactivedate">Lastactivedate</label>
+                    <div class="d-flex">
+                        <input id="field_lastactivedate" type="datetime-local" class="form-control" name="lastactivedate" [(ngModel)]="lastactivedate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="cart.amount" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.checkout" for="field_checkout">Checkout</label>
+                    <input type="checkbox" class="form-control" name="checkout" id="field_checkout"
+                        [(ngModel)]="cart.checkout" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.points" for="field_points">Points</label>
+                    <input type="number" class="form-control" name="points" id="field_points"
+                        [(ngModel)]="cart.points" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.cart.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" [(ngModel)]="cart.customer" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="customerOption.id === cart.customer?.id ? cart.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.normalized}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

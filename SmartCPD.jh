@@ -1,0 +1,235 @@
+// JDL definition for application 'SmartCPD' generated with command 'jhipster export-jdl'
+
+entity Customer {
+  normalized String,
+  phone String required pattern(/^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/),
+  streetaddress String required,
+  postalcode String required pattern(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/),
+  city String required,
+  stateProvince String required,
+  country String required,
+  registered Instant,
+  lastactive Instant,
+  points Integer,
+  cycledate ZonedDateTime,
+  areaserviced String,
+  specialities TYPES,
+  trades String,
+  monthYear String required,
+  licenseNumber String,
+  show Boolean
+}
+entity Company {
+  name String required,
+  description String required,
+  notes String,
+  phone String required pattern(/^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/),
+  streetAddress String required,
+  postalCode String required pattern(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/),
+  city String required,
+  stateProvince String required,
+  country String required,
+  cycledate ZonedDateTime required,
+  url String,
+  show Boolean
+}
+entity Topic {
+  name String required,
+  description String required,
+  image AnyBlob required
+}
+entity Course {
+  title String required,
+  section String required,
+  normCourses String,
+  description String required,
+  amount Double required,
+  image AnyBlob required,
+  point Long,
+  credit String required,
+  country String required,
+  state String required
+}
+entity CourseCartBridge {
+  timestamp Instant
+}
+entity Certificate {
+  timestamp Instant,
+  isEmailed Boolean
+}
+entity Section {
+  name String required,
+  notes String,
+  normSection String,
+  content AnyBlob,
+  videoUrl String,
+  textcontent TextBlob,
+  type String required,
+  pdfUrl String,
+  totalPages Integer
+}
+entity Quiz {
+  name String required,
+  difficulty String,
+  passingscore Integer
+}
+entity Question {
+  textQuestion String required,
+  difficulty String,
+  restudy String,
+  used Boolean
+}
+entity Choice {
+  textChoice String required,
+  isanswer Boolean
+}
+entity CourseHistory {
+  startdate Instant,
+  lastactivedate Instant,
+  isactive Boolean,
+  iscompleted Boolean,
+  access Boolean
+}
+entity QuestionHistory {
+  timestamp Instant,
+  correct Boolean
+}
+entity SectionHistory {
+  startdate Instant,
+  lastactivedate Instant,
+  watched Boolean,
+  stamp Integer
+}
+entity QuizHistory {
+  start Instant,
+  passed Boolean
+}
+entity Orders {
+  createddate Instant,
+  amount Double,
+  status NOTIFICATIONS,
+  payment PAYMENT,
+  gateway_id String,
+  seller_message String,
+  network_status String,
+  seller_status String,
+  gateway_amt String,
+  seller_type String,
+  card_type String,
+  last4 String
+}
+entity Cart {
+  normCart String,
+  createddate Instant,
+  lastactivedate Instant,
+  amount Double,
+  checkout Boolean,
+  points Integer
+}
+entity Companyrequest {
+  name String required,
+  description String required,
+  phone String required pattern(/^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/),
+  email String required,
+  streetAddress String required,
+  postalCode String required pattern(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/),
+  city String required,
+  stateProvince String required,
+  country String required,
+  cycledate ZonedDateTime required,
+  url String
+}
+entity TimeCourseLog {
+  timespent Long,
+  recorddate Instant
+}
+entity Servicelist {
+  name String,
+  company String,
+  url String,
+  phone String,
+  email String,
+  areas String,
+  speciality String,
+  trades String
+}
+entity QuizApp
+entity Tags {
+  name String,
+  description String
+}
+entity Bookmark {
+  text String required,
+  slide Integer,
+  timestamp String,
+  module String,
+  seconds Integer
+}
+entity Checkout
+entity Dashboards
+
+enum TYPES {
+  RESIDENCE,
+  COMMERCIAL,
+  INDUSTRIAL
+}
+
+enum NOTIFICATIONS {
+  ORDERPROCESSING,
+  COMPLETE,
+  CANCELLLED,
+  REFUND,
+  ONHOLD
+}
+
+enum PAYMENT {
+  PAYPAL,
+  STRIPE
+}
+
+relationship OneToOne {
+  Customer{user(login) required} to User,
+  Section{quiz(name)} to Quiz,
+  Quiz{newSection(name)} to Section,
+  Orders{cart} to Cart,
+  Servicelist{customer(normalized) required} to Customer
+}
+relationship OneToMany {
+  Question{choice} to Choice{question(textQuestion)}
+}
+relationship ManyToOne {
+  Customer{company(name)} to Company,
+  Course{topic(name)} to Topic,
+  CourseCartBridge{cart(normCart)} to Cart,
+  CourseCartBridge{course(normCourses)} to Course,
+  Certificate{customer(normalized)} to Customer,
+  Certificate{courses(normCourses)} to Course,
+  Section{course(normCourses)} to Course,
+  Question{quiz(name)} to Quiz,
+  CourseHistory{customer(normalized)} to Customer,
+  CourseHistory{course(normCourses)} to Course,
+  QuestionHistory{customer(normalized)} to Customer,
+  QuestionHistory{question(textQuestion)} to Question,
+  SectionHistory{customer(normalized)} to Customer,
+  SectionHistory{section(normSection)} to Section,
+  QuizHistory{customer(normalized)} to Customer,
+  QuizHistory{quiz(name)} to Quiz,
+  Cart{customer(normalized)} to Customer,
+  TimeCourseLog{customer(normalized)} to Customer,
+  TimeCourseLog{course(title)} to Course,
+  QuizApp{quiz(name)} to Quiz,
+  QuizApp{currSection(name)} to Section,
+  QuizApp{newSection(name)} to Section,
+  Bookmark{section(name) required} to Section
+}
+relationship ManyToMany {
+  Course{tags(name)} to Tags,
+  Section{tags(name)} to Tags,
+  QuizApp{questions(textQuestion)} to Question
+}
+
+paginate Customer, Company, Topic, Course, CourseCartBridge, Certificate, Section, Quiz, Question, Choice, CourseHistory, QuestionHistory, SectionHistory, QuizHistory, Orders, Cart, Companyrequest, TimeCourseLog, Servicelist, QuizApp, Tags, Dashboards with infinite-scroll
+paginate Bookmark with pagination
+service Customer, Company, Topic, Course, CourseCartBridge, Certificate, Section, Quiz, Question, Choice, CourseHistory, QuestionHistory, SectionHistory, QuizHistory, Orders, Cart, Companyrequest, TimeCourseLog, Servicelist, QuizApp, Tags, Bookmark with serviceImpl
+search Customer, Company, Topic, Course, CourseCartBridge, Certificate, Section, Quiz, Question, Choice, CourseHistory, QuestionHistory, SectionHistory, QuizHistory, Orders, Cart, Companyrequest, TimeCourseLog, Servicelist, QuizApp, Tags, Bookmark, Checkout, Dashboards with elasticsearch
+filter Customer, Company, Topic, Course, CourseCartBridge, Certificate, Section, Quiz, Question, Choice, CourseHistory, QuestionHistory, SectionHistory, QuizHistory, Orders, Cart, Companyrequest, TimeCourseLog, Servicelist, QuizApp, Tags, Bookmark

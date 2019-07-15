@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="quizHistory">
+            <h2><span jhiTranslate="smartCpdApp.quizHistory.detail.title">Quiz History</span> {{quizHistory.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.quizHistory.start">Start</span></dt>
+                <dd>
+                    <span>{{quizHistory.start}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quizHistory.passed">Passed</span></dt>
+                <dd>
+                    <span>{{quizHistory.passed}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quizHistory.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="quizHistory.customer">
+                        <a [routerLink]="['/customer', quizHistory.customer?.id, 'view']">{{quizHistory.customer?.normalized}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quizHistory.quiz">Quiz</span></dt>
+                <dd>
+                    <div *ngIf="quizHistory.quiz">
+                        <a [routerLink]="['/quiz', quizHistory.quiz?.id, 'view']">{{quizHistory.quiz?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/quiz-history', quizHistory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

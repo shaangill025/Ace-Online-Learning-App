@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-file-manager-heading" jhiTranslate="smartCpdApp.fileManager.home.createOrEditLabel">Create or edit a File Manager</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!fileManager.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="fileManager.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.fileManager.file" for="field_file">File</label>
+                    <div>
+                        <div *ngIf="fileManager.file" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(fileManager.fileContentType, fileManager.file)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{fileManager.fileContentType}}, {{byteSize(fileManager.file)}}</span>
+                            <button type="button" (click)="fileManager.file=null;fileManager.fileContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_file" (change)="setFileData($event, fileManager, 'file', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="file" id="field_file"
+                        [(ngModel)]="fileManager.file" required/>
+                    <input type="hidden" class="form-control" name="fileContentType" id="field_fileContentType"
+                        [(ngModel)]="fileManager.fileContentType" />
+                    <div [hidden]="!(editForm.controls.file?.dirty && editForm.controls.file?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.file?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.fileManager.section" for="field_section">Section</label>
+                    <select class="form-control" id="field_section" name="section" [(ngModel)]="fileManager.section" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sectionOption.id === fileManager.section?.id ? fileManager.section : sectionOption" *ngFor="let sectionOption of sections; trackBy: trackSectionById">{{sectionOption.normSection}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+{
+    "name": "Orders",
+    "fields": [
+        {
+            "fieldName": "createddate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "NOTIFICATIONS",
+            "fieldValues": "ORDERPROCESSING,COMPLETE,CANCELLLED,REFUND,ONHOLD"
+        },
+        {
+            "fieldName": "payment",
+            "fieldType": "PAYMENT",
+            "fieldValues": "PAYPAL,STRIPE"
+        },
+        {
+            "fieldName": "gateway_id",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "seller_message",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "network_status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "seller_status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gateway_amt",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "seller_type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "card_type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "last4",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "cart",
+            "otherEntityName": "cart",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "orders"
+        }
+    ],
+    "changelogDate": "20180819063652",
+    "entityTableName": "orders",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": "elasticsearch"
+}

@@ -1,0 +1,33 @@
+{
+    "name": "CourseCartBridge",
+    "fields": [
+        {
+            "fieldName": "timestamp",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "cart",
+            "otherEntityName": "cart",
+            "otherEntityField": "normCart"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "normCourses"
+        }
+    ],
+    "changelogDate": "20180819063642",
+    "entityTableName": "course_cart_bridge",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": "elasticsearch"
+}

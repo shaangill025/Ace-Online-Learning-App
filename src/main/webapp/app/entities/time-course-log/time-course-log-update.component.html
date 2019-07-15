@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-time-course-log-heading" jhiTranslate="smartCpdApp.timeCourseLog.home.createOrEditLabel">Create or edit a Time Course Log</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!timeCourseLog.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="timeCourseLog.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.timeCourseLog.timespent" for="field_timespent">Timespent</label>
+                    <input type="number" class="form-control" name="timespent" id="field_timespent"
+                        [(ngModel)]="timeCourseLog.timespent" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.timeCourseLog.recorddate" for="field_recorddate">Recorddate</label>
+                    <div class="d-flex">
+                        <input id="field_recorddate" type="datetime-local" class="form-control" name="recorddate" [(ngModel)]="recorddate"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.timeCourseLog.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" [(ngModel)]="timeCourseLog.customer" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="customerOption.id === timeCourseLog.customer?.id ? timeCourseLog.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.normalized}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.timeCourseLog.courseHistory" for="field_courseHistory">Course History</label>
+                    <select class="form-control" id="field_courseHistory" name="courseHistory" [(ngModel)]="timeCourseLog.courseHistory"  required>
+                        <option *ngIf="!editForm.value.courseHistory" [ngValue]="null" selected></option>
+                        <option [ngValue]="courseHistoryOption.id === timeCourseLog.courseHistory?.id ? timeCourseLog.courseHistory : courseHistoryOption" *ngFor="let courseHistoryOption of coursehistories; trackBy: trackCourseHistoryById">{{courseHistoryOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.courseHistory?.dirty && editForm.controls.courseHistory?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.courseHistory?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

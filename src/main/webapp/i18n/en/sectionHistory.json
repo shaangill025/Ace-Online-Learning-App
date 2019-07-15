@@ -1,0 +1,28 @@
+
+{
+    "smartCpdApp": {
+        "sectionHistory" : {
+            "home": {
+                "title": "Section Histories",
+                "createLabel": "Create a new Section History",
+                "createOrEditLabel": "Create or edit a Section History",
+                "search": "Search for Section History"
+            },
+            "created": "A new Section History is created with identifier {{ param }}",
+            "updated": "A Section History is updated with identifier {{ param }}",
+            "deleted": "A Section History is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Section History {{ id }}?"
+            },
+            "detail": {
+                "title": "Section History"
+            },
+            "startdate": "Startdate",
+            "lastactivedate": "Lastactivedate",
+            "watched": "Watched",
+            "stamp": "Stamp",
+            "customer": "Customer",
+            "section": "Section"
+        }
+    }
+}

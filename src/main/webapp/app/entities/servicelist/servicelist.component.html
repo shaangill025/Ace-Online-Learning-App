@@ -1,0 +1,144 @@
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="alert alert-info" *ngIf="errorRegionLock">
+                <div class="alert alert-info" *ngIf="shouldnotbeinCanada">
+                    <strong>We have detected that you are accessing this application from USA.
+                        This application was developed for Canadian customers. Kindly, note that the certificates
+                        and CPD points issued on this wesite are only valid in Canada</strong> Kindly visit <a href="http://www.aceaol.com/#/">http://www.aceaol.com</a>
+                        to be redirected to our other application developed for US customers.
+                </div>
+                <div class="alert alert-info" *ngIf="shouldnotbeinUsa">
+                    <strong>We have detected that you are accessing this application from Canada.
+                        This application was developed for US based customers. Kindly, note that the certificates
+                        and CPD points issued on this website are only valid in US</strong> Kindly visit <a href="https://www.aceaol.ca/#/">https://www.aceaol.ca</a>
+                        to be redirected to our other application developed for Canadian customers.
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 id="page-heading">
+        <span>Search for Service/Utility Professionals from our qualified pool of users!</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-servicelist" [routerLink]="['/servicelist/new']" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.servicelist.home.createLabel">
+            Create new Servicelist
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-6">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Search for Professional Services">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <a *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <div class="table-responsive" *ngIf="servicelists">
+            <table class="table table-striped">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="name"><span jhiTranslate="smartCpdApp.servicelist.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="company"><span jhiTranslate="smartCpdApp.servicelist.company">Company</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="url"><span jhiTranslate="smartCpdApp.servicelist.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="phone"><span jhiTranslate="smartCpdApp.servicelist.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="email"><span jhiTranslate="smartCpdApp.servicelist.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="areas"><span jhiTranslate="smartCpdApp.servicelist.areas">Areas</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="speciality"><span jhiTranslate="smartCpdApp.servicelist.speciality">Speciality</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="trades"><span jhiTranslate="smartCpdApp.servicelist.trades">Trades</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="customer.normalized"><span jhiTranslate="smartCpdApp.servicelist.customer">Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th></th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let servicelist of servicelists ;trackBy: trackId">
+                    <td><a [routerLink]="['/servicelist', servicelist.id, 'view' ]">{{servicelist.id}}</a></td>
+                    <td>{{servicelist.name}}</td>
+                    <td>{{servicelist.company}}</td>
+                    <td>{{servicelist.url}}</td>
+                    <td>{{servicelist.phone}}</td>
+                    <td>{{servicelist.email}}</td>
+                    <td>{{servicelist.areas}}</td>
+                    <td>{{servicelist.speciality}}</td>
+                    <td>{{servicelist.trades}}</td>
+                    <td>
+                        <div *ngIf="servicelist.customer">
+                            <a [routerLink]="['../customer', servicelist.customer?.id, 'view' ]" >{{servicelist.customer?.normalized}}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['/servicelist', servicelist.id, 'view' ]"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/servicelist', servicelist.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'servicelist/'+ servicelist.id + '/delete'} }]"
+                                    replaceUrl="true"
+                                    queryParamsHandling="merge"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </a>
+
+    <!--<a *jhiHasAnyAuthority="'ROLE_USER'">-->
+    <a>
+        <div *ngIf="servicelists">
+            <div class="list-group">
+                <div *ngFor="let servicelist of servicelists; trackBy: trackId">
+                    <div class="list-group-item list-group-item-action flex-column align-items-start" style="margin-top: 5px; background-color: #f2f2f2;">
+                        <div class="row">
+                            <div class="col-4">
+                                <div><h1 class="mb-1" style="font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;">{{servicelist.name}}</h1></div>
+                            </div>
+                            <div class="col-4">
+                                <div class="row"><small class="mb-1">Area Serviced: <strong>{{servicelist.areas}}</strong></small></div>
+                                <div class="row"><small class="mb-1">Speciality: <strong>{{servicelist.speciality}}</strong></small></div>
+                                <div class="row"><small class="mb-1">Trade: <strong>{{servicelist.trades}}</strong></small></div>
+                            </div>
+                            <div class="col-4">
+                                <div *ngIf="servicelist.company!=null" class="row"><small class="mb-1">Company: <strong>{{servicelist.company}}</strong></small></div>
+                                <div *ngIf="servicelist.url!=null" class="row"><small class="mb-1">Company URL: </small><a href="http://{{servicelist.url}}"> {{servicelist.url}}</a></div>
+                                <div class="row"><small class="mb-1">Phone: <strong>{{servicelist.phone}}</strong></small></div>
+                                <div class="row"><small class="mb-1">Email: <strong>{{servicelist.email}}</strong></small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+<ngx-spinner
+    bdColor="rgba(51,51,51, 0.8)"
+    size="large"
+    color="#fff"
+    type="ball-climbing-dot">
+    <p style="font-size: 35px; color: white">Loading...</p>
+</ngx-spinner>

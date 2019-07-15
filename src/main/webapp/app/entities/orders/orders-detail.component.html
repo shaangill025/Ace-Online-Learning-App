@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="orders">
+            <h2><span jhiTranslate="smartCpdApp.orders.detail.title">Orders</span> {{orders.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.orders.createddate">Createddate</span></dt>
+                <dd>
+                    <span>{{orders.createddate}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.amount">Amount</span></dt>
+                <dd>
+                    <span>{{orders.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'smartCpdApp.NOTIFICATIONS.' + orders.status}}">{{orders.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.payment">Payment</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'smartCpdApp.PAYMENT.' + orders.payment}}">{{orders.payment}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.gateway_id">Gateway Id</span></dt>
+                <dd>
+                    <span>{{orders.gateway_id}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.seller_message">Seller Message</span></dt>
+                <dd>
+                    <span>{{orders.seller_message}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.network_status">Network Status</span></dt>
+                <dd>
+                    <span>{{orders.network_status}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.seller_status">Seller Status</span></dt>
+                <dd>
+                    <span>{{orders.seller_status}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.gateway_amt">Gateway Amt</span></dt>
+                <dd>
+                    <span>{{orders.gateway_amt}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.seller_type">Seller Type</span></dt>
+                <dd>
+                    <span>{{orders.seller_type}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.card_type">Card Type</span></dt>
+                <dd>
+                    <span>{{orders.card_type}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.last4">Last 4</span></dt>
+                <dd>
+                    <span>{{orders.last4}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.orders.cart">Cart</span></dt>
+                <dd>
+                    <div *ngIf="orders.cart">
+                        <a [routerLink]="['/cart', orders.cart?.id, 'view']">{{orders.cart?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/orders', orders.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

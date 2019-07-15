@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "quiz",
+            "otherEntityName": "quiz",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "currSection",
+            "otherEntityName": "section",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "newSection",
+            "otherEntityName": "section",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "questions",
+            "otherEntityName": "question",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "textQuestion",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "quizIntance"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180823211934",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "quiz_app",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

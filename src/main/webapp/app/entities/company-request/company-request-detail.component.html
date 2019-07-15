@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="companyRequest">
+            <h2><span jhiTranslate="smartCpdApp.companyRequest.detail.title">Company Request</span> {{companyRequest.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.name">Name</span></dt>
+                <dd>
+                    <span>{{companyRequest.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.description">Description</span></dt>
+                <dd>
+                    <span>{{companyRequest.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.phone">Phone</span></dt>
+                <dd>
+                    <span>{{companyRequest.phone}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.email">Email</span></dt>
+                <dd>
+                    <span>{{companyRequest.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.streetAddress">Street Address</span></dt>
+                <dd>
+                    <span>{{companyRequest.streetAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.postalCode">Postal Code</span></dt>
+                <dd>
+                    <span>{{companyRequest.postalCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.city">City</span></dt>
+                <dd>
+                    <span>{{companyRequest.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.stateProvince">State Province</span></dt>
+                <dd>
+                    <span>{{companyRequest.stateProvince}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.country">Country</span></dt>
+                <dd>
+                    <span>{{companyRequest.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.url">Url</span></dt>
+                <dd>
+                    <span>{{companyRequest.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.companyRequest.licenceCycle">Licence Cycle</span></dt>
+                <dd>
+                    <span>{{companyRequest.licenceCycle}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/company-request', companyRequest.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

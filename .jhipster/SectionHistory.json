@@ -1,0 +1,45 @@
+{
+    "name": "SectionHistory",
+    "fields": [
+        {
+            "fieldName": "startdate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastactivedate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "watched",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "stamp",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "otherEntityField": "normalized"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "otherEntityField": "normSection"
+        }
+    ],
+    "changelogDate": "20180819063650",
+    "entityTableName": "section_history",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": "elasticsearch"
+}

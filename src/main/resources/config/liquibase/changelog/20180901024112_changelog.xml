@@ -1,0 +1,594 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-1">
+        <createTable tableName="bookmarks">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="bookmarksPK"/>
+            </column>
+            <column name="bookmark" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="section_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-2">
+        <createTable tableName="cart">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="cartPK"/>
+            </column>
+            <column name="amount" type="DOUBLE"/>
+            <column name="checkout" type="BOOLEAN"/>
+            <column name="createddate" type="BINARY(255)"/>
+            <column name="lastactivedate" type="BINARY(255)"/>
+            <column name="norm_cart" type="VARCHAR(255)"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-3">
+        <createTable tableName="certificate">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="certificatePK"/>
+            </column>
+            <column name="pdf" type="BLOB"/>
+            <column name="pdf_content_type" type="VARCHAR(255)"/>
+            <column name="jhi_timestamp" type="BINARY(255)"/>
+            <column name="courses_id" type="BIGINT"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-4">
+        <createTable tableName="choice">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="choicePK"/>
+            </column>
+            <column name="isanswer" type="BOOLEAN"/>
+            <column name="text_choice" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="question_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-5">
+        <createTable tableName="company">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="companyPK"/>
+            </column>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cycledate" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notes" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="jhi_show" type="BOOLEAN"/>
+            <column name="state_province" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street_address" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-6">
+        <createTable tableName="course">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="coursePK"/>
+            </column>
+            <column name="amount" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="norm_courses" type="VARCHAR(255)"/>
+            <column name="point" type="BIGINT"/>
+            <column name="section" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-7">
+        <createTable tableName="course_cart_bridge">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="course_cart_bridgePK"/>
+            </column>
+            <column name="jhi_timestamp" type="BINARY(255)"/>
+            <column name="cart_id" type="BIGINT"/>
+            <column name="course_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-8">
+        <createTable tableName="course_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="course_historyPK"/>
+            </column>
+            <column name="jhi_access" type="BOOLEAN"/>
+            <column name="isactive" type="BOOLEAN"/>
+            <column name="iscompleted" type="BOOLEAN"/>
+            <column name="lastactivedate" type="BINARY(255)"/>
+            <column name="startdate" type="BINARY(255)"/>
+            <column name="course_id" type="BIGINT"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-9">
+        <createTable tableName="course_tags">
+            <column name="courses_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tags_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-10">
+        <createTable tableName="customer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="customerPK"/>
+            </column>
+            <column name="areaserviced" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cycledate" type="BINARY(255)"/>
+            <column name="lastactive" type="BINARY(255)"/>
+            <column name="license_number" type="VARCHAR(255)"/>
+            <column name="month_year" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="normalized" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="points" type="INT"/>
+            <column name="postalcode" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registered" type="BINARY(255)"/>
+            <column name="jhi_show" type="BOOLEAN"/>
+            <column name="specialities" type="VARCHAR(255)"/>
+            <column name="state_province" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="streetaddress" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trades" type="VARCHAR(255)"/>
+            <column name="company_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-11">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-12">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="BINARY(255)"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-13">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-14">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="BINARY(255)"/>
+            <column name="activated" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(254)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(6)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reset_date" type="BINARY(255)"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-15">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-16">
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="ordersPK"/>
+            </column>
+            <column name="amount" type="DOUBLE"/>
+            <column name="createddate" type="BINARY(255)"/>
+            <column name="payment" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="cart_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-17">
+        <createTable tableName="question">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="questionPK"/>
+            </column>
+            <column name="difficulty" type="VARCHAR(255)"/>
+            <column name="restudy" type="VARCHAR(255)"/>
+            <column name="text_question" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="used" type="BOOLEAN"/>
+            <column name="quiz_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-18">
+        <createTable tableName="question_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="question_historyPK"/>
+            </column>
+            <column name="correct" type="BOOLEAN"/>
+            <column name="jhi_timestamp" type="BINARY(255)"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="question_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-19">
+        <createTable tableName="quiz">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="quizPK"/>
+            </column>
+            <column name="difficulty" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="passingscore" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-20">
+        <createTable tableName="quiz_app">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="quiz_appPK"/>
+            </column>
+            <column name="curr_section_id" type="BIGINT"/>
+            <column name="new_section_id" type="BIGINT"/>
+            <column name="quiz_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-22">
+        <createTable tableName="quiz_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="quiz_historyPK"/>
+            </column>
+            <column name="passed" type="BOOLEAN"/>
+            <column name="jhi_start" type="BINARY(255)"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="quiz_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-23">
+        <createTable tableName="section">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="sectionPK"/>
+            </column>
+            <column name="content" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="norm_section" type="VARCHAR(255)"/>
+            <column name="notes" type="VARCHAR(255)"/>
+            <column name="textcontent" type="CLOB"/>
+            <column name="jhi_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="video_url" type="VARCHAR(255)"/>
+            <column name="course_id" type="BIGINT"/>
+            <column name="quiz_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-24">
+        <createTable tableName="section_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="section_historyPK"/>
+            </column>
+            <column name="lastactivedate" type="BINARY(255)"/>
+            <column name="startdate" type="BINARY(255)"/>
+            <column name="watched" type="BOOLEAN"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="section_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-25">
+        <createTable tableName="section_tags">
+            <column name="sections_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tags_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-26">
+        <createTable tableName="servicelist">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="servicelistPK"/>
+            </column>
+            <column name="areas" type="VARCHAR(255)"/>
+            <column name="company" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="speciality" type="VARCHAR(255)"/>
+            <column name="trades" type="VARCHAR(255)"/>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-27">
+        <createTable tableName="tags">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="tagsPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-28">
+        <createTable tableName="time_course_log">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="time_course_logPK"/>
+            </column>
+            <column name="loggedin" type="BINARY(255)"/>
+            <column name="loggedout" type="BINARY(255)"/>
+            <column name="timespent" type="BIGINT"/>
+            <column name="course_id" type="BIGINT"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-29">
+        <createTable tableName="topic">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="topicPK"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-30">
+        <addPrimaryKey columnNames="courses_id, tags_id" tableName="course_tags"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-31">
+        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-32">
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-34">
+        <addPrimaryKey columnNames="sections_id, tags_id" tableName="section_tags"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-35">
+        <addPrimaryKey columnNames="name" constraintName="jhi_authorityPK" tableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-36">
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-37">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-38">
+        <addUniqueConstraint columnNames="cart_id" constraintName="UC_ORDERSCART_ID_COL" tableName="orders"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-39">
+        <addUniqueConstraint columnNames="quiz_id" constraintName="UC_SECTIONQUIZ_ID_COL" tableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-40">
+        <addUniqueConstraint columnNames="user_id" constraintName="UK_j7ja2xvrxudhvssosd4nu1o92" tableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-41">
+        <addUniqueConstraint columnNames="customer_id" constraintName="UK_mnhxi67w33gji6x0w2i32d30l" tableName="servicelist"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-42">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-43">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-44">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="quiz_history" constraintName="FK468jedamnwatoqbk49h3c9jnq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-45">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-46">
+        <addForeignKeyConstraint baseColumnNames="quiz_id" baseTableName="quiz_history" constraintName="FK60h0qr9tvog83t48s97jndoyj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="quiz"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-47">
+        <addForeignKeyConstraint baseColumnNames="section_id" baseTableName="section_history" constraintName="FK75up7toxsf5nlgwqx5sf8tswp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-48">
+        <addForeignKeyConstraint baseColumnNames="quiz_id" baseTableName="section" constraintName="FK76a9s4smgbo3aui1i0mxasrff" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="quiz"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-49">
+        <addForeignKeyConstraint baseColumnNames="section_id" baseTableName="bookmarks" constraintName="FK77x67pq1ace765799pj906gek" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-50">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="section_history" constraintName="FK8cyb7k14jihytt64rih0dylcw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-51">
+        <addForeignKeyConstraint baseColumnNames="cart_id" baseTableName="course_cart_bridge" constraintName="FK8n6p01baqlrytsqfcft35qduq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="cart"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-52">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="question_history" constraintName="FK99xeq9tom7f7odxmlqsf9ysoj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-53">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="servicelist" constraintName="FKa4kys51yhbl8i2mnmkco2ch3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-54">
+        <addForeignKeyConstraint baseColumnNames="tags_id" baseTableName="course_tags" constraintName="FKa9nqxjvu9kcsp7un6t7u3y5up" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tags"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-55">
+        <addForeignKeyConstraint baseColumnNames="quiz_id" baseTableName="question" constraintName="FKb0yh0c1qaxfwlcnwo9dms2txf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="quiz"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-56">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="certificate" constraintName="FKbin167gb15lctd21ocemxja99" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-57">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="choice" constraintName="FKcaq6r76cswke5b9fk6fyx3y5w" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-58">
+        <addForeignKeyConstraint baseColumnNames="company_id" baseTableName="customer" constraintName="FKcc6lvs1hfb70cc5rjbyq0m8is" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="company"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-59">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="cart" constraintName="FKdebwvad6pp1ekiqy5jtixqbaj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-61">
+        <addForeignKeyConstraint baseColumnNames="sections_id" baseTableName="section_tags" constraintName="FKf8celi480uwybf5d1p1udv6hx" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-62">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="customer" constraintName="FKg09blp5mmjq2s3vgngse5ug4a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-63">
+        <addForeignKeyConstraint baseColumnNames="quiz_id" baseTableName="quiz_app" constraintName="FKg4x21mfmppr7kdlvcdnevd0e5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="quiz"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-64">
+        <addForeignKeyConstraint baseColumnNames="new_section_id" baseTableName="quiz_app" constraintName="FKhsny30aoeonpbsht7rkfap4qb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-65">
+        <addForeignKeyConstraint baseColumnNames="questions_id" baseTableName="quiz_app_questions" constraintName="FKiabn9ufjtbor1hj735kxapac5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-66">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="question_history" constraintName="FKje5jkpp1j8jr08kqn8j8o8o6e" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-67">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="time_course_log" constraintName="FKk3nueft7ld07rip89q1kq3kwb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-68">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="certificate" constraintName="FKlqtdcim2jeqflhigx5f0nnn9n" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-69">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="course_cart_bridge" constraintName="FKns8xh5u1n588ddvpbbud868ti" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-70">
+        <addForeignKeyConstraint baseColumnNames="curr_section_id" baseTableName="quiz_app" constraintName="FKodnlw87uoi48vxdyjo9mlui9m" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="section"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-71">
+        <addForeignKeyConstraint baseColumnNames="topic_id" baseTableName="course" constraintName="FKokaxyfpv8p583w8yspapfb2ar" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="topic"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-72">
+        <addForeignKeyConstraint baseColumnNames="tags_id" baseTableName="section_tags" constraintName="FKokxy92d9sd5rblwperghpanmk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tags"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-73">
+        <addForeignKeyConstraint baseColumnNames="courses_id" baseTableName="course_tags" constraintName="FKoxelymaw099hfqydq4p1muj0g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-74">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="section" constraintName="FKoy8uc0ftpivwopwf5ptwdtar0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-76">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="course_history" constraintName="FKpukmxvh51v54sstekbb60r7it" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-77">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="time_course_log" constraintName="FKrp50wtc51ddjaw71ap96fph1x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-78">
+        <addForeignKeyConstraint baseColumnNames="course_id" baseTableName="course_history" constraintName="FKsokma5dbcypftksj4bampak7d" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="course"/>
+    </changeSet>
+    <changeSet author="shaanjotgill (generated)" id="1535769684011-79">
+        <addForeignKeyConstraint baseColumnNames="cart_id" baseTableName="orders" constraintName="FKtpihbdn6ws0hu56camb0bg2to" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="cart"/>
+    </changeSet>
+</databaseChangeLog>

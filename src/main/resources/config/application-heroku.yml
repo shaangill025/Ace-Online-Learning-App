@@ -1,0 +1,34 @@
+# ===================================================================
+# Spring Boot configuration for the "heroku" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+eureka:
+    instance:
+        hostname: ace-online.herokuapp.com
+        non-secure-port: 80
+        prefer-ip-address: false
+
+spring:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://us-mm-pdx-552-i.cleardb.net:3306/ace_aol_primary_db
+        username: sgill13
+        password: SYGC27ApjfDLwzEu
+        hikari:
+            maximumPoolSize: 8
+            data-source-properties:
+                autoReconnect: true
+                useSSL: false
+    data:
+        jest:
+            uri: https://6829cc595a1a4c59881f5afa6cd46ce4.us-west-2.aws.found.io:9243
+            username: elastic
+            password: umrI7vUILtlKL65hWnb3Hr7A

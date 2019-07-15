@@ -1,0 +1,103 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartCpdApp.orders.home.title">Orders</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-orders" [routerLink]="['/orders/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.orders.home.createLabel">
+            Create new Orders
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'smartCpdApp.orders.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="orders">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createddate"><span jhiTranslate="smartCpdApp.orders.createddate">Createddate</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="amount"><span jhiTranslate="smartCpdApp.orders.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="smartCpdApp.orders.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="payment"><span jhiTranslate="smartCpdApp.orders.payment">Payment</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="gateway_id"><span jhiTranslate="smartCpdApp.orders.gateway_id">Gateway Id</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="seller_message"><span jhiTranslate="smartCpdApp.orders.seller_message">Seller Message</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="network_status"><span jhiTranslate="smartCpdApp.orders.network_status">Network Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="seller_status"><span jhiTranslate="smartCpdApp.orders.seller_status">Seller Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="gateway_amt"><span jhiTranslate="smartCpdApp.orders.gateway_amt">Gateway Amt</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="seller_type"><span jhiTranslate="smartCpdApp.orders.seller_type">Seller Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="card_type"><span jhiTranslate="smartCpdApp.orders.card_type">Card Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="last4"><span jhiTranslate="smartCpdApp.orders.last4">Last 4</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="cart.id"><span jhiTranslate="smartCpdApp.orders.cart">Cart</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let orders of orders ;trackBy: trackId">
+                <td><a [routerLink]="['/orders', orders.id, 'view' ]">{{orders.id}}</a></td>
+                <td>{{orders.createddate | date:'medium'}}</td>
+                <td>{{orders.amount}}</td>
+                <td jhiTranslate="{{'smartCpdApp.NOTIFICATIONS.' + orders.status}}">{{orders.status}}</td>
+                <td jhiTranslate="{{'smartCpdApp.PAYMENT.' + orders.payment}}">{{orders.payment}}</td>
+                <td>{{orders.gateway_id}}</td>
+                <td>{{orders.seller_message}}</td>
+                <td>{{orders.network_status}}</td>
+                <td>{{orders.seller_status}}</td>
+                <td>{{orders.gateway_amt}}</td>
+                <td>{{orders.seller_type}}</td>
+                <td>{{orders.card_type}}</td>
+                <td>{{orders.last4}}</td>
+                <td>
+                    <div *ngIf="orders.cart">
+                        <a [routerLink]="['../cart', orders.cart?.id, 'view' ]" >{{orders.cart?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/orders', orders.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/orders', orders.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'orders/'+ orders.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                        <button *ngIf="orders.seller_status!=='succeeded'" type="submit"
+                                (click)="markComplete(orders);"
+                                class="btn btn-light btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Payment Completed</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

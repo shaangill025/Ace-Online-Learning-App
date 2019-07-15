@@ -1,0 +1,26 @@
+
+{
+    "smartCpdApp": {
+        "quizApp" : {
+            "home": {
+                "title": "Quiz Apps",
+                "createLabel": "Create a new Quiz App",
+                "createOrEditLabel": "Create or edit a Quiz App",
+                "search": "Search for Quiz App"
+            },
+            "created": "A new Quiz App is created with identifier {{ param }}",
+            "updated": "A Quiz App is updated with identifier {{ param }}",
+            "deleted": "A Quiz App is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Quiz App {{ id }}?"
+            },
+            "detail": {
+                "title": "Quiz App"
+            },
+            "quiz": "Quiz",
+            "currSection": "Curr Section",
+            "newSection": "New Section",
+            "questions": "Questions"
+        }
+    }
+}

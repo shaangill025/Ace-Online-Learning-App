@@ -1,0 +1,32 @@
+{
+    "smartCpdApp": {
+        "companyRequest": {
+            "home": {
+                "title": "Company Requests",
+                "createLabel": "Create a new Company Request",
+                "createOrEditLabel": "Create or edit a Company Request",
+                "search": "Search for Company Request"
+            },
+            "created": "A new Company Request is created with identifier {{ param }}",
+            "updated": "A Company Request is updated with identifier {{ param }}",
+            "deleted": "A Company Request is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Company Request {{ id }}?"
+            },
+            "detail": {
+                "title": "Company Request"
+            },
+            "name": "Name",
+            "description": "Description",
+            "phone": "Phone",
+            "email": "Email",
+            "streetAddress": "Street Address",
+            "postalCode": "Postal Code",
+            "city": "City",
+            "stateProvince": "State Province",
+            "country": "Country",
+            "url": "Url",
+            "licenceCycle": "Licence Cycle"
+        }
+    }
+}

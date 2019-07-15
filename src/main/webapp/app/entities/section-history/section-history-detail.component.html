@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="sectionHistory">
+            <h2><span jhiTranslate="smartCpdApp.sectionHistory.detail.title">Section History</span> {{sectionHistory.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.startdate">Startdate</span></dt>
+                <dd>
+                    <span>{{sectionHistory.startdate}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.lastactivedate">Lastactivedate</span></dt>
+                <dd>
+                    <span>{{sectionHistory.lastactivedate}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.watched">Watched</span></dt>
+                <dd>
+                    <span>{{sectionHistory.watched}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.stamp">Stamp</span></dt>
+                <dd>
+                    <span>{{sectionHistory.stamp}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="sectionHistory.customer">
+                        <a [routerLink]="['/customer', sectionHistory.customer?.id, 'view']">{{sectionHistory.customer?.normalized}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.sectionHistory.section">Section</span></dt>
+                <dd>
+                    <div *ngIf="sectionHistory.section">
+                        <a [routerLink]="['/section', sectionHistory.section?.id, 'view']">{{sectionHistory.section?.normSection}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/section-history', sectionHistory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

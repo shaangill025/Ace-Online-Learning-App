@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "otherEntityField": "normalized"
+        },
+        {
+            "relationshipName": "courseHistory",
+            "otherEntityName": "courseHistory",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "timestamp",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "isEmailed",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20180819063643",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "certificate",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

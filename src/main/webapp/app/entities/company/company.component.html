@@ -1,0 +1,101 @@
+ <a *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <div class="table-responsive" *ngIf="companies">
+            <table class="table table-striped">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="name"><span jhiTranslate="smartCpdApp.company.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="description"><span jhiTranslate="smartCpdApp.company.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="notes"><span jhiTranslate="smartCpdApp.company.notes">Notes</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="phone"><span jhiTranslate="smartCpdApp.company.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="streetAddress"><span jhiTranslate="smartCpdApp.company.streetAddress">Street Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="postalCode"><span jhiTranslate="smartCpdApp.company.postalCode">Postal Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="city"><span jhiTranslate="smartCpdApp.company.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="stateProvince"><span jhiTranslate="smartCpdApp.company.stateProvince">State Province</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="country"><span jhiTranslate="smartCpdApp.company.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="url"><span jhiTranslate="smartCpdApp.company.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="show"><span jhiTranslate="smartCpdApp.company.show">Show</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="licenceCycle"><span>Cycledate</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let company of companies ;trackBy: trackId">
+                    <td><a [routerLink]="['/company', company.id, 'view' ]">{{company.id}}</a></td>
+                    <td>{{company.name}}</td>
+                    <td>{{company.description}}</td>
+                    <td>{{company.notes}}</td>
+                    <td>{{company.phone}}</td>
+                    <td>{{company.streetAddress}}</td>
+                    <td>{{company.postalCode}}</td>
+                    <td>{{company.city}}</td>
+                    <td>{{company.stateProvince}}</td>
+                    <td>{{company.country}}</td>
+                    <td>{{company.url}}</td>
+                    <td>{{company.show}}</td>
+                    <td>{{company.licenceCycle}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['/company', company.id, 'view' ]"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/company', company.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'company/'+ company.id + '/delete'} }]"
+                                    replaceUrl="true"
+                                    queryParamsHandling="merge"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </a>
+
+    <!--<a *jhiHasAnyAuthority="'ROLE_USER'">-->
+    <a>
+        <div *ngIf="companies">
+            <h3>Our Proud Partners</h3>
+            <div class="list-group">
+                <!--api/_search/courses?query=test<a (click)="redirectToCourse(topic.name)" [routerLink]="['/course', topic.id, 'view']" class="list-group-item list-group-item-action flex-column align-items-start"-->
+                <div *ngFor="let company of companies; trackBy: trackId">
+                    <a *ngIf="company.show" class="list-group-item list-group-item-action flex-column align-items-start" style="margin-top: 5px; background-color: #f2f2f2;">
+                        <div class="row" style="padding-left: 15px;">
+                            <div class="col-8 col-xs-12">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <div class="row"><h1 class="mb-1" style="font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;">{{company.name}}</h1></div>
+                                </div>
+                            </div>
+                            <div class="col-4 col-xs-12" style="margin-top: 10px;">
+                                <div class="row"><small class="mb-1">Address: <strong>{{company.streetAddress}}, {{company.city}}, {{company.country}} {{company.postalCode}}</strong></small></div>
+                                <div class="row"><small class="mb-1">Phone: <strong>{{company.phone}}</strong></small></div>
+                                <div class="row"><small class="mb-1">Url: <a href="http://{{company.url}}">{{company.url}}</a></small></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <small style="margin-left: 5em;" class="mb-1"><strong>About the Company: </strong>{{company.description}}</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </a>
+ <ngx-spinner
+     bdColor="rgba(51,51,51, 0.8)"
+     size="large"
+     color="#fff"
+     type="ball-climbing-dot">
+     <p style="font-size: 35px; color: white">Loading...</p>
+ </ngx-spinner>

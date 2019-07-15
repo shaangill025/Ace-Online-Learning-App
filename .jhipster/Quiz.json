@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "newSection",
+            "otherEntityName": "section",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "difficulty",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "passingscore",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180819063645",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "quiz",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="servicelist">
+            <h2><span jhiTranslate="smartCpdApp.servicelist.detail.title">Servicelist</span> {{servicelist.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.servicelist.name">Name</span></dt>
+                <dd>
+                    <span>{{servicelist.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.company">Company</span></dt>
+                <dd>
+                    <span>{{servicelist.company}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.url">Url</span></dt>
+                <dd>
+                    <span>{{servicelist.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.phone">Phone</span></dt>
+                <dd>
+                    <span>{{servicelist.phone}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.email">Email</span></dt>
+                <dd>
+                    <span>{{servicelist.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.areas">Areas</span></dt>
+                <dd>
+                    <span>{{servicelist.areas}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.speciality">Speciality</span></dt>
+                <dd>
+                    <span>{{servicelist.speciality}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.trades">Trades</span></dt>
+                <dd>
+                    <span>{{servicelist.trades}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.servicelist.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="servicelist.customer">
+                        <a [routerLink]="['/customer', servicelist.customer?.id, 'view']">{{servicelist.customer?.normalized}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/servicelist', servicelist.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+<div *ngIf="errorAdBlock===true">
+    <div class="row justify-content-center" style="border: 1em; border-block: currentColor;">
+        <div class="col-md-5 center-block">
+            <div class="alert alert-danger center">
+                <h5 class="center">Ad Blocker Plugin Detected</h5>
+            </div>
+            <div class="alert alert-info center">
+                <div>
+                    <img style="width: 100%" src="../../../content/images/adblock.png" class="center-block img-responsive">
+                </div>
+                <strong class="center" style="color: cornsilk">Kindly disable AdBlockers suck as Adblock plus, uBlock Origin, etc. These plugins will negatively affect your experience using this website. After you disable the plugin or apply an ignore exception for this website, please click </strong>
+                <a (click)="reloadPage()" style="text-underline: azure; color: cornsilk;">Reload after disabling plugin</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="!errorAdBlock">
+    <div class="row justify-content-center" *ngIf="errorRegionLock">
+        <div class="col-md-9">
+            <div class="alert alert-info">
+                <div class="alert alert-info" *ngIf="shouldnotbeinCanada">
+                    <strong>We have detected that you are accessing this application from USA.
+                        This application was developed for Canadian customers. Kindly, note that the certificates
+                        and CPD points issued on this wesite are only valid in Canada</strong> Kindly visit <a href="http://www.aceaol.com/#/">http://www.aceaol.com</a>
+                    to be redirected to our other application developed for US customers.
+                </div>
+                <div class="alert alert-info" *ngIf="shouldnotbeinUsa">
+                    <strong>We have detected that you are accessing this application from Canada.
+                        This application was developed for US based customers. Kindly, note that the certificates
+                        and CPD points issued on this website are only valid in US</strong> Kindly visit <a href="https://www.aceaol.ca/#/">https://www.aceaol.ca</a>
+                    to be redirected to our other application developed for Canadian customers.
+                </div>
+                <div class="alert alert-info" *ngIf="regionOutside">
+                    <strong>Please visit,</strong> kindly visit <a href="https://www.aceaol.ca/#/">https://www.aceaol.ca</a>
+                    for Canadian courses. Kindly, note that the certificates and CPD points issued on this website are only valid in Canada.<br><br>
+                    <strong>Please visit,</strong> kindly visit <a href="https://www.aceaol.com/#/">https://www.aceaol.com</a>
+                    for US courses. Kindly, note that the certificates and CPD points issued on this website are only valid in US.
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartCpdApp.course.home.title">Courses</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-course" [routerLink]="['/course/new']" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.course.home.createLabel">
+            Create new Course
+            </span>
+        </button>
+    </h2>
+    <div *jhiHasAnyAuthority="'ROLE_ADMIN'"><jhi-alert></jhi-alert></div>
+    <div *ngIf="message !== ''" class="alert-danger alert" style="margin-left: 30%; margin-right: 30%"><h3>{{message}}</h3></div>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch"
+                           name="currentSearch" placeholder="{{'smartCpdApp.course.home.search' | translate}}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+
+            <span><strong>Sort by</strong></span>
+            <div jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                <button type="button" class="btn btn-light" jhiSortBy="amount">
+                    <span jhiTranslate="smartCpdApp.course.amount">Amount</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-light" jhiSortBy="point">
+                    <span jhiTranslate="smartCpdApp.course.point">Points</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-light" jhiSortBy="credit">
+                    <span jhiTranslate="smartCpdApp.course.credit">Credit</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-light" jhiSortBy="state">
+                    <span jhiTranslate="smartCpdApp.course.state">State</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </button>
+                <button type="button" class="btn btn-light" jhiSortBy="country">
+                    <span jhiTranslate="smartCpdApp.course.country">Country</span>
+                    <fa-icon [icon]="'sort'"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <a *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <div class="table-responsive" *ngIf="courses">
+            <table class="table table-striped">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="title"><span jhiTranslate="smartCpdApp.course.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="section"><span jhiTranslate="smartCpdApp.course.section">Section</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="normCourses"><span jhiTranslate="smartCpdApp.course.normCourses">Norm Courses</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="description"><span jhiTranslate="smartCpdApp.course.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="amount"><span jhiTranslate="smartCpdApp.course.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="image"><span jhiTranslate="smartCpdApp.course.image">Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="point"><span jhiTranslate="smartCpdApp.course.point">Point</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="credit"><span jhiTranslate="smartCpdApp.course.credit">Credit</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="country"><span jhiTranslate="smartCpdApp.course.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="state"><span jhiTranslate="smartCpdApp.course.state">State</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="topic.name"><span jhiTranslate="smartCpdApp.course.topic">Topic</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let course of courses ;trackBy: trackId">
+                    <td><a [routerLink]="['/course', course.id, 'view' ]">{{course.id}}</a></td>
+                    <td>{{course.title}}</td>
+                    <td>{{course.section}}</td>
+                    <td>{{course.normCourses}}</td>
+                    <td>{{course.description}}</td>
+                    <td>{{course.amount}}</td>
+                    <td>
+                        <a *ngIf="course.image" (click)="openFile(course.imageContentType, course.image)" jhiTranslate="entity.action.open">open</a>
+                        <span *ngIf="course.image">{{course.imageContentType}}, {{byteSize(course.image)}}</span>
+                    </td>
+                    <td>{{course.point}}</td>
+                    <td>{{course.credit}}</td>
+                    <td>{{course.country}}</td>
+                    <td>{{course.state}}</td>
+                    <td>
+                        <div *ngIf="course.topic">
+                            <a [routerLink]="['../topic', course.topic?.id, 'view' ]" >{{course.topic?.name}}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="['/course', course.id, 'view' ]"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon [icon]="'eye'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/course', course.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                    [routerLink]="['/', { outlets: { popup: 'course/'+ course.id + '/delete'} }]"
+                                    replaceUrl="true"
+                                    queryParamsHandling="merge"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </a>
+    <div *ngIf="courses">
+        <!--<a *jhiHasAnyAuthority="'ROLE_USER'">-->
+        <a>
+            <div class="list-group">
+                <!--api/_search/courses?query=test<a (click)="redirectToCourse(topic.name)" [routerLink]="['/course', topic.id, 'view']" class="list-group-item list-group-item-action flex-column align-items-start"-->
+                <div *ngFor="let courseTemp of courses; trackBy: trackId" >
+                    <div class="list-group-item list-group-item-action flex-column align-items-start" *ngIf="courseTemp.show" style="background-color: #f2f2f2; margin-top: 5px;">
+                    <div class="row">
+                        <div class="col-3 col-xs-12">
+                            <img class="img-responsive" [src]="'data:' + courseTemp.imageContentType +
+                    ';base64,' + courseTemp.image" style="max-height:170px;" alt="topic image"/>
+                        </div>
+                        <div class="col-6 col-xs-12">
+                            <div class="d-flex w-100 justify-content-between">
+                                <div class="row"><h1 class="mb-1">{{courseTemp.normCourses}}</h1></div>
+                            </div>
+                            <div class="row"><p><b>{{courseTemp.description}}</b></p></div>
+                            <div class="row"><small class="mb-1">Country: <b>{{courseTemp.country}}</b></small></div>
+                            <div class="row"><small class="mb-1">State or Province: <b>{{courseTemp.state}}</b></small></div>
+                            <div class="row"><small class="mb-1">Topic: <b>{{courseTemp.topic.name}}</b></small></div>
+                            <div class="row"><small class="mb-1"><b>CPD Credits: {{courseTemp.credit}}</b> <b>Achievement Points: {{courseTemp.point}}</b></small></div>
+                            <div class="row"><small class="mb-1">Price: <b>${{courseTemp.amount}}</b></small></div>
+                        </div>
+                        <div class="col-2 col-xs-12">
+                            <div class="row">
+                                <button class="btn btn-primary float-right jh-create-entity create-course" (click)="addCourse(courseTemp);" *jhiHasAnyAuthority="'ROLE_USER'">
+                                    <fa-icon [icon]="'shopping-cart'"></fa-icon>
+                                    <span class="hidden-sm-down">
+                                            Add to Cart
+                                        </span>
+                                </button>
+                            </div>
+                            <div class="row"><br><hr><br></div>
+                            <div class="row">
+                                <button class="btn btn-dark float-right jh-create-entity create-course" [routerLink]="['/course', courseTemp.id, 'view']" *jhiHasAnyAuthority="'ROLE_USER'">
+                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                    <span class="hidden-sm-down">
+                                            View Details
+                                        </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div><br>
+        </a>
+    </div>
+</div>
+<ngx-spinner
+    bdColor="rgba(51,51,51, 0.8)"
+    size="large"
+    color="#fff"
+    type="ball-climbing-dot">
+    <p style="font-size: 35px; color: white">Loading...</p>
+</ngx-spinner>

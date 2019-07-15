@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="courseCartBridge">
+            <h2><span jhiTranslate="smartCpdApp.courseCartBridge.detail.title">Course Cart Bridge</span> {{courseCartBridge.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.courseCartBridge.timestamp">Timestamp</span></dt>
+                <dd>
+                    <span>{{courseCartBridge.timestamp}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.courseCartBridge.cart">Cart</span></dt>
+                <dd>
+                    <div *ngIf="courseCartBridge.cart">
+                        <a [routerLink]="['/cart', courseCartBridge.cart?.id, 'view']">{{courseCartBridge.cart?.normCart}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.courseCartBridge.course">Course</span></dt>
+                <dd>
+                    <div *ngIf="courseCartBridge.course">
+                        <a [routerLink]="['/course', courseCartBridge.course?.id, 'view']">{{courseCartBridge.course?.normCourses}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/course-cart-bridge', courseCartBridge.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

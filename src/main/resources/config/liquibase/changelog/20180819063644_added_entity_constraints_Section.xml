@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Section.
+    -->
+    <changeSet id="20180819063644-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="quiz_id"
+                                 baseTableName="section"
+                                 constraintName="fk_section_quiz_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quiz"/>
+
+        <addForeignKeyConstraint baseColumnNames="sections_id"
+                                 baseTableName="section_tags"
+                                 constraintName="fk_section_tags_sections_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="section"/>
+        <addForeignKeyConstraint baseColumnNames="tags_id"
+                                 baseTableName="section_tags"
+                                 constraintName="fk_section_tags_tags_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tags"/>
+        
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="section"
+                                 constraintName="fk_section_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+    </changeSet>
+</databaseChangeLog>

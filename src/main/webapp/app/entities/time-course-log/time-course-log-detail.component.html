@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="timeCourseLog">
+            <h2><span jhiTranslate="smartCpdApp.timeCourseLog.detail.title">Time Course Log</span> {{timeCourseLog.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.timeCourseLog.timespent">Timespent</span></dt>
+                <dd>
+                    <span>{{timeCourseLog.timespent}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.timeCourseLog.recorddate">Recorddate</span></dt>
+                <dd>
+                    <span>{{timeCourseLog.recorddate}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.timeCourseLog.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="timeCourseLog.customer">
+                        <a [routerLink]="['/customer', timeCourseLog.customer?.id, 'view']">{{timeCourseLog.customer?.normalized}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.timeCourseLog.courseHistory">Course History</span></dt>
+                <dd>
+                    <div *ngIf="timeCourseLog.courseHistory">
+                        <a [routerLink]="['/course-history', timeCourseLog.courseHistory?.id, 'view']">{{timeCourseLog.courseHistory?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/time-course-log', timeCourseLog.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+{
+    "smartCpdApp": {
+        "timeCourseLog": {
+            "home": {
+                "title": "Time Course Logs",
+                "createLabel": "Create a new Time Course Log",
+                "createOrEditLabel": "Create or edit a Time Course Log",
+                "search": "Search for Time Course Log"
+            },
+            "created": "A new Time Course Log is created with identifier {{ param }}",
+            "updated": "A Time Course Log is updated with identifier {{ param }}",
+            "deleted": "A Time Course Log is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Time Course Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Time Course Log"
+            },
+            "timespent": "Timespent",
+            "recorddate": "Recorddate",
+            "customer": "Customer",
+            "courseHistory": "Course History"
+        }
+    }
+}

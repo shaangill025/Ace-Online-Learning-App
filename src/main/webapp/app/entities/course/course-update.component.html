@@ -1,0 +1,163 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-course-heading" jhiTranslate="smartCpdApp.course.home.createOrEditLabel">Create or edit a Course</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!course.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="course.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.title" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                        [(ngModel)]="course.title" required/>
+                    <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.section" for="field_section">Section</label>
+                    <input type="text" class="form-control" name="section" id="field_section"
+                        [(ngModel)]="course.section" required/>
+                    <div [hidden]="!(editForm.controls.section?.dirty && editForm.controls.section?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.section?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.normCourses" for="field_normCourses">Norm Courses</label>
+                    <input type="text" class="form-control" name="normCourses" id="field_normCourses"
+                        [(ngModel)]="course.normCourses" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="course.description" required/>
+                    <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                        [(ngModel)]="course.amount" required/>
+                    <div [hidden]="!(editForm.controls.amount?.dirty && editForm.controls.amount?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.amount?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.image" for="field_image">Image</label>
+                    <div>
+                        <div *ngIf="course.image" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(course.imageContentType, course.image)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{course.imageContentType}}, {{byteSize(course.image)}}</span>
+                            <button type="button" (click)="course.image=null;course.imageContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, course, 'image', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                        [(ngModel)]="course.image" required/>
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                        [(ngModel)]="course.imageContentType" />
+                    <div [hidden]="!(editForm.controls.image?.dirty && editForm.controls.image?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.image?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.point" for="field_point">Point</label>
+                    <input type="number" class="form-control" name="point" id="field_point"
+                        [(ngModel)]="course.point" required/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.credit" for="field_credit">Credit</label>
+                    <input type="text" class="form-control" name="credit" id="field_credit"
+                        [(ngModel)]="course.credit" required/>
+                    <div [hidden]="!(editForm.controls.credit?.dirty && editForm.controls.credit?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.credit?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.country" for="field_country">Country</label>
+                    <input type="text" class="form-control" name="country" id="field_country"
+                        [(ngModel)]="course.country" required/>
+                    <div [hidden]="!(editForm.controls.country?.dirty && editForm.controls.country?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.country?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.state" for="field_state">State</label>
+                    <input type="text" class="form-control" name="state" id="field_state"
+                        [(ngModel)]="course.state" required/>
+                    <div [hidden]="!(editForm.controls.state?.dirty && editForm.controls.state?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.state?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.show" for="field_show">Show</label>
+                    <input type="checkbox" class="form-control" name="show" id="field_show"
+                        [(ngModel)]="course.show" />
+                    <div [hidden]="!(editForm.controls.show?.dirty && editForm.controls.show?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.show?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.course.topic" for="field_topic">Topic</label>
+                    <select class="form-control" id="field_topic" name="topic" [(ngModel)]="course.topic" required>
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="topicOption.id === course.topic?.id ? course.topic : topicOption" *ngFor="let topicOption of topics; trackBy: trackTopicById">{{topicOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="smartCpdApp.course.tags" for="field_tags">Tags</label>
+                    <select class="form-control" id="field_tags" multiple name="tags" [(ngModel)]="course.tags">
+                        <option [ngValue]="getSelected(course.tags, tagsOption)" *ngFor="let tagsOption of tags; trackBy: trackTagsById">{{tagsOption.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

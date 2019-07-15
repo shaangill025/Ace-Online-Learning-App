@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="choice">
+            <h2><span jhiTranslate="smartCpdApp.choice.detail.title">Choice</span> {{choice.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.choice.textChoice">Text Choice</span></dt>
+                <dd>
+                    <span>{{choice.textChoice}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.choice.isanswer">Isanswer</span></dt>
+                <dd>
+                    <span>{{choice.isanswer}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.choice.question">Question</span></dt>
+                <dd>
+                    <div *ngIf="choice.question">
+                        <a [routerLink]="['/question', choice.question?.id, 'view']">{{choice.question?.textQuestion}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/choice', choice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

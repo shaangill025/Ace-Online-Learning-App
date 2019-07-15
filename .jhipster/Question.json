@@ -1,0 +1,46 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "choice",
+            "otherEntityName": "choice",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "question"
+        },
+        {
+            "relationshipName": "quiz",
+            "otherEntityName": "quiz",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "textQuestion",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "difficulty",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "restudy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "used",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20180819063646",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "question",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

@@ -1,0 +1,95 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartCpdApp.companyRequest.home.title">Company Requests</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-company-request" [routerLink]="['/company-request/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.companyRequest.home.createLabel">
+            Create new Company Request
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'smartCpdApp.companyRequest.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="companyRequests">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span jhiTranslate="smartCpdApp.companyRequest.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="smartCpdApp.companyRequest.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="phone"><span jhiTranslate="smartCpdApp.companyRequest.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="email"><span jhiTranslate="smartCpdApp.companyRequest.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="streetAddress"><span jhiTranslate="smartCpdApp.companyRequest.streetAddress">Street Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="postalCode"><span jhiTranslate="smartCpdApp.companyRequest.postalCode">Postal Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span jhiTranslate="smartCpdApp.companyRequest.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="stateProvince"><span jhiTranslate="smartCpdApp.companyRequest.stateProvince">State Province</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="country"><span jhiTranslate="smartCpdApp.companyRequest.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="url"><span jhiTranslate="smartCpdApp.companyRequest.url">Url</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="licenceCycle"><span jhiTranslate="smartCpdApp.companyRequest.licenceCycle">Licence Cycle</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let companyRequest of companyRequests ;trackBy: trackId">
+                <td><a [routerLink]="['/company-request', companyRequest.id, 'view' ]">{{companyRequest.id}}</a></td>
+                <td>{{companyRequest.name}}</td>
+                <td>{{companyRequest.description}}</td>
+                <td>{{companyRequest.phone}}</td>
+                <td>{{companyRequest.email}}</td>
+                <td>{{companyRequest.streetAddress}}</td>
+                <td>{{companyRequest.postalCode}}</td>
+                <td>{{companyRequest.city}}</td>
+                <td>{{companyRequest.stateProvince}}</td>
+                <td>{{companyRequest.country}}</td>
+                <td>{{companyRequest.url}}</td>
+                <td>{{companyRequest.licenceCycle}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/company-request', companyRequest.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/company-request', companyRequest.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'company-request/'+ companyRequest.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                        <button type="submit"
+                                (click)="addToDatabase(companyRequest)"
+                                class="btn btn-default btn-sm">
+                            <fa-icon [icon]="'user-plus'"></fa-icon>
+                            <span class="d-none d-md-inline">Add to Database</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

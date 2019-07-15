@@ -1,0 +1,105 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="customer">
+            <h2><span jhiTranslate="smartCpdApp.customer.detail.title">Customer</span> {{customer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.customer.normalized">Normalized</span></dt>
+                <dd>
+                    <span>{{customer.normalized}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.phone">Phone</span></dt>
+                <dd>
+                    <span>{{customer.phone}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.streetaddress">Streetaddress</span></dt>
+                <dd>
+                    <span>{{customer.streetaddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.postalcode">Postalcode</span></dt>
+                <dd>
+                    <span>{{customer.postalcode}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.city">City</span></dt>
+                <dd>
+                    <span>{{customer.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.stateProvince">State Province</span></dt>
+                <dd>
+                    <span>{{customer.stateProvince}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.country">Country</span></dt>
+                <dd>
+                    <span>{{customer.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.registered">Registered</span></dt>
+                <dd>
+                    <span>{{customer.registered}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.lastactive">Lastactive</span></dt>
+                <dd>
+                    <span>{{customer.lastactive}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.points">Points</span></dt>
+                <dd>
+                    <span>{{customer.points}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.areaserviced">Areaserviced</span></dt>
+                <dd>
+                    <span>{{customer.areaserviced}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.specialities">Specialities</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'smartCpdApp.TYPES.' + customer.specialities}}">{{customer.specialities}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.trades">Trades</span></dt>
+                <dd>
+                    <span>{{customer.trades}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.monthYear">Month Year</span></dt>
+                <dd>
+                    <span>{{customer.monthYear}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.show">Show</span></dt>
+                <dd>
+                    <span>{{customer.show}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.hidden">Hidden</span></dt>
+                <dd>
+                    <span>{{customer.hidden}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.licenceCycle">Licence Cycle</span></dt>
+                <dd>
+                    <span>{{customer.licenceCycle}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.licenceNumber">Licence Number</span></dt>
+                <dd>
+                    <span>{{customer.licenceNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.company">Company</span></dt>
+                <dd>
+                    <div *ngIf="customer.company">
+                        <a [routerLink]="['/company', customer.company?.id, 'view']">{{customer.company?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.customer.user">User</span></dt>
+                <dd>
+                    {{customer.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/customer', customer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

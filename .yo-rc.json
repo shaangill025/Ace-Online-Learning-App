@@ -1,0 +1,62 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "gitCompany": "",
+    "baseName": "SmartCPD",
+    "packageName": "io.github.softech.dev.sgill",
+    "packageFolder": "io/github/softech/dev/sgill",
+    "serverPort": 8080,
+    "serviceDiscoveryType": false,
+    "authenticationType": "jwt",
+    "uaaBaseName": "../uaa",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "enableSwaggerCodegen": false,
+    "messageBroker": false,
+    "buildTool": "maven",
+    "useSass": true,
+    "clientPackageManager": "yarn",
+    "testFrameworks": [
+      "cucumber"
+    ],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "clientFramework": "angularX",
+    "jhiPrefix": "jhi",
+    "jhipsterVersion": "5.7.2",
+    "jwtSecretKey": "NWIzNWM1NmZmMzczMDYzYzU1ODI4NGM0YjdkYjVmZDZmZmFiOWE3Zjg0MDNjMzhlOGM1MWI1MjEyY2VhNDRhZWUxOThlYTdiOWQwY2VhNWEzMDdmMzhlMGZiMzIxODBjNGVlMjJhNmIwZGEwMmRlOWYwOTA1NWQzYmFlYzU2MzY=",
+    "otherModules": [],
+    "herokuAppName": "ace-online",
+    "herokuDeployType": "war",
+    "appsFolders": [
+      "smart-cpd-application-v2-3a6205c518b9c2bb4f1774f714eb0702c2136e95_copy"
+    ],
+    "directoryPath": "../",
+    "monitoring": "elk",
+    "dockerRepositoryName": "aceonlineapp",
+    "dockerPushCommand": "docker push",
+    "openshiftNamespace": "AceOnline",
+    "storageType": "persistent",
+    "registryReplicas": 2,
+    "aws": {
+      "applicationName": "ace-online",
+      "environmentName": "smart-cpd-env",
+      "bucketName": "smart-cpd",
+      "instanceType": "t2.micro",
+      "awsRegion": "us-west-2",
+      "dbName": "SmartCPD",
+      "dbInstanceClass": "db.t2.micro"
+    }
+  },
+  "git-provider": "GitHub",
+  "git-company": "SoftechDataSolutions",
+  "repository-name": "smart-cpd-application-v2"
+}

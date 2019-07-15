@@ -1,0 +1,67 @@
+this.activatedRoute.data.subscribe(({ section }) => {
+            this.section = section;
+            this.bookmarkService.getsection(this.section.id).subscribe(data => {
+                this.bookmarks = data.body;
+                this.principal.identity().then(account => {
+                    this.custEmail = account.email;
+                    this.startDate = new Date();
+                    this.userService.getemail(this.custEmail).subscribe(userId => {
+                        console.log('User ID' + userId);
+                        this.customerService.getuser(userId).subscribe(customer => {
+                            this.customer = customer;
+                            this.sectionHistoryService.getbycustomer(this.customer.id, this.section.id).subscribe(secHist => {
+                                this.prevHistory = secHist;
+                                if (this.counter2 > 0) {
+                                    console.log('Section History ID - ' + this.prevHistory.id);
+                                    if (this.section.type === 'pdf') {
+                                        const timerPdf = setInterval(() => {
+                                            this.ticksDate();
+                                            if (this.completeFlag) {
+                                                clearInterval(timerPdf);
+                                            }
+                                            if (this.ellapsed % 31 === 0) {
+                                                this.prevHistory.lastactivedate = moment(new Date());
+                                                this.prevHistory.stamp = this.pageNum;
+                                                this.sectionHistoryService.update(this.prevHistory).subscribe(dataSec => {
+                                                    console.log(data);
+                                                });
+                                            }
+                                        }, 1000);
+                                    } else {
+                                        const timerMP4 = setInterval(() => {
+                                            // this.ticksSecond();
+                                            this.ticksDate();
+                                            this.isCompleted();
+                                            if (this.completeFlag) {
+                                                clearInterval(timerMP4);
+                                            }
+                                            if (this.ellapsed % 11 === 0) {
+                                                this.prevHistory.lastactivedate = moment(new Date());
+                                                this.prevHistory.stamp = this.ellapsed;
+                                                this.sectionHistoryService.update(this.prevHistory).subscribe(dataSection => {
+                                                    console.log(data);
+                                                });
+                                            }
+                                        }, 1000);
+                                    }
+                                    this.contentFile = this.section.content;
+                                    this.pdflink = this.section.pdfUrl;
+                                    this.lastpageNum = this.section.totalPages;
+                                    this.quizName = this.section.quiz.name;
+                                    this.courseName = this.section.course.normCourses;
+                                } else {
+                                    if (this.counter2 === 0 && this.section.type === 'pdf' && this.prevHistory.stamp !== 0) {
+                                        this.pageNum = this.prevHistory.stamp;
+                                        this.counter2++;
+                                    } else if (this.counter2 === 0 && this.prevHistory.stamp !== 0) {
+                                        this.api.seekTime(this.prevHistory.stamp, false);
+                                        this.onPlay();
+                                        this.counter2++;
+                                    }
+                                }
+                            });
+                        });
+                    });
+                });
+            });
+        });

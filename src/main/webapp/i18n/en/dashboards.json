@@ -1,0 +1,22 @@
+
+{
+    "smartCpdApp": {
+        "dashboards" : {
+            "home": {
+                "title": "Dashboards",
+                "createLabel": "Create a new Dashboards",
+                "createOrEditLabel": "Create or edit a Dashboards",
+                "search": "Search for Dashboards"
+            },
+            "created": "A new Dashboards is created with identifier {{ param }}",
+            "updated": "A Dashboards is updated with identifier {{ param }}",
+            "deleted": "A Dashboards is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Dashboards {{ id }}?"
+            },
+            "detail": {
+                "title": "Dashboards"
+            }
+        }
+    }
+}

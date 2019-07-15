@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="mergeFunction">
+            <h2><span jhiTranslate="smartCpdApp.mergeFunction.detail.title">Merge Function</span> {{mergeFunction.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.mergeFunction.datetime">Datetime</span></dt>
+                <dd>
+                    <span>{{mergeFunction.datetime}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.mergeFunction.note">Note</span></dt>
+                <dd>
+                    <span>{{mergeFunction.note}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.mergeFunction.tobeRemoved">Tobe Removed</span></dt>
+                <dd>
+                    <div *ngIf="mergeFunction.tobeRemoved">
+                        <a [routerLink]="['/customer', mergeFunction.tobeRemoved?.id, 'view']">{{mergeFunction.tobeRemoved?.normalized}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.mergeFunction.replacement">Replacement</span></dt>
+                <dd>
+                    <div *ngIf="mergeFunction.replacement">
+                        <a [routerLink]="['/customer', mergeFunction.replacement?.id, 'view']">{{mergeFunction.replacement?.normalized}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/merge-function', mergeFunction.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

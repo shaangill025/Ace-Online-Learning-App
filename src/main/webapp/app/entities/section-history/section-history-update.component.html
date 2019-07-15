@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-section-history-heading" jhiTranslate="smartCpdApp.sectionHistory.home.createOrEditLabel">Create or edit a Section History</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!sectionHistory.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="sectionHistory.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.startdate" for="field_startdate">Startdate</label>
+                    <div class="d-flex">
+                        <input id="field_startdate" type="datetime-local" class="form-control" name="startdate" [(ngModel)]="startdate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.lastactivedate" for="field_lastactivedate">Lastactivedate</label>
+                    <div class="d-flex">
+                        <input id="field_lastactivedate" type="datetime-local" class="form-control" name="lastactivedate" [(ngModel)]="lastactivedate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.watched" for="field_watched">Watched</label>
+                    <input type="checkbox" class="form-control" name="watched" id="field_watched"
+                        [(ngModel)]="sectionHistory.watched" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.stamp" for="field_stamp">Stamp</label>
+                    <input type="number" class="form-control" name="stamp" id="field_stamp"
+                        [(ngModel)]="sectionHistory.stamp" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" [(ngModel)]="sectionHistory.customer" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="customerOption.id === sectionHistory.customer?.id ? sectionHistory.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.normalized}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.sectionHistory.section" for="field_section">Section</label>
+                    <select class="form-control" id="field_section" name="section" [(ngModel)]="sectionHistory.section" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="sectionOption.id === sectionHistory.section?.id ? sectionHistory.section : sectionOption" *ngFor="let sectionOption of sections; trackBy: trackSectionById">{{sectionOption.normSection}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

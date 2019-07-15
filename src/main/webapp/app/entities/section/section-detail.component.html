@@ -1,0 +1,161 @@
+<div>
+    <div *ngIf="accessErrorFlag" class="alert alert-danger" role="alert" >
+        <span>
+            The API gateway has encountered an issue when handling your request, kindly contact support for further assistance.
+        </span>
+    </div>
+    <div *ngIf="completeFlag && section.type === 'pdf'" class="alert alert-success" role="alert" >
+        <span>
+            This is the last slide, after reviewing this material you can attempt the mandatory module quiz. You have completed it in {{completed}}
+        </span>
+    </div>
+    <div *ngIf="completeFlag && section.type === 'mp4'" class="alert alert-success" role="alert" >
+        <span>
+            You have completed this video module in {{completed}}
+        </span>
+    </div>
+    <div *ngIf="pdfSessionLoading" class="alert alert-info" role="alert">
+        <span>
+            Thanks for your patience, your persistence data is being loaded from your previous session and will be applied to this session shortly.
+        </span>
+    </div>
+    <div *ngIf="accessFlag" class="row">
+        <div class="col-3" style="margin-top:70px;">
+            <div *ngIf="section.type === 'pdf'" class="row" style="border-top: 1px solid; padding-bottom: 25px; padding-top: 25px; border-bottom: 1px solid;">
+                <div *ngIf="pageNum !== 1 && pageNum < lastpageNum" class="col-4 alert alert-warning" role="alert"><a (click)="prevPage();">Previous Slide</a></div>
+                <div *ngIf="pageNum < lastpageNum" style="margin-left: 10px;" class="col-4 alert alert-info" role="alert"><a (click)="nextPage();">Next Slide</a></div>
+                <div *ngIf="completeFlag" class="col-4 alert alert-success" role="alert"><a (click)="moveToQuiz();">Attempt Quiz!</a></div>
+            </div>
+            <div *ngIf="section.type === 'mp4' && !completeFlag" class="row" style="border-top: 1px solid; padding-top: 25px;">
+                <div class="col-4 alert alert-warning" role="alert"><a (click)="onPlay();">Play  <fa-icon [icon]="'play'"></fa-icon></a></div>
+                <div style="margin-left: 10px;" class="col-4 alert alert-info" role="alert"><a (click)="onPause();">Pause  <fa-icon [icon]="'pause'"></fa-icon></a></div>
+            </div>
+            <div class="row" *ngIf="section.type === 'mp4' && !completeFlag">
+                <div style="margin-left: 25px;" class="col-6 alert alert-primary" role="alert"><a (click)="onStepBackward30();">Go Back 30s  <fa-icon [icon]="'step-backward'"></fa-icon></a></div>
+            </div>
+            <div class="row" *ngIf="section.type === 'mp4' && !completeFlag">
+                <div style="margin-left: 25px;" class="col-6 alert alert-info" role="alert"><a (click)="onStepBackward60();">Go Back 60s  <fa-icon [icon]="'step-backward'"></fa-icon></a></div>
+            </div>
+            <div class="row" *ngIf="section.type === 'mp4' && !completeFlag">
+                <div style="margin-left: 25px;" class="col-6 alert alert-success" role="alert"><a (click)="onStepBackward300();">Go Back 5min  <fa-icon [icon]="'fast-backward'"></fa-icon></a></div>
+            </div>
+            <div class="row" *ngIf="section.type === 'mp4' && !completeFlag" style="padding-bottom: 25px; border-bottom: 1px solid;">
+                <div style="margin-left: 25px;" class="col-6 alert alert-danger" role="alert"><a (click)="onReset();">Reset Video  <fa-icon [icon]="'fast-backward'"></fa-icon></a></div>
+            </div>
+            <div *ngIf="section.type === 'mp4' && completeFlag" class="row" style="border-top: 1px solid; padding-top: 25px; padding-bottom: 25px; border-bottom: 1px solid;">
+                <div class="col-4 alert alert-success" role="alert"><a (click)="moveToQuiz();">Attempt Quiz!</a></div>
+            </div>
+            <div class="row" style="padding-top: 25px; border-bottom: 1px solid;">
+                <span>
+                    <h6>Timer: {{ellapsedTime}}</h6>
+                </span>
+            </div>
+            <div *ngIf="section.type === 'pdf'" class="row" style="margin-top: 10px; padding-bottom: 25px; padding-top: 25px; border-bottom: 1px solid;">
+                <label for="goto-page">Page/Slide Number:&ensp;</label><br>
+                <input id="goto-page" name="pageNum" pInputText type="number" size="4" [(ngModel)]="pageNum">
+            </div>
+        <!--<div *ngIf="section.type === 'pdf'" class="row" style="margin-top: 10px; border-top: 1px solid; padding-bottom: 25px; padding-top: 25px; border-bottom: 1px solid;">
+            <div class="col-4"><label for="gotopage">Page/Slide Number:&ensp;</label>  </div>
+            <div class="col-6"><input id="gotopage" type="number" name="pageNum" placeholder="{{pageNum}}">  </div><div class="col-2"></div>
+            <div class="col-4"><span class="alert alert-success" role="alert" (click)="referSlide(gotopage);" >GoTo</span>  </div>-->
+        <!--</div>-->
+            <div class="row">
+                <div class="col-10 justify-content-center">
+                    <h3 style="padding-left: 20px; padding-top: 15px; border-bottom: 1px solid;">Bookmarks</h3>
+                </div>
+            </div>
+            <div class="row" *ngFor="let bookmks of bookmarks" style="padding-bottom: 25px; border-bottom: 1px solid;">
+                <div class="col-10 justify-content-center">
+                    <ul *ngIf="bookmks.module === section.name && section.type === 'pdf'">
+                        <li>
+                            <a (click)="referSlide(bookmks.slide);">{{bookmks.text}} @ Slide#{{bookmks.slide}}</a>
+                        </li>
+                    </ul>
+                    <ul *ngIf="bookmks.module === section.name && section.type === 'mp4'">
+                        <li *ngIf="bookmks.seconds <= ellapsed||comingAgainFlag">
+                            <a (click)="referVideo2(bookmks.seconds);">{{bookmks.text}} @ {{bookmks.timestamp}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="section.type === 'pdf' && accessFlag" class="col-9">
+            <form novalidate>
+                <pe-steps>
+                    <pe-step label="Slides">
+                        <h2>{{section.normSection}}</h2>
+                        <h5>{{section.name}}, Page# is {{pageNum}}</h5>
+                        <hr>
+                        <pdf-viewer [src]="section.pdfUrl"
+                                    [show-all]="false"
+                                    [fit-to-page]="true"
+                                    [original-size]="false"
+                                    [autoresize]="true"
+                                    [render-text]="false"
+                                    [(page)]="pageNum">
+                        </pdf-viewer>
+                        <div class="row" style="border-top: 1px solid; padding-bottom: 25px; padding-top: 25px; border-bottom: 1px solid;">
+                            <div *ngIf="pageNum !== 1 && pageNum < lastpageNum" style="size: 5em;" class="col-4 alert alert-warning align-content-center" role="alert"><a (click)="prevPage();">Previous Slide</a></div>
+                            <div *ngIf="pageNum < lastpageNum" style="size: 5em; margin-left: 10px;" class="col-4 alert alert-info align-content-center" role="alert"><a (click)="nextPage();">Next Slide</a></div>
+                        </div>
+                    </pe-step>
+                    <pe-step label="Notes">{{textCont}}</pe-step>
+                </pe-steps>
+            </form>
+        </div>
+        <div *ngIf="section.type === 'mp4' && accessFlag" class="col-9">
+            <form novalidate>
+                <pe-steps>
+                    <pe-step label="{{section.normSection}}">
+                        <h5>{{section.name}}</h5>
+                        <hr>
+                        <vg-player (onPlayerReady)="onPlayerReady($event);" >
+                            <vg-buffering></vg-buffering>
+                            <vg-controls>
+                                <vg-playback-button [playbackValues]="[ '1.0' ]">Speed</vg-playback-button>
+                                <vg-time-display [vgProperty]="'current'" [vgFormat]="'mm:ss'"></vg-time-display>
+                                <vg-time-display [vgProperty]="'left'" [vgFormat]="'mm:ss'"></vg-time-display>
+                                <vg-time-display [vgProperty]="'total'" [vgFormat]="'mm:ss'"></vg-time-display>
+                                <vg-mute>Mute</vg-mute>
+                                <vg-volume>Volume</vg-volume>
+                            </vg-controls>
+                            <video #media
+                                   width="100%"
+                                   height="75%"
+                                   [vgMedia]="media"
+                                   id="video"
+                                   preload="auto"
+                                   autoplay='true'
+                                   src="{{section.videoUrl}}"
+                                   crossorigin>
+                            </video>
+                        </vg-player>
+                        <div *ngIf="section.type === 'mp4'" class="row" style="margin-top: 25px;">
+                            <div class="col-1.8 alert alert-warning" role="alert"><a (click)="onPlay();">Play  <fa-icon [icon]="'play'"></fa-icon></a></div>
+                            <div style="margin-left: 5px;" class="col-2 alert alert-info" role="alert"><a (click)="onPause();">Pause  <fa-icon [icon]="'pause'"></fa-icon></a></div>
+                            <div style="margin-left: 5px;" class="col-2 alert alert-primary" role="alert"><a (click)="onStepBackward30();">Go Back 30s  <fa-icon [icon]="'step-backward'"></fa-icon></a></div>
+                            <div style="margin-left: 5px;" class="col-2 alert alert-info" role="alert"><a (click)="onStepBackward60();">Go Back 60s  <fa-icon [icon]="'step-backward'"></fa-icon></a></div>
+                            <div style="margin-left: 5px;" class="col-2 alert alert-success" role="alert"><a (click)="onStepBackward300();">Go Back 5min  <fa-icon [icon]="'fast-backward'"></fa-icon></a></div>
+                            <div style="margin-left: 5px;" class="col-2 alert alert-danger" role="alert"><a (click)="onReset();">Reset Video  <fa-icon [icon]="'fast-backward'"></fa-icon></a></div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div>
+                            <h5>Notes for this module</h5>
+                            <p>{{textCont}}</p>
+                        </div>
+                    </pe-step>
+                    <pe-step label="Notes">{{textCont}}</pe-step>
+                </pe-steps>
+            </form>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+    bdColor="rgba(51,51,51,0.80)"
+    size="large"
+    color="#fff"
+    type="square-jelly-box">
+    <p style="font-size: 20px; color: white">Module is loading...</p>
+</ngx-spinner>

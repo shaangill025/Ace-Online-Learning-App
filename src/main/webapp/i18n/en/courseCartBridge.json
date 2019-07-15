@@ -1,0 +1,25 @@
+
+{
+    "smartCpdApp": {
+        "courseCartBridge" : {
+            "home": {
+                "title": "Course Cart Bridges",
+                "createLabel": "Create a new Course Cart Bridge",
+                "createOrEditLabel": "Create or edit a Course Cart Bridge",
+                "search": "Search for Course Cart Bridge"
+            },
+            "created": "A new Course Cart Bridge is created with identifier {{ param }}",
+            "updated": "A Course Cart Bridge is updated with identifier {{ param }}",
+            "deleted": "A Course Cart Bridge is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Course Cart Bridge {{ id }}?"
+            },
+            "detail": {
+                "title": "Course Cart Bridge"
+            },
+            "timestamp": "Timestamp",
+            "cart": "Cart",
+            "course": "Course"
+        }
+    }
+}

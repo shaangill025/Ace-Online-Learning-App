@@ -1,0 +1,221 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-customer-heading" jhiTranslate="smartCpdApp.customer.home.createOrEditLabel">Create or edit a Customer</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!customer.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="customer.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.normalized" for="field_normalized">Normalized</label>
+                    <input type="text" class="form-control" name="normalized" id="field_normalized"
+                        [(ngModel)]="customer.normalized" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.phone" for="field_phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="field_phone"
+                        [(ngModel)]="customer.phone" required pattern="^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$"/>
+                    <div [hidden]="!(editForm.controls.phone?.dirty && editForm.controls.phone?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.phone?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.phone?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Phone' }">
+                            This field should follow pattern for "Phone".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.streetaddress" for="field_streetaddress">Streetaddress</label>
+                    <input type="text" class="form-control" name="streetaddress" id="field_streetaddress"
+                        [(ngModel)]="customer.streetaddress" required/>
+                    <div [hidden]="!(editForm.controls.streetaddress?.dirty && editForm.controls.streetaddress?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.streetaddress?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.postalcode" for="field_postalcode">Postalcode</label>
+                    <input type="text" class="form-control" name="postalcode" id="field_postalcode"
+                        [(ngModel)]="customer.postalcode" required pattern="^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$"/>
+                    <div [hidden]="!(editForm.controls.postalcode?.dirty && editForm.controls.postalcode?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.postalcode?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.postalcode?.errors?.pattern" jhiTranslate="entity.validation.pattern" translateValues="{ pattern: 'Postalcode' }">
+                            This field should follow pattern for "Postalcode".
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.city" for="field_city">City</label>
+                    <input type="text" class="form-control" name="city" id="field_city"
+                        [(ngModel)]="customer.city" required/>
+                    <div [hidden]="!(editForm.controls.city?.dirty && editForm.controls.city?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.city?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.stateProvince" for="field_stateProvince">State Province</label>
+                    <input type="text" class="form-control" name="stateProvince" id="field_stateProvince"
+                        [(ngModel)]="customer.stateProvince" required/>
+                    <div [hidden]="!(editForm.controls.stateProvince?.dirty && editForm.controls.stateProvince?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.stateProvince?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.country" for="field_country">Country</label>
+                    <input type="text" class="form-control" name="country" id="field_country"
+                        [(ngModel)]="customer.country" required/>
+                    <div [hidden]="!(editForm.controls.country?.dirty && editForm.controls.country?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.country?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.registered" for="field_registered">Registered</label>
+                    <div class="d-flex">
+                        <input id="field_registered" type="datetime-local" class="form-control" name="registered" [(ngModel)]="registered"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.lastactive" for="field_lastactive">Lastactive</label>
+                    <div class="d-flex">
+                        <input id="field_lastactive" type="datetime-local" class="form-control" name="lastactive" [(ngModel)]="lastactive"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.points" for="field_points">Points</label>
+                    <input type="number" class="form-control" name="points" id="field_points"
+                        [(ngModel)]="customer.points" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.areaserviced" for="field_areaserviced">Areaserviced</label>
+                    <input type="text" class="form-control" name="areaserviced" id="field_areaserviced"
+                        [(ngModel)]="customer.areaserviced" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.specialities" for="field_specialities">Specialities</label>
+                    <select class="form-control" name="specialities" [(ngModel)]="customer.specialities" id="field_specialities" >
+                        <option value="RESIDENCE">{{'smartCpdApp.TYPES.RESIDENCE' | translate}}</option>
+                        <option value="COMMERCIAL">{{'smartCpdApp.TYPES.COMMERCIAL' | translate}}</option>
+                        <option value="INDUSTRIAL">{{'smartCpdApp.TYPES.INDUSTRIAL' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.trades" for="field_trades">Trades</label>
+                    <input type="text" class="form-control" name="trades" id="field_trades"
+                        [(ngModel)]="customer.trades" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.monthYear" for="field_monthYear">Month Year</label>
+                    <input type="text" class="form-control" name="monthYear" id="field_monthYear"
+                        [(ngModel)]="customer.monthYear" required/>
+                    <div [hidden]="!(editForm.controls.monthYear?.dirty && editForm.controls.monthYear?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.monthYear?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.show" for="field_show">Show</label>
+                    <input type="checkbox" class="form-control" name="show" id="field_show"
+                        [(ngModel)]="customer.show" />
+                </div>
+                <!--<div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.hidden" for="field_hidden">Hidden</label>
+                    <input type="text" class="form-control" name="hidden" id="field_hidden"
+                        [(ngModel)]="customer.hidden" required/>
+                    <div [hidden]="!(editForm.controls.hidden?.dirty && editForm.controls.hidden?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hidden?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.licenceCycle" for="field_licenceCycle">Licence Cycle</label>
+                    <input type="number" class="form-control" name="licenceCycle" id="field_licenceCycle"
+                        [(ngModel)]="customer.licenceCycle" required min="1" jhiMin="1" max="12" jhiMax="12"/>
+                    <div [hidden]="!(editForm.controls.licenceCycle?.dirty && editForm.controls.licenceCycle?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.licenceCycle?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.licenceCycle?.errors?.min" jhiTranslate="entity.validation.min" translateValues="{ min: 1 }">
+                            This field should be at least 1.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.licenceCycle?.errors?.max" jhiTranslate="entity.validation.max" translateValues="{ max: 12 }">
+                            This field cannot be more than 12.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.licenceCycle?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.licenceNumber" for="field_licenceNumber">Licence Number</label>
+                    <input type="text" class="form-control" name="licenceNumber" id="field_licenceNumber"
+                        [(ngModel)]="customer.licenceNumber" required/>
+                    <div [hidden]="!(editForm.controls.licenceNumber?.dirty && editForm.controls.licenceNumber?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.licenceNumber?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.company" for="field_company">Company</label>
+                    <select class="form-control" id="field_company" name="company" [(ngModel)]="customer.company" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="companyOption.id === customer.company?.id ? customer.company : companyOption" *ngFor="let companyOption of companies; trackBy: trackCompanyById">{{companyOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" [(ngModel)]="customer.user"  required>
+                        <option *ngIf="!editForm.value.user" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id === customer.user?.id ? customer.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.user?.dirty && editForm.controls.user?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.user?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

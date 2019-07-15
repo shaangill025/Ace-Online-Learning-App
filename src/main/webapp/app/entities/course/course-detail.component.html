@@ -1,0 +1,82 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="course">
+            <h2><span jhiTranslate="smartCpdApp.course.detail.title">Course</span> {{course.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.course.title">Title</span></dt>
+                <dd>
+                    <span>{{course.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.section">Section</span></dt>
+                <dd>
+                    <span>{{course.section}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.normCourses">Norm Courses</span></dt>
+                <dd>
+                    <span>{{course.normCourses}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.description">Description</span></dt>
+                <dd>
+                    <span>{{course.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.amount">Amount</span></dt>
+                <dd>
+                    <span>{{course.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="course.image">
+                        <a (click)="openFile(course.imageContentType, course.image)" jhiTranslate="entity.action.open">open</a>
+                        {{course.imageContentType}}, {{byteSize(course.image)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.point">Point</span></dt>
+                <dd>
+                    <span>{{course.point}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.credit">Credit</span></dt>
+                <dd>
+                    <span>{{course.credit}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.country">Country</span></dt>
+                <dd>
+                    <span>{{course.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.state">State</span></dt>
+                <dd>
+                    <span>{{course.state}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.show">Show</span></dt>
+                <dd>
+                    <span>{{course.show}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.topic">Topic</span></dt>
+                <dd>
+                    <div *ngIf="course.topic">
+                        <a [routerLink]="['/topic', course.topic?.id, 'view']">{{course.topic?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.course.tags">Tags</span></dt>
+                <dd>
+                    <span *ngFor="let tags of course.tags; let last = last">
+                        <a [routerLink]="['/tags', tags?.id, 'view' ]">{{tags.name}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/course', course.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

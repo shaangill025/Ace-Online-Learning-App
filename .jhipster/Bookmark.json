@@ -1,0 +1,47 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "section",
+            "otherEntityName": "section",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "text",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "slide",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "timestamp",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "module",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "seconds",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180904211039",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "bookmark",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination"
+}

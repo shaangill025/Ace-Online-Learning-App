@@ -1,0 +1,244 @@
+entity Customer {
+    normalized String,
+    phone String required pattern(/^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/),
+    streetaddress String required,
+	postalcode String required pattern(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/),
+	city String required,
+	stateProvince String required,
+    country String required,
+    profilePic Blob,
+    registered Instant,
+    lastactive Instant,
+    points Integer,
+    cycledate ZonedDateTime,
+    areaserviced String,
+    specialities TYPES,
+    trades String,
+    monthYear String required,
+    licenseNumber String
+}
+
+entity Company {
+	name String required,
+    description String required,
+    notes String,
+    phone String required pattern(/^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/),
+    streetAddress String required,
+	postalCode String required pattern(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/),
+	city String required,
+	stateProvince String required,
+    country String required,
+    cycledate ZonedDateTime required
+}
+
+entity Topic {
+	name String required,
+    description String required,
+    image Blob required
+}
+
+
+entity Course {
+	title String required,
+    section String required,
+    normCourses String,
+	description String required,
+    amount Double required,
+    image Blob required,
+    startdate ZonedDateTime,
+    enddate ZonedDateTime,
+    point Long,
+    credit String required,
+    country String required,
+    state String required
+}
+
+entity CourseCartBridge{
+	timestamp Instant
+}
+
+entity Certificate{
+	timestamp Instant,
+    firstname String,
+    lastname String,
+    course String,
+    content Blob
+}
+
+
+entity Section {
+	name String required,
+	notes String,
+    normSection String,
+	content Blob required,
+    textContent String,
+    videoUrl String
+}
+
+entity Quiz {
+	name String required,
+	difficulty String,
+    passingscore Integer
+}
+
+entity Question {
+	textQuestion String required,
+	difficulty String
+}
+
+entity Choice {
+	textChoice String required,
+	isanswer Boolean
+}
+
+entity CourseHistory {
+	startdate Instant,
+	lastactivedate Instant,
+    isactive Boolean,
+    iscompleted Boolean,
+    access Boolean
+}
+
+entity QuestionHistory {
+	timestamp Instant,
+	correct Boolean
+}
+
+entity SectionHistory {
+	startdate Instant,
+	lastactivedate Instant,
+    watched Boolean
+}
+
+entity QuizHistory {
+	start Instant,
+    passed Boolean
+}
+
+entity Orders {
+	createddate Instant,
+	amount Double,
+    status NOTIFICATIONS,
+    payment PAYMENT    
+}
+
+entity Cart {
+	normCart String,
+	createddate Instant,
+	lastactivedate Instant,
+    amount Double,
+    checkout Boolean
+}
+
+entity TimeCourseLog{
+	loggedin Instant,
+    loggedout Instant,
+    timespent Long
+}
+
+enum TYPES{
+	RESIDENCE, COMMERCIAL, INDUSTRIAL
+}
+
+enum PAYMENT{
+	PAYPAL, STRIPE
+}
+
+enum NOTIFICATIONS{
+	ORDERPROCESSING, COMPLETE, CANCELLLED, REFUND, ONHOLD
+}
+
+relationship ManyToOne {
+	CourseHistory{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	CourseHistory{course(normCourses)} to Course
+}
+
+relationship ManyToOne {
+	SectionHistory{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	SectionHistory{section(normSection)} to Section
+}
+
+relationship ManyToOne {
+	QuestionHistory{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	QuestionHistory{question(textQuestion)} to Question
+}
+
+relationship ManyToOne {
+	QuizHistory{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	QuizHistory{quiz(name)} to Quiz
+}
+
+relationship ManyToOne {
+	Certificate{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	Customer{company(name)} to Company
+}
+
+relationship ManyToOne {
+	TimeCourseLog{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	TimeCourseLog{course(title)} to Course
+}
+
+relationship ManyToOne {
+	Cart{customer(normalized)} to Customer
+}
+
+relationship ManyToOne {
+	CourseCartBridge{cart(normCart)} to Cart
+}
+
+relationship ManyToOne {
+	CourseCartBridge{course(normCourses)} to Course
+}
+
+//relationship OneToOne {
+//	Customer{user(login)} to User
+//}
+
+relationship OneToOne {
+	Orders{cart(normCart)} to Cart
+}
+
+// defining multiple OneToMany relationships with comments
+relationship ManyToOne {
+	Section{course(normCourses)} to Course,
+    Question{quiz(name)} to Quiz,
+    Choice{question(textQuestion)} to Question
+}
+
+relationship OneToOne {
+	Section{quiz(name)} to Quiz
+}
+
+relationship ManyToOne {
+	Course{topic(name)} to Topic
+}
+
+
+// Set pagination options
+paginate * with infinite-scroll
+
+//dto * with mapstruct
+
+// Set service options to all except few
+service * with serviceImpl
+filter *
+search * with elasticsearch
+// Set an angular suffix

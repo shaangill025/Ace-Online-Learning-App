@@ -1,0 +1,25 @@
+{
+    "smartCpdApp": {
+        "mergeFunction": {
+            "home": {
+                "title": "Merge Functions",
+                "createLabel": "Create a new Merge Function",
+                "createOrEditLabel": "Create or edit a Merge Function",
+                "search": "Search for Merge Function"
+            },
+            "created": "A new Merge Function is created with identifier {{ param }}",
+            "updated": "A Merge Function is updated with identifier {{ param }}",
+            "deleted": "A Merge Function is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Merge Function {{ id }}?"
+            },
+            "detail": {
+                "title": "Merge Function"
+            },
+            "datetime": "Datetime",
+            "note": "Note",
+            "tobeRemoved": "Tobe Removed",
+            "replacement": "Replacement"
+        }
+    }
+}

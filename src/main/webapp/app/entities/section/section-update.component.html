@@ -1,0 +1,120 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-section-heading" jhiTranslate="smartCpdApp.section.home.createOrEditLabel">Create or edit a Section</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!section.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="section.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="section.name" required/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.notes" for="field_notes">Notes</label>
+                    <input type="text" class="form-control" name="notes" id="field_notes"
+                        [(ngModel)]="section.notes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.normSection" for="field_normSection">Norm Section</label>
+                    <input type="text" class="form-control" name="normSection" id="field_normSection"
+                        [(ngModel)]="section.normSection" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.type" for="field_type">Type</label>
+                    <div id="field_type">
+                        <div class="radio">
+                            <label style="margin-left: 10px;">
+                                <input type="radio" name="type" value="mp4" [(ngModel)]="section.type">
+                                .mp4
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label style="margin-left: 10px;">
+                                <input type="radio" name="type" value="pdf" [(ngModel)]="section.type">
+                                .pdf
+                            </label>
+                        </div>
+                    </div>
+                </div>
+               <div class="form-group" *ngIf="section.type === 'pdf'">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.pdfUrl" for="field_pdfUrl">Pdf Url</label>
+                    <input type="text" class="form-control" name="pdfUrl" id="field_pdfUrl"
+                           [(ngModel)]="section.pdfUrl" />
+                </div>
+                <div class="form-group" *ngIf="section.type === 'pdf'">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.totalPages" for="field_totalPages">Total Pages</label>
+                    <input type="number" class="form-control" name="totalPages" id="field_totalPages"
+                           [(ngModel)]="section.totalPages" />
+                </div>
+                <div class="form-group" *ngIf="section.type === 'mp4'">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.videoUrl" for="field_videoUrl">Video Url</label>
+                    <input type="text" class="form-control" name="videoUrl" id="field_videoUrl"
+                           [(ngModel)]="section.videoUrl" />
+                </div>
+                <!--<div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.content" for="field_content">Content</label>
+                    <div>
+                        <div *ngIf="section.content" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(section.contentContentType, section.content)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{section.contentContentType}}, {{byteSize(section.content)}}</span>
+                            <button type="button" (click)="section.content=null;section.contentContentType=null;"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_content" (change)="setFileData($event, section, 'content', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="content" id="field_content"
+                        [(ngModel)]="section.content" />
+                    <input type="hidden" class="form-control" name="contentContentType" id="field_contentContentType"
+                        [(ngModel)]="section.contentContentType" />
+                </div>-->
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.textcontent" for="field_textcontent">Textcontent</label>
+                    <p-editor id="field_textcontent" name="textcontent" [(ngModel)]="section.textcontent" styleClass="editor-dimensions"></p-editor>
+                    <!--<textarea class="form-control" name="textcontent" id="field_textcontent"
+                        [(ngModel)]="section.textcontent" ></textarea>-->
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.quiz" for="field_quiz">Quiz</label>
+                    <select class="form-control" id="field_quiz" name="quiz" [(ngModel)]="section.quiz">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="quizOption.id === section.quiz?.id ? section.quiz : quizOption" *ngFor="let quizOption of quizzes; trackBy: trackQuizById">{{quizOption.id}} - {{quizOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="smartCpdApp.section.tags" for="field_tags">Tags</label>
+                    <select class="form-control" id="field_tags" multiple name="tags" [(ngModel)]="section.tags">
+                        <option [ngValue]="getSelected(section.tags, tagsOption)" *ngFor="let tagsOption of tags; trackBy: trackTagsById">{{tagsOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.section.course" for="field_course">Course</label>
+                    <select class="form-control" id="field_course" name="course" [(ngModel)]="section.course" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="courseOption.id === section.course?.id ? section.course : courseOption" *ngFor="let courseOption of courses; trackBy: trackCourseById">{{courseOption.id}} - {{courseOption.normCourses}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

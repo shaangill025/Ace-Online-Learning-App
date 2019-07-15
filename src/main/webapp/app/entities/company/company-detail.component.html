@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="company">
+            <h2><span jhiTranslate="smartCpdApp.company.detail.title">Company</span> {{company.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.company.name">Name</span></dt>
+                <dd>
+                    <span>{{company.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.description">Description</span></dt>
+                <dd>
+                    <span>{{company.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.notes">Notes</span></dt>
+                <dd>
+                    <span>{{company.notes}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.phone">Phone</span></dt>
+                <dd>
+                    <span>{{company.phone}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.streetAddress">Street Address</span></dt>
+                <dd>
+                    <span>{{company.streetAddress}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.postalCode">Postal Code</span></dt>
+                <dd>
+                    <span>{{company.postalCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.city">City</span></dt>
+                <dd>
+                    <span>{{company.city}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.stateProvince">State Province</span></dt>
+                <dd>
+                    <span>{{company.stateProvince}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.country">Country</span></dt>
+                <dd>
+                    <span>{{company.country}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.url">Url</span></dt>
+                <dd>
+                    <span>{{company.url}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.show">Show</span></dt>
+                <dd>
+                    <span>{{company.show}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.company.licenceCycle">Licence Cycle</span></dt>
+                <dd>
+                    <span>{{company.licenceCycle}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/company', company.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

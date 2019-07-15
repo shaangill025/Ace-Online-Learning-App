@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-course-history-heading" jhiTranslate="smartCpdApp.courseHistory.home.createOrEditLabel">Create or edit a Course History</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!courseHistory.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="courseHistory.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.startdate" for="field_startdate">Startdate</label>
+                    <div class="d-flex">
+                        <input id="field_startdate" type="datetime-local" class="form-control" name="startdate" [(ngModel)]="startdate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.lastactivedate" for="field_lastactivedate">Lastactivedate</label>
+                    <div class="d-flex">
+                        <input id="field_lastactivedate" type="datetime-local" class="form-control" name="lastactivedate" [(ngModel)]="lastactivedate"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.isactive" for="field_isactive">Isactive</label>
+                    <input type="checkbox" class="form-control" name="isactive" id="field_isactive"
+                        [(ngModel)]="courseHistory.isactive" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.iscompleted" for="field_iscompleted">Iscompleted</label>
+                    <input type="checkbox" class="form-control" name="iscompleted" id="field_iscompleted"
+                        [(ngModel)]="courseHistory.iscompleted" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.access" for="field_access">Access</label>
+                    <input type="checkbox" class="form-control" name="access" id="field_access"
+                        [(ngModel)]="courseHistory.access" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.customer" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" [(ngModel)]="courseHistory.customer" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="customerOption.id === courseHistory.customer?.id ? courseHistory.customer : customerOption" *ngFor="let customerOption of customers; trackBy: trackCustomerById">{{customerOption.normalized}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.courseHistory.course" for="field_course">Course</label>
+                    <select class="form-control" id="field_course" name="course" [(ngModel)]="courseHistory.course" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="courseOption.id === courseHistory.course?.id ? courseHistory.course : courseOption" *ngFor="let courseOption of courses; trackBy: trackCourseById">{{courseOption.normCourses}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

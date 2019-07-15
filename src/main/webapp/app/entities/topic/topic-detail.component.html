@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="topic">
+            <h2><span jhiTranslate="smartCpdApp.topic.detail.title">Topic</span> {{topic.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.topic.name">Name</span></dt>
+                <dd>
+                    <span>{{topic.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.topic.description">Description</span></dt>
+                <dd>
+                    <span>{{topic.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.topic.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="topic.image">
+                        <img class="img-responsive" [src]="'data:' + topic.imageContentType +
+                    ';base64,' + topic.image" style="max-height:300px;" alt="topic image"/>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/topic', topic.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

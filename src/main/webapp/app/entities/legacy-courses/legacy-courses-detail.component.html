@@ -1,0 +1,60 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="legacyCourses">
+            <h2><span jhiTranslate="smartCpdApp.legacyCourses.detail.title">Legacy Courses</span> {{legacyCourses.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.legacyCourses.title">Title</span></dt>
+                <dd>
+                    <span>{{legacyCourses.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.legacyCourses.description">Description</span></dt>
+                <dd>
+                    <span>{{legacyCourses.description}}</span>
+                </dd>
+                <!--<dt><span jhiTranslate="smartCpdApp.legacyCourses.amount">Amount</span></dt>
+                <dd>
+                    <span>{{legacyCourses.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.legacyCourses.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="legacyCourses.image">
+                        <a (click)="openFile(legacyCourses.imageContentType, legacyCourses.image)">
+                            <img [src]="'data:' + legacyCourses.imageContentType + ';base64,' + legacyCourses.image" style="max-width: 100%;" alt="legacyCourses image"/>
+                        </a>
+                        {{legacyCourses.imageContentType}}, {{byteSize(legacyCourses.image)}}
+                    </div>
+                </dd>-->
+                <dt><span>Province & Country</span></dt>
+                <dd>
+                    <span>{{legacyCourses.province}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.legacyCourses.customer">Customer</span></dt>
+                <dd>
+                    <div *ngIf="legacyCourses.customer">
+                        <a [routerLink]="['/customer', legacyCourses.customer?.id, 'view']">{{legacyCourses.customer?.normalized}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.legacyCourses.course">Course</span></dt>
+                <dd>
+                    <div *ngIf="legacyCourses.course">
+                        <a [routerLink]="['/course', legacyCourses.course?.id, 'view']">{{legacyCourses.course?.normCourses}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/legacy-courses', legacyCourses.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

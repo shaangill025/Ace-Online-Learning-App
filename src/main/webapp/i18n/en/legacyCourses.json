@@ -1,0 +1,28 @@
+{
+    "smartCpdApp": {
+        "legacyCourses": {
+            "home": {
+                "title": "Legacy Courses",
+                "createLabel": "Create a new Legacy Courses",
+                "createOrEditLabel": "Create or edit a Legacy Courses",
+                "search": "Search for Legacy Courses"
+            },
+            "created": "A new Legacy Courses is created with identifier {{ param }}",
+            "updated": "A Legacy Courses is updated with identifier {{ param }}",
+            "deleted": "A Legacy Courses is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Legacy Courses {{ id }}?"
+            },
+            "detail": {
+                "title": "Legacy Courses"
+            },
+            "title": "Title",
+            "description": "Description",
+            "amount": "Amount",
+            "image": "Image",
+            "province": "Province",
+            "customer": "Customer",
+            "course": "Course"
+        }
+    }
+}

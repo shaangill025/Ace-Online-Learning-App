@@ -1,0 +1,31 @@
+
+{
+    "smartCpdApp": {
+        "servicelist" : {
+            "home": {
+                "title": "Servicelists",
+                "createLabel": "Create a new Servicelist",
+                "createOrEditLabel": "Create or edit a Servicelist",
+                "search": "Search for Servicelist"
+            },
+            "created": "A new Servicelist is created with identifier {{ param }}",
+            "updated": "A Servicelist is updated with identifier {{ param }}",
+            "deleted": "A Servicelist is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Servicelist {{ id }}?"
+            },
+            "detail": {
+                "title": "Servicelist"
+            },
+            "name": "Name",
+            "company": "Company",
+            "url": "Url",
+            "phone": "Phone",
+            "email": "Email",
+            "areas": "Areas",
+            "speciality": "Speciality",
+            "trades": "Trades",
+            "customer": "Customer"
+        }
+    }
+}

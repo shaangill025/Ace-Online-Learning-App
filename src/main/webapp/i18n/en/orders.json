@@ -1,0 +1,35 @@
+
+{
+    "smartCpdApp": {
+        "orders" : {
+            "home": {
+                "title": "Orders",
+                "createLabel": "Create a new Orders",
+                "createOrEditLabel": "Create or edit a Orders",
+                "search": "Search for Orders"
+            },
+            "created": "A new Orders is created with identifier {{ param }}",
+            "updated": "A Orders is updated with identifier {{ param }}",
+            "deleted": "A Orders is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Orders {{ id }}?"
+            },
+            "detail": {
+                "title": "Orders"
+            },
+            "createddate": "Createddate",
+            "amount": "Amount",
+            "status": "Status",
+            "payment": "Payment",
+            "gateway_id": "Gateway Id",
+            "seller_message": "Seller Message",
+            "network_status": "Network Status",
+            "seller_status": "Seller Status",
+            "gateway_amt": "Gateway Amt",
+            "seller_type": "Seller Type",
+            "card_type": "Card Type",
+            "last4": "Last 4",
+            "cart": "Cart"
+        }
+    }
+}

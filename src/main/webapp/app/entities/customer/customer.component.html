@@ -1,0 +1,113 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartCpdApp.customer.home.title">Customers</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-customer" [routerLink]="['/customer/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.customer.home.createLabel">
+            Create new Customer
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'smartCpdApp.customer.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="customers">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="normalized"><span jhiTranslate="smartCpdApp.customer.normalized">Normalized</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="phone"><span jhiTranslate="smartCpdApp.customer.phone">Phone</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="streetaddress"><span jhiTranslate="smartCpdApp.customer.streetaddress">Streetaddress</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="postalcode"><span jhiTranslate="smartCpdApp.customer.postalcode">Postalcode</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span jhiTranslate="smartCpdApp.customer.city">City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="stateProvince"><span jhiTranslate="smartCpdApp.customer.stateProvince">State Province</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="country"><span jhiTranslate="smartCpdApp.customer.country">Country</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="registered"><span jhiTranslate="smartCpdApp.customer.registered">Registered</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastactive"><span jhiTranslate="smartCpdApp.customer.lastactive">Lastactive</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="points"><span jhiTranslate="smartCpdApp.customer.points">Points</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="areaserviced"><span jhiTranslate="smartCpdApp.customer.areaserviced">Areaserviced</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="specialities"><span jhiTranslate="smartCpdApp.customer.specialities">Specialities</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="trades"><span jhiTranslate="smartCpdApp.customer.trades">Trades</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="monthYear"><span jhiTranslate="smartCpdApp.customer.monthYear">Month Year</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="show"><span jhiTranslate="smartCpdApp.customer.show">Show</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="hidden"><span jhiTranslate="smartCpdApp.customer.hidden">Hidden</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="licenceCycle"><span jhiTranslate="smartCpdApp.customer.licenceCycle">Licence Cycle</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="licenceNumber"><span jhiTranslate="smartCpdApp.customer.licenceNumber">Licence Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="company.name"><span jhiTranslate="smartCpdApp.customer.company">Company</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="smartCpdApp.customer.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let customer of customers ;trackBy: trackId">
+                <td><a [routerLink]="['/customer', customer.id, 'view' ]">{{customer.id}}</a></td>
+                <td>{{customer.normalized}}</td>
+                <td>{{customer.phone}}</td>
+                <td>{{customer.streetaddress}}</td>
+                <td>{{customer.postalcode}}</td>
+                <td>{{customer.city}}</td>
+                <td>{{customer.stateProvince}}</td>
+                <td>{{customer.country}}</td>
+                <td>{{customer.registered | date:'medium'}}</td>
+                <td>{{customer.lastactive | date:'medium'}}</td>
+                <td>{{customer.points}}</td>
+                <td>{{customer.areaserviced}}</td>
+                <td jhiTranslate="{{'smartCpdApp.TYPES.' + customer.specialities}}">{{customer.specialities}}</td>
+                <td>{{customer.trades}}</td>
+                <td>{{customer.monthYear}}</td>
+                <td>{{customer.show}}</td>
+                <!--<td>{{customer.hidden}}</td>-->
+                <td>{{customer.licenceCycle}}</td>
+                <td>{{customer.licenceNumber}}</td>
+                <td>
+                    <div *ngIf="customer.company">
+                        <a [routerLink]="['../company', customer.company?.id, 'view' ]" >{{customer.company?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{customer.user?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/customer', customer.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/customer', customer.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'customer/'+ customer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

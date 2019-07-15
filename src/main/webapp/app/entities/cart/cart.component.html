@@ -1,0 +1,85 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartCpdApp.cart.home.title">Carts</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cart" [routerLink]="['/cart/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span class="hidden-sm-down"  jhiTranslate="smartCpdApp.cart.home.createLabel">
+            Create new Cart
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="{{ 'smartCpdApp.cart.home.search' | translate }}">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="carts">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="normCart"><span jhiTranslate="smartCpdApp.cart.normCart">Norm Cart</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createddate"><span jhiTranslate="smartCpdApp.cart.createddate">Createddate</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastactivedate"><span jhiTranslate="smartCpdApp.cart.lastactivedate">Lastactivedate</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="amount"><span jhiTranslate="smartCpdApp.cart.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="checkout"><span jhiTranslate="smartCpdApp.cart.checkout">Checkout</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="points"><span jhiTranslate="smartCpdApp.cart.points">Points</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="customer.normalized"><span jhiTranslate="smartCpdApp.cart.customer">Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let cart of carts ;trackBy: trackId">
+                <td><a [routerLink]="['/cart', cart.id, 'view' ]">{{cart.id}}</a></td>
+                <td>{{cart.normCart}}</td>
+                <td>{{cart.createddate | date:'medium'}}</td>
+                <td>{{cart.lastactivedate | date:'medium'}}</td>
+                <td>{{cart.amount}}</td>
+                <td>{{cart.checkout}}</td>
+                <td>{{cart.points}}</td>
+                <td>
+                    <div *ngIf="cart.customer">
+                        <a [routerLink]="['../customer', cart.customer?.id, 'view' ]" >{{cart.customer?.normalized}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/cart', cart.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/cart', cart.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'cart/'+ cart.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

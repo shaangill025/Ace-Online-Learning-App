@@ -1,0 +1,57 @@
+<div class="row justify-content-center" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-bookmark-heading" jhiTranslate="smartCpdApp.bookmark.home.createOrEditLabel">Create or edit a Bookmark</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!bookmark.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="bookmark.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.bookmark.text" for="field_text">Text</label>
+                    <input type="text" class="form-control" name="text" id="field_text"
+                        [(ngModel)]="bookmark.text" required/>
+                    <div [hidden]="!(editForm.controls.text?.dirty && editForm.controls.text?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.text?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.bookmark.slide" for="field_slide">Slide</label>
+                    <input type="number" class="form-control" name="slide" id="field_slide"
+                        [(ngModel)]="bookmark.slide" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.bookmark.timestamp" for="field_timestamp">Timestamp</label>
+                    <input type="text" class="form-control" name="timestamp" id="field_timestamp"
+                        [(ngModel)]="bookmark.timestamp" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartCpdApp.bookmark.section" for="field_section">Section</label>
+                    <select class="form-control" id="field_section" name="section" [(ngModel)]="bookmark.section"  required>
+                        <option *ngIf="!editForm.value.section" [ngValue]="null" selected></option>
+                        <option [ngValue]="sectionOption.id === bookmark.section?.id ? bookmark.section : sectionOption" *ngFor="let sectionOption of sections; trackBy: trackSectionById">{{sectionOption.name}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.section?.dirty && editForm.controls.section?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.section?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

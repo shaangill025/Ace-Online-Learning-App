@@ -1,0 +1,41 @@
+{
+    "smartCpdApp": {
+        "customer": {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Create a new Customer",
+                "createOrEditLabel": "Create or edit a Customer",
+                "search": "Search for Customer"
+            },
+            "created": "A new Customer is created with identifier {{ param }}",
+            "updated": "A Customer is updated with identifier {{ param }}",
+            "deleted": "A Customer is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Customer {{ id }}?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "normalized": "Normalized",
+            "phone": "Phone",
+            "streetaddress": "Streetaddress",
+            "postalcode": "Postalcode",
+            "city": "City",
+            "stateProvince": "State Province",
+            "country": "Country",
+            "registered": "Registered",
+            "lastactive": "Lastactive",
+            "points": "Points",
+            "areaserviced": "Areaserviced",
+            "specialities": "Specialities",
+            "trades": "Trades",
+            "monthYear": "Month Year",
+            "show": "Show",
+            "hidden": "Hidden",
+            "licenceCycle": "Licence Cycle",
+            "licenceNumber": "Licence Number",
+            "company": "Company",
+            "user": "User"
+        }
+    }
+}

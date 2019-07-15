@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="fileManager">
+            <h2><span jhiTranslate="smartCpdApp.fileManager.detail.title">File Manager</span> {{fileManager.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.fileManager.file">File</span></dt>
+                <dd>
+                    <div *ngIf="fileManager.file">
+                        <a (click)="openFile(fileManager.fileContentType, fileManager.file)" jhiTranslate="entity.action.open">open</a>
+                        {{fileManager.fileContentType}}, {{byteSize(fileManager.file)}}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.fileManager.section">Section</span></dt>
+                <dd>
+                    <div *ngIf="fileManager.section">
+                        <a [routerLink]="['/section', fileManager.section?.id, 'view']">{{fileManager.section?.normSection}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/file-manager', fileManager.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "question",
+            "otherEntityName": "question",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "textQuestion"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "textChoice",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "isanswer",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20180819063647",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "choice",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

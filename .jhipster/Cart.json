@@ -1,0 +1,45 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "otherEntityField": "normalized"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "normCart",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createddate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "lastactivedate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "checkout",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "points",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180819063653",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "cart",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}

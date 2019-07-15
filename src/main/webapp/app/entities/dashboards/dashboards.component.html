@@ -1,0 +1,161 @@
+<div>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3" *ngIf="recentCourse.normCourses !== null">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Course</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Most Recent Course that you were working towards</h6>
+                        <a class="card-link" (click)="recCourse()">
+                            <p class="card-text">{{recentCourse.normCourses}}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3" *ngIf="recentSection.normSection !== null">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent Section</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Most Recent Module that you were working towards</h6>
+                        <a class="card-link" (click)="recSection()">
+                            <p class="card-text">{{recentSection.normSection}}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row" style="margin-top: 5em;">
+            <div class="col-2"></div>
+            <!--<div class="col-6">
+                <h4>Carts History</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                            <th><span>ID</span></th>
+                            <th><span>Is Checked Out?</span></th>
+                            <th><span>Created Date</span></th>
+                            <th><span>Last Active Date</span></th>
+                            <th><span>Amount</span></th>
+                            <th><span>Points</span></th>
+                        </tr>
+                        </thead>
+                        <tbody infinite-scroll (scrolled)="loadCartPage(pageCart + 1)" [infiniteScrollDisabled]="pageCart >= links['last']" [infiniteScrollDistance]="0">
+                        <tr *ngFor="let cart of carts;">
+                            <td><a (click)="recCart(cart)">{{cart.id}}</a></td>
+                            <td>{{cart.checkout}}</td>
+                            <td>{{cart.createddate}}</td>
+                            <td>{{cart.lastactivedate}}</td>
+                            <td>{{cart.amount}}</td>
+                            <td>{{cart.points}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>-->
+            <div class="col-8">
+                <h5>Enrolled Courses</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <!--<tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th jhiSortBy="isactive"><span>Is Active?</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th jhiSortBy="iscompleted"><span>Is Completed?</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th jhiSortBy="lastactivedate"><span>Last Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th jhiSortBy="startdate"><span>Start Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th jhiSortBy="access"><span>Access</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Course Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                        <!--</tr>-->
+                            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                                <th><span>ID</span></th>
+                                <th><span>Course Name</span></th>
+                                <th><span>Is Still Active?</span></th>
+                                <th><span>Is Completed?</span></th>
+                                <th><span>Start Date</span></th>
+                                <th><span>Access</span></th>
+                            <!--<th><span>Course Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                            </tr>
+                        </thead>
+                            <tbody infinite-scroll (scrolled)="loadCoursePage(pageCourse + 1)" [infiniteScrollDisabled]="pageCourse >= links['last']" [infiniteScrollDistance]="0">
+                            <tr *ngFor="let course of courseHistory;">
+                                <td><a (click)="recCourse2(course.course)" >{{course.course.id}}</a></td>
+                                <td>{{course.course.normCourses}}</td>
+                                <td>{{course.isactive}}</td>
+                                <td>{{course.iscompleted}}</td>
+                                <td>{{course.startdate}}</td>
+                                <td>{{course.access}}</td>
+                                <!--<td>{{course.course.normCourses}}</td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row" style="margin-top: 5em;">
+            <div class="col-1"></div>
+            <div class="col-7">
+                <h4>Orders History</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                            <th><span>ID</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                            <th><span>Payment</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                            <th><span>Status</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                            <th><span>Amount</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                            <th><span>Date</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                            <th><span>Card Type</span> <!--<fa-icon [icon]="'sort'"></fa-icon>--></th>
+                        </tr>
+                        </thead>
+                        <tbody infinite-scroll (scrolled)="loadOrderPage(pageOrder + 1)" [infiniteScrollDisabled]="pageOrder >= links['last']" [infiniteScrollDistance]="0">
+                        <tr *ngFor="let loopOrder of orders;">
+                            <td><a [routerLink]="['/orders', loopOrder.id, 'view' ]">{{loopOrder.id}}</a></td>
+                            <td>{{loopOrder.payment}}</td>
+                            <td>{{loopOrder.status}}</td>
+                            <td>{{loopOrder.amount}}</td>
+                            <td>{{loopOrder.createddate}}</td>
+                            <td>{{loopOrder.card_type}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3" *ngIf="certificates !== null">
+                <h4>Certificates</h4>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse">
+                            <th><span>ID</span></th>
+                            <th><span>Course</span></th>
+                            <th><span>Date</span></th>
+                        </tr>
+                        </thead>
+                        <tbody infinite-scroll (scrolled)="loadCertPage(pageCert + 1)" [infiniteScrollDisabled]="pageCert >= links['last']" [infiniteScrollDistance]="0">
+                        <tr *ngFor="let cert of certificates;">
+                            <td><a (click)="recCertificate(cert)">{{cert.id}}</a></td>
+                            <td>{{cert.courseHistory.course.normCourses}}</td>
+                            <td>{{cert.timestamp}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="large"
+    color="#fff"
+    type="pacman">
+    <p style="font-size: 20px; color: white">Your Data is being loaded...</p>
+</ngx-spinner>

@@ -1,0 +1,84 @@
+/* after changing this file run 'yarn run webpack:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Boostrap variables
+@import 'bootstrap-variables';
+@import '~bootswatch/dist/yeti/variables';
+// Import Bootstrap source files from node_modules
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/yeti/bootswatch';
+@import '~font-awesome/css/font-awesome.css';
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import '~primeng/resources/primeng.min.css';
+@import '~primeng-extensions/resources/primeng-extensions.min.css';
+@import '~primeng/resources/themes/redmond/theme.css';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import "~primeicons/primeicons.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng-extensions/resources/primeng-extensions.min.css";
+ @import "~primeng/resources/themes/omega/theme.css";
+ @import "~quill/dist/quill.core.css";
+ @import "~quill/dist/quill.snow.css";
+
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import "~primeicons/primeicons.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng-extensions/resources/primeng-extensions.min.css";
+ @import "~primeng/resources/themes/bootstrap/theme.css";
+ @import "~quill/dist/quill.core.css";
+ @import "~quill/dist/quill.snow.css";
+
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng-extensions/resources/primeng-extensions.min.css";
+ @import "~primeng/resources/themes/nova-colored/theme.css";
+ @import "~quill/dist/quill.core.css";
+ @import "~quill/dist/quill.snow.css";
+
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng-extensions/resources/primeng-extensions.min.css";
+ @import "~primeng/resources/themes/omega/theme.css";
+ @import "~quill/dist/quill.core.css";
+ @import "~quill/dist/quill.snow.css";
+
+/* ==========================================================================
+PrimeNG and it's third-party dependencies resources
+========================================================================== */
+
+@import "~primeicons/primeicons.css";
+@import "~primeflex/primeflex.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng-extensions/resources/primeng-extensions.min.css";
+ @import "~primeng/resources/themes/luna-amber/theme.css";
+ @import "~quill/dist/quill.core.css";
+ @import "~quill/dist/quill.snow.css";
+
+/* jhipster-needle-scss-add-vendor JHipster will add new css style */

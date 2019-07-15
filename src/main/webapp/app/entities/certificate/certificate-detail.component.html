@@ -1,0 +1,53 @@
+<div class="alert alert-info" *ngIf="accessError">
+    <strong>API Gateway Error! you do not have access to this certificate. In case of an issue, kindly contact our support</strong>
+</div>
+<div  *ngIf="!accessError">
+    <div class="row justify-content-center">
+        <div class="col-2"></div>
+        <div id="convertPdf" *ngIf="certificate" class="col-8 justify-content-center">
+            <!--style="background: url('https://www.voltasengineering.com/wp-content/uploads/2018/09/smart_cpd_certificate_temp.png');
+             background-size: cover; background-repeat: no-repeat; background-position: center; height: 1000px; width: 500px;"-->
+            <!--https://www.voltasengineering.com/wp-content/uploads/2018/09/smart_cpd_certificate_temp.png-->
+            <img src="../../../content/img/smart_cpd_certificate_temp.png" width="100%" height="100%">
+            <div style="margin-top: -30em; text-align: center;">
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;">Presented to</strong><br>
+                <strong style="font-size: 350%; font-weight: bolder; font-family: Cambria;">{{certificate.customer.normalized}}</strong><br>
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;">has successfully completed and earned </strong><br>
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;"><u>{{certificate.courseHistory.course.credit}} CPD points</u> for</strong><br>
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;"><u>{{certificate.courseHistory.course.normCourses}}</u></strong><br>
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;"> on {{certificate.timestamp}} spending</strong><br>
+                <strong style="font-size: 200%; font-weight: bold; font-family: Cambria;"><u>{{fomrattedTime}}</u> in it's accomplishment</strong><br><hr><br>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <button type="submit"
+                    style="position: center; margin-left: 48%;"
+                     (click)="convertToPDF()"
+                     class="btn btn-info">
+                <fa-icon [icon]="'download'"></fa-icon>&nbsp;<span> Download PDF </span>
+            </button>
+            <!--<h3>Array Buffer<br></h3>
+            <style="background-image: url('https://www.voltasengineering.com/wp-content/uploads/2018/09/smart_cpd_certificate_temp.png');
+            <h3>{{newArrayBuffer}}<br></h3>
+            <h3>{{arrayBufferLength}}<br><hr></h3>
+            <h3>Base 64<br></h3>
+            <h3>{{base64String}}<br></h3>
+            <h3>{{base64Length}}<br><hr></h3>
+            <h3>Test<br></h3>
+            <h3>{{arrayBuffer}}<br></h3>
+            <h3>{{test}}<br><hr></h3>
+            <h3>Byte<br></h3>
+            <h3>{{bytes}}</h3>-->
+        </div>
+    </div>
+</div>
+<ngx-spinner
+    bdColor="rgba(51,51,51, 0.8)"
+    size="large"
+    color="#fff"
+    type="ball-climbing-dot">
+    <p style="font-size: 35px; color: white">Loading your Certificate...</p>
+</ngx-spinner>

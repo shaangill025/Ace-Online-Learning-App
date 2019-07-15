@@ -1,0 +1,94 @@
+<div>
+    <div class="row justify-content-center">
+        <h1 id="page-heading">
+            <span>Checkout</span>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+            <div *ngFor="let bridge of bridgeCart">
+                <div style="border: 1px solid; padding: 15px; margin-top: 10px; margin-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-8 col-sm-8 col-xs-8">
+                            <img class="img-responsive" height="80%" width="100%" [src]="'data:' + bridge.course.imageContentType +
+                                ';base64,' + bridge.course.image" style="max-height:150px;" alt="course image"/>
+                        </div>
+                        <div class="col-lg-5 col-md-4 col-sm-4 col-xs-4 align-content-center flex-active">
+                            <button (click)="removeCourse(bridge);" style="margin-top: 20%;" class="alert-danger alert"><fa-icon [icon]="'trash-alt'"></fa-icon>
+                                   Remove</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 align-content-center" style="margin-top: 2%;">
+                            <span>
+                                <h3>{{bridge.course.normCourses}}</h3>
+                                <strong>Amount: </strong><h3 *ngIf="currency==='USD'">{{bridge.course.amount | currency:'USD'}}</h3><h3 *ngIf="currency==='CAD'">{{bridge.course.amount | currency:'CAD'}}</h3>
+                                <strong>Points on Purchase: </strong><h3>{{bridge.course.point}}</h3>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 align-content-center" style="border: 1px dashed; padding: 15px; margin-top: 10px; margin-bottom: 5px; text-align: center">
+            <h4><u>Total Amount for Courses</u></h4>
+            <h5>{{amount}}</h5><br><hr><br>
+            <h4><u>Total Rewardable Points for Courses</u></h4>
+            <h5>{{points}}</h5><br><hr><br>
+            <h4><u>Your Available Achievement Points</u></h4>
+            <h5>{{tempCustPoints}}</h5><br><hr><br>
+            <h4><u>Sales Tax</u></h4>
+            <h5>{{tax}}</h5><br><hr><br>
+            <h4><u>Total Amount</u></h4>
+            <h5>{{gross}}</h5>
+            <br><hr><br>
+            <div *ngIf="amount > 0">
+                <input id="redeem" type="text" placeholder="Redeem Points" style="font-size: 20px; border: 2px solid;"
+                    [ngModel]="redeempoints">
+                <input type="submit" value="{{redeemPointsText}}" class="alert-primary alert" style="margin: 5%;" (click)="redeemPts()"><br><hr><br>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="border: 1px dashed; padding: 15px; margin-top: 10px; margin-bottom: 5px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Accepted Cards</h4>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <div class="row container-fluid" *ngIf="amount > 0">
+                            <form class="checkout">
+                                <div class="checkout-header">
+                                    <h1 class="checkout-title">
+                                        Checkout
+                                    </h1>
+                                </div>
+                                <p><input type="text" class="checkout-input checkout-name" placeholder="Full Name" name="name"></p>
+                                <p><input type="text" class="checkout-input checkout-card" placeholder="Credit Card #" name="cardNumber"></p>
+                                <p><input type="text" class="checkout-input checkout-exp" placeholder="MM" name="expMonth">
+                                    <input type="text" class="checkout-input checkout-exp" placeholder="YYYY" name="expYear"></p>
+                                <p><input type="text" class="checkout-input checkout-cvc" placeholder="CVC" name="cvc"></p>
+                                <button class="checkout-btn" (click)="chargeCreditCard()">Pay</button>
+                            </form>
+                            <br>
+                            <h6 style="font-weight: bold;">{{transactionError}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div></div>
+    </div>
+<ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="large"
+    color="#fff"
+    type="pacman">
+    <p style="font-size: 20px; color: white">Your Data is being loaded...</p>
+</ngx-spinner>
+

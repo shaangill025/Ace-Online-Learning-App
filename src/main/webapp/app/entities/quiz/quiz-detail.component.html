@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="quiz">
+            <h2><span jhiTranslate="smartCpdApp.quiz.detail.title">Quiz</span> {{quiz.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartCpdApp.quiz.name">Name</span></dt>
+                <dd>
+                    <span>{{quiz.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quiz.difficulty">Difficulty</span></dt>
+                <dd>
+                    <span>{{quiz.difficulty}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quiz.passingscore">Passingscore</span></dt>
+                <dd>
+                    <span>{{quiz.passingscore}}</span>
+                </dd>
+                <dt><span jhiTranslate="smartCpdApp.quiz.newSection">New Section</span></dt>
+                <dd>
+                    <div *ngIf="quiz.newSection">
+                        <a [routerLink]="['/section', quiz.newSection?.id, 'view']">{{quiz.newSection?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/quiz', quiz.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

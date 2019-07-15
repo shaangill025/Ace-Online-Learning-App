@@ -1,0 +1,498 @@
+<!--<link rel="stylesheet" href="../../content/css/styles-merged.css">
+<link rel="stylesheet" href="../../content/css/style.css">
+<link rel="stylesheet" href="../../content/css/custom.css">-->
+<div *ngIf="errorAdBlock===true">
+    <div class="row justify-content-center" style="border: 1em; border-block: currentColor;">
+        <div class="col-md-5 center-block">
+            <div class="alert alert-danger center">
+                <h5 class="center">Ad Blocker Plugin Detected</h5>
+            </div>
+            <div class="alert alert-info center">
+                <div>
+                    <img style="width: 100%" src="../../content/images/adblock.png" class="center-block img-responsive">
+                </div>
+                <strong class="center" style="color: cornsilk">Kindly disable AdBlockers suck as Adblock plus, uBlock Origin, etc. These plugins will negatively affect your experience using this website. After you disable the plugin or apply an ignore exception for this website, please click </strong>
+                <a (click)="reloadPage()" style="text-underline: azure; color: cornsilk;">Reload after disabling plugin</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row"  *ngIf="errorAdBlock===false">
+    <div class="col-md-11">
+        <!--<h1 class="display-4">Welcome to our Smart CPD app! <span *ngIf="isAuthenticated()">{{account.firstName}}</span></h1>-->
+        <!--<p class="lead" jhiTranslate="home.subtitle">This is a test homepage</p>-->
+        <div class="alert alert-info">
+            <strong class="center" style="color: cornsilk">Kindly disable AdBlockers suck as Adblock plus, uBlock Origin, etc. These plugins will negatively affect your experience using this website.</strong>
+        </div>
+        <div [ngSwitch]="isAuthenticated()">
+            <div class="alert alert-success" *ngSwitchCase="true">
+                <span id="home-logged-message" *ngIf="account" jhiTranslate="home.logged.message"
+                    translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
+            </div>
+            <!--<div class="alert alert-warning" *ngSwitchCase="false">
+                <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+                <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+            </div>-->
+            <div class="alert alert-warning" *ngSwitchCase="false">
+                <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
+                <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" *ngIf="errorRegionLock">
+            <div class="col-md-9">
+                <div class="alert alert-info">
+                    <div class="alert alert-info" *ngIf="shouldnotbeinCanada">
+                        <strong>We have detected that you are accessing this application from USA.
+                            This application was developed for Canadian customers. Kindly, note that the certificates
+                            and CPD points issued on this wesite are only valid in Canada</strong> Kindly visit <a href="http://www.aceaol.com/#/">http://www.aceaol.com</a>
+                        to be redirected to our other application developed for US customers.
+                    </div>
+                    <div class="alert alert-info" *ngIf="shouldnotbeinUsa">
+                        <strong>We have detected that you are accessing this application from Canada.
+                            This application was developed for US based customers. Kindly, note that the certificates
+                            and CPD points issued on this website are only valid in US</strong> Kindly visit <a href="https://www.aceaol.ca/#/">https://www.aceaol.ca</a>
+                        to be redirected to our other application developed for Canadian customers.
+                    </div>
+                    <div class="alert alert-info" *ngIf="regionOutside">
+                        <strong>Please visit,</strong> kindly visit <a href="https://www.aceaol.ca/#/">https://www.aceaol.ca</a>
+                        for Canadian courses. Kindly, note that the certificates and CPD points issued on this website are only valid in Canada.<br><br>
+                        <strong>Please visit,</strong> kindly visit <a href="https://www.aceaol.com/#/">https://www.aceaol.com</a>
+                        for US courses. Kindly, note that the certificates and CPD points issued on this website are only valid in US.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="probootstrap-section probootstrap-section-colored" style="height: 15em;">
+            <div class="container" style="margin-top: -4em;">
+                <div class="row">
+                    <!--<div [ngSwitch]="isAuthenticated()" class="col-md-12 text-left section-heading probootstrap-animate">
+                        <div *ngSwitchCase="true" *ngIf="checkRole">
+                            <h2>Welcome back to Smart CPD's Application, {{account.firstName}}</h2>
+                        </div>
+                        <div *ngIf="checkRole">
+                            <h2>Welcome back to Smart CPD's Application, {{account.firstName}}</h2>
+                        </div>
+                        <div *ngIf="!checkRole">
+                            <h2>Welcome to Smart CPD's Application</h2>
+                        </div>
+                    </div>-->
+                    <div class="col-md-12 text-left section-heading probootstrap-animate">
+                        <div *ngIf="checkRole">
+                            <h2>Welcome back, {{account.firstName}}</h2>
+                        </div>
+                        <div *ngIf="!checkRole">
+                            <h2>Welcome to Assure Continuing Education Academy of Learning</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="probootstrap-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="probootstrap-flex-block">
+                            <div class="probootstrap-text probootstrap-animate">
+                                <h3>About Us</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis explicabo veniam labore ratione illo vero voluptate a deserunt incidunt odio aliquam commodi blanditiis voluptas error non rerum temporibus optio accusantium!</p>
+                            </div>
+                            <div class="probootstrap-image probootstrap-animate" style="background-image: url(../../content/img/slider3.jpg)">
+                                <a href="https://vimeo.com/45830194" class="btn-video popup-vimeo"><fa-icon style="margin-left: 45%; position: center;" size="8x" [icon]="'play'"></fa-icon></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="probootstrap-section probootstrap-border-top" id="probootstrap-counter">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+                        <div class="probootstrap-counter-wrap">
+                            <div class="probootstrap-icon">
+                                <fa-icon [icon]="'user-graduate'" size="5x" [fixedWidth]="false"></fa-icon>
+                            </div>
+                            <div class="probootstrap-text">
+                  <span class="probootstrap-counter">
+                    <span class="js-counter" data-from="0" data-to="20000" data-speed="5000" data-refresh-interval="50">20000</span>
+                  </span>
+                                <span class="probootstrap-counter-label">Students Enrolled</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+                        <div class="probootstrap-counter-wrap">
+                            <div class="probootstrap-icon">
+                                <fa-icon [icon]="'user-tie'" size="5x" [fixedWidth]="false"></fa-icon>
+                            </div>
+                            <div class="probootstrap-text">
+                  <span class="probootstrap-counter">
+                    <span class="js-counter" data-from="0" data-to="5" data-speed="5000" data-refresh-interval="50">5</span>
+                  </span>
+                                <span class="probootstrap-counter-label">Certified Teachers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+                        <div class="probootstrap-counter-wrap">
+                            <div class="probootstrap-icon">
+                                <fa-icon [icon]="'chalkboard-teacher'" size="5x" [fixedWidth]="false"></fa-icon>
+                            </div>
+                            <div class="probootstrap-text">
+                  <span class="probootstrap-counter">
+                    <span class="js-counter" data-from="0" data-to="25" data-speed="5000" data-refresh-interval="50">25</span>
+                  </span>
+                                <span class="probootstrap-counter-label">Courses Available</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12 probootstrap-animate">
+
+                        <div class="probootstrap-counter-wrap">
+                            <div class="probootstrap-icon">
+                                <fa-icon [icon]="'smile'" size="5x" [fixedWidth]="false"></fa-icon>
+                            </div>
+                            <div class="probootstrap-text">
+                  <span class="probootstrap-counter">
+                    <span class="js-counter" data-from="0" data-to="91" data-speed="5000" data-refresh-interval="50">91</span>%
+                  </span>
+                                <span class="probootstrap-counter-label">User Satisfaction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--<section class="probootstrap-section probootstrap-bg-white probootstrap-border-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
+                        <h2>Our Featured Courses</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="probootstrap-service-2 probootstrap-animate">
+                            <div class="image">
+                                <div class="image-bg">
+                                    <img src="../../content/img/img_sm_1.jpg" alt="Free Bootstrap Template by uicookies.com">
+                                </div>
+                            </div>
+                            <div class="text">
+                                <span class="probootstrap-meta"><i class="icon-calendar2"></i> January 01, 2019</span>
+                                <h3>Course 1 Name</h3>
+                                <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam quos quis nisi voluptatum architecto rerum error.</p>
+                                <p><a href="#" class="btn btn-primary">Enroll now</a> <span class="enrolled-count">2,928 students enrolled</span></p>
+                            </div>
+                        </div>
+
+                        <div class="probootstrap-service-2 probootstrap-animate">
+                            <div class="image">
+                                <div class="image-bg">
+                                    <img src="../../content/img/img_sm_3.jpg" alt="Free Bootstrap Template by uicookies.com">
+                                </div>
+                            </div>
+                            <div class="text">
+                                <span class="probootstrap-meta"><i class="icon-calendar2"></i> January 01, 2019</span>
+                                <h3>Course 2 Name</h3>
+                                <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam quos quis nisi voluptatum architecto rerum error.</p>
+                                <p><a href="#" class="btn btn-primary">Enroll now</a> <span class="enrolled-count">7,202 students enrolled</span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="probootstrap-service-2 probootstrap-animate">
+                            <div class="image">
+                                <div class="image-bg">
+                                    <img src="../../content/img/img_sm_2.jpg" alt="Free Bootstrap Template by uicookies.com">
+                                </div>
+                            </div>
+                            <div class="text">
+                                <span class="probootstrap-meta"><i class="icon-calendar2"></i> January 01, 2019</span>
+                                <h3>Course 3 Name</h3>
+                                <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam quos quis nisi voluptatum architecto rerum error.</p>
+                                <p><a href="#" class="btn btn-primary">Enroll now</a> <span class="enrolled-count">12,582 students enrolled</span></p>
+                            </div>
+                        </div>
+
+                        <div class="probootstrap-service-2 probootstrap-animate">
+                            <div class="image">
+                                <div class="image-bg">
+                                    <img src="../../content/img/img_sm_4.jpg" alt="Free Bootstrap Template by uicookies.com">
+                                </div>
+                            </div>
+                            <div class="text">
+                                <span class="probootstrap-meta"><i class="icon-calendar2"></i> January 01, 2019</span>
+                                <h3>Course 4 Name</h3>
+                                <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam quos quis nisi voluptatum architecto rerum error.</p>
+                                <p><a href="#" class="btn btn-primary">Enroll now</a> <span class="enrolled-count">9,582 students enrolled</span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>-->
+        <section class="probootstrap-section probootstrap-border-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
+                        <h2>Meet Our Qualified Teachers</h2>
+                        <p class="lead">Sed a repudiandae impedit voluptate nam Deleniti dignissimos perspiciatis nostrum porro nesciunt</p>
+                    </div>
+                </div>
+                <!-- END row -->
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_1.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div class="text">
+                                <h3>Name 1</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_5.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div class="text">
+                                <h3>Name 2</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_6.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div class="text">
+                                <h3>Name 3</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_7.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div class="text">
+                                <h3>Name 4</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="probootstrap-section probootstrap-bg probootstrap-section-colored probootstrap-testimonial" style="background-image: url(../../content/img/ceremony1.jpg);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center section-heading probootstrap-animate">
+                        <h2>Alumni Testimonial</h2>
+                        <p class="lead">Sed a repudiandae impedit voluptate nam Deleniti dignissimos perspiciatis nostrum porro nesciunt</p>
+                    </div>
+                </div>
+                <!-- END row -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_1.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div style="color: white;">
+                                <h3>Name 1</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_5.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div style="color: white;">
+                                <h3>Name 2</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-sm-block visible-xs-block"></div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="probootstrap-teacher text-center probootstrap-animate">
+                            <figure class="media">
+                                <img src="../../content/img/person_6.jpg" alt="Free Bootstrap Template by uicookies.com" class="img-responsive">
+                            </figure>
+                            <div style="color: white;">
+                                <h3>Name 3</h3>
+                                <p>Area of Expertise</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END row -->
+            </div>
+        </section>
+
+        <section class="probootstrap-section probootstrap-border-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-3 text-center section-heading probootstrap-animate">
+                        <h2>Why Choose Smart CPD!</h2>
+                        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Consectetur Adipisicing</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Aliquid Dolorum Saepe</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Eveniet Tempora Anisi</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Laboriosam Quod Dignissimos</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Asperiores Maxime Modi</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="icon"><fa-icon [icon]="'check-square'"></fa-icon></div>
+                            <div class="text">
+                                <h3>Libero Maxime Molestiae</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END row -->
+            </div>
+        </section>
+
+        <section class="probootstrap-cta probootstrap-border-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h1 class="probootstrap-animate" data-animate-effect="fadeInRight">Latest News and Events!</h1>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Consectetur Adipisicing</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Aliquid Dolorum Saepe</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Eveniet Tempora Anisi</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Laboriosam Quod Dignissimos</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Asperiores Maxime Modi</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                        <div class="service left-icon probootstrap-animate">
+                            <div class="text">
+                                <h3>Libero Maxime Molestiae</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </section>
+        <section class="probootstrap-section probootstrap-bg-white probootstrap-border-top">
+            <div class="container probootstrap-border-top">
+                <h2>FAQ</h2>
+                <div class="text">
+                    <h3>Consectetur Adipisicing</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                </div>
+                <div class="text">
+                    <strong>Consectetur Adipisicing?</strong>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                </div>
+                <div class="text">
+                    <strong>Consectetur Adipisicing?</strong>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                </div>
+                <div class="text">
+                    <strong>Consectetur Adipisicing?</strong>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                </div>
+                <div class="text">
+                    <strong>Consectetur Adipisicing?</strong>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div>
+    <ng-adsense
+        [adClient]="'ca-pub-7732163028100468'"
+        [adSlot]="7259870550"
+        [display]="'inline-block'"
+        [width]="320"
+        [height]="108"
+    ></ng-adsense>
+</div>

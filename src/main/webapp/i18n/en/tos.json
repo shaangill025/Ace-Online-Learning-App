@@ -1,0 +1,21 @@
+{
+    "smartCpdApp": {
+        "tos": {
+            "home": {
+                "title": "Tos",
+                "createLabel": "Create a new Tos",
+                "createOrEditLabel": "Create or edit a Tos",
+                "search": "Search for Tos"
+            },
+            "created": "A new Tos is created with identifier {{ param }}",
+            "updated": "A Tos is updated with identifier {{ param }}",
+            "deleted": "A Tos is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Tos {{ id }}?"
+            },
+            "detail": {
+                "title": "Tos"
+            }
+        }
+    }
+}

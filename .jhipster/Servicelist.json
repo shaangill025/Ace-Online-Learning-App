@@ -1,0 +1,58 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "one-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "normalized",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "servicelist"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "company",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "url",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "areas",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "speciality",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "trades",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180822053330",
+    "dto": "no",
+    "searchEngine": "elasticsearch",
+    "service": "serviceImpl",
+    "entityTableName": "servicelist",
+    "jpaMetamodelFiltering": true,
+    "pagination": "infinite-scroll"
+}
