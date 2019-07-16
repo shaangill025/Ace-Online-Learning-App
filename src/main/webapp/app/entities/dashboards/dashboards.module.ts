@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SmartCpdSharedModule } from 'app/shared';
 import { DashboardsComponent, dashboardsRoute } from './';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const ENTITY_STATES = [...dashboardsRoute];
 

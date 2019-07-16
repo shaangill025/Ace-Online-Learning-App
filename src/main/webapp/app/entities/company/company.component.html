@@ -1,4 +1,5 @@
- <a *jhiHasAnyAuthority="'ROLE_ADMIN'">
+<div>
+    <a *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <div class="table-responsive" *ngIf="companies">
             <table class="table table-striped">
                 <thead>
@@ -92,10 +93,11 @@
             </div>
         </div>
     </a>
- <ngx-spinner
-     bdColor="rgba(51,51,51, 0.8)"
-     size="large"
-     color="#fff"
-     type="ball-climbing-dot">
-     <p style="font-size: 35px; color: white">Loading...</p>
- </ngx-spinner>
+</div>
+<ngx-spinner
+        bdColor="rgba(51,51,51, 0.8)"
+        size="large"
+        color="#fff"
+        type="square-jelly-box">
+</ngx-spinner>
+

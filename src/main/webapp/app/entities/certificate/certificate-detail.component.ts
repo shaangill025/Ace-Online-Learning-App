@@ -22,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     selector: 'jhi-certificate-detail',
     templateUrl: './certificate-detail.component.html'
 })
-export class CertificateDetailComponent implements OnInit, AfterViewInit {
+export class CertificateDetailComponent implements OnInit {
     certificate: ICertificate;
     customer: ICustomer;
     user: IUser;
@@ -48,20 +48,20 @@ export class CertificateDetailComponent implements OnInit, AfterViewInit {
         private timecourselogService: TimeCourseLogService,
         private userService: UserService,
         private customerService: CustomerService,
-        private couseHistoryService: CourseHistoryService,
-        private spinner: NgxSpinnerService
+        private couseHistoryService: CourseHistoryService
+        //private spinner: NgxSpinnerService
     ) {
         this.timespent = 0;
         this.fomrattedTime = '00:00';
     }
 
-    ngAfterViewInit(): void {
+    /*ngAfterViewInit(): void {
         this.spinner.show();
         setTimeout(() => {
-            /** spinner ends after 5 seconds */
+            // spinner ends after 5 seconds
             this.spinner.hide();
         }, 5000);
-    }
+    }*/
 
     ngOnInit() {
         this.isSaving = false;
@@ -72,7 +72,7 @@ export class CertificateDetailComponent implements OnInit, AfterViewInit {
             this.account = account;
             this.userEmail = this.account.email;
             this.userService.getlogin(account.login).subscribe(userId => {
-                this.customerService.getuser(userId).subscribe(cust => {
+                this.customerService.getuser(this.account.login).subscribe(cust => {
                     if (cust.id === this.certificate.customer.id) {
                         this.accessError = false;
                     } else {

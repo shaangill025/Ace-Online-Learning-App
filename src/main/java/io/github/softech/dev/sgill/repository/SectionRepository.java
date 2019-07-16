@@ -37,6 +37,8 @@ public interface SectionRepository extends JpaRepository<Section, Long>, JpaSpec
 
     Optional<List<Section>> findSectionsByCourse(Course course);
 
+    Optional<List<Section>> findSectionsByCourseOrderByIdDesc(Course course);
+
     @Query(value = "SELECT * FROM section u WHERE u.course_id = :course_id ORDER BY u.id ASC", nativeQuery = true)
     Optional<List<Section>> getSectionsByCourse(@Param("course_id") Long course_id);
 

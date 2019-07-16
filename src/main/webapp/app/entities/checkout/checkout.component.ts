@@ -29,7 +29,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
     templateUrl: './checkout.component.html',
     styleUrls: ['checkout.css']
 })
-export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
     currentAccount: any;
     eventSubscriber: Subscription;
     currentSearch: string;
@@ -70,8 +70,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         private navbarService: NavbarService,
         private http: HttpClient,
         private orderService: OrdersService,
-        private router: Router,
-        private spinner: NgxSpinnerService
+        private router: Router
+        //private spinner: NgxSpinnerService
     ) {}
 
     chargeCreditCard() {
@@ -278,14 +278,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     }*/
 
-    ngAfterViewInit(): void {
-        this.spinner.show();
-        setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-        }, 6000);
-    }
-
     ngOnInit() {
         if ((location.hostname + this.router.url).includes('aceaol.com')) {
             this.currency = 'USD';
@@ -298,7 +290,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.currentAccount = account;
             this.userService.getuserbylogin(account.login).subscribe(users => {
                 this.userID = users;
-                this.customerService.getuser(this.userID).subscribe(customer => {
+                this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                     this.customer = customer;
                     this.tempCustPoints = this.customer.points;
                     this.cartService.check(this.customer.id).subscribe(carts => {

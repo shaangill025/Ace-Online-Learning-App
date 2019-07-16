@@ -37,13 +37,14 @@
     </div>
     <div class="col-2"><span>Time Taken: {{ellapsedTime}}</span></div>
 </div>
-<ngx-spinner
-    bdColor="rgba(51,51,51,0.95)"
-    size="large"
-    color="#fff"
-    type="ball-climbing-dot">
-    <p style="font-size: 20px; color: white">Quiz is being loaded...</p>
-</ngx-spinner>
+<div *ngIf="!flagCheck">
+    <ngx-spinner
+        bdColor="rgba(51,51,51,0.95)"
+        size="large"
+        color="#fff"
+        type="square-jelly-box">
+    </ngx-spinner>
+</div>
 <!--<div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="quizApp">

@@ -19,6 +19,25 @@
             Thanks for your patience, your persistence data is being loaded from your previous session and will be applied to this session shortly.
         </span>
     </div>
+    <div *ngIf="showButton && !pdfSessionLoading">
+        <span class="alert alert-info">
+            In case, there is no pdf content generated or the slide from last persistance session has not been loaded [it is loaded from page 1], then click the Load button below. You can click the Clear button to remove this message.
+        </span>
+        <br><br>
+        <div class="row">
+            <div class="col-3">
+                <div style="width:20em; height: 4em;" class="alert alert-success">
+                    <a (click)="loadPersistance();">Load Persistance Session <fa-icon [icon]="'history'"></fa-icon></a>
+                </div>
+            </div>
+            <div class="col-2">
+                <div style="width:8em; height: 4em;" class="alert alert-danger">
+                    <a (click)="resetShowButton();">Clear <fa-icon [icon]="'trash-alt'"></fa-icon></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div *ngIf="accessFlag" class="row">
         <div class="col-3" style="margin-top:70px;">
             <div *ngIf="section.type === 'pdf'" class="row" style="border-top: 1px solid; padding-bottom: 25px; padding-top: 25px; border-bottom: 1px solid;">
@@ -152,10 +171,11 @@
         </div>
     </div>
 </div>
-<ngx-spinner
-    bdColor="rgba(51,51,51,0.80)"
-    size="large"
-    color="#fff"
-    type="square-jelly-box">
-    <p style="font-size: 20px; color: white">Module is loading...</p>
-</ngx-spinner>
+<div *ngIf="!flagCheck">
+    <ngx-spinner
+        bdColor="rgba(51,51,51,0.80)"
+        size="large"
+        color="#fff"
+        type="square-jelly-box">
+    </ngx-spinner>
+</div>

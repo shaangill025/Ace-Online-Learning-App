@@ -4,7 +4,10 @@
             "null": "",
             "RESIDENCE": "RESIDENCE",
             "COMMERCIAL": "COMMERCIAL",
-            "INDUSTRIAL": "INDUSTRIAL"
+            "ALLOFABOVE": "ALLOFABOVE",
+            "RESCOMMERCIAL": "RESCOMMERCIAL",
+            "INDCOMMERCIAL": "INDCOMMERCIAL",
+            "RESINDUSTRIAL": "RESINDUSTRIAL"
         }
     }
 }

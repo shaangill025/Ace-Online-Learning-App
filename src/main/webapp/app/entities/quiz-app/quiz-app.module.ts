@@ -17,6 +17,7 @@ import {
     quizAppRoute,
     quizAppPopupRoute
 } from './';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const ENTITY_STATES = [...quizAppRoute, ...quizAppPopupRoute];
 

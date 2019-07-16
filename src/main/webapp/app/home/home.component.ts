@@ -9,7 +9,6 @@ import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ElementRef } from '@angular/core';
-import adBlocker from 'just-detect-adblock';
 import { addSubtract } from 'ngx-bootstrap/chronos/moment/add-subtract';
 @Component({
     selector: 'jhi-home',
@@ -31,6 +30,8 @@ export class HomeComponent implements OnInit {
     shouldnotbeinCanada = false;
     regionOutside = false;
     errorAdBlock = false;
+    canadaDomain = false;
+    usaDomain = false;
     @ViewChild('adsBanner') ads: ElementRef;
 
     constructor(
@@ -46,14 +47,21 @@ export class HomeComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        if ((location.hostname + this.router.url).includes('aceaol.ca')) {
+            this.canadaDomain = true;
+        }
+        if ((location.hostname + this.router.url).includes('aceaol.com')) {
+            this.usaDomain = true;
+        }
         this.principal.identity().then(account => {
             this.account = account;
         });
-        if (this.router.url.includes('/', 0)) {
+        // Ad block detect
+        /* if (this.router.url.includes('/', 0)) {
             setInterval(() => {
                 this.checkAdBlock();
             }, 5000);
-        }
+        }*/
         setInterval(() => {
             this.checkRole = this.principal.hasAnyAuthorityDirect(['ROLE_USER', 'ROLE_ADMIN']);
         }, 500);

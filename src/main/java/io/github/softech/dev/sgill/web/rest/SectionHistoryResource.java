@@ -181,18 +181,20 @@ public class SectionHistoryResource {
         return tempOpt.get();
     }
 
-    @GetMapping("/{sectionId}/section-history/{customerId}")
+    @GetMapping("/{courseId}/section-history/{customerId}")
     @Timed
-    public SectionHistory getByCustomerSectionHistories(@PathVariable Long sectionId, @PathVariable Long customerId) {
-        log.debug("REST request to get most recent Section by Course ID: {}", sectionId);
+    public SectionHistory getByCustomerSectionHistories(@PathVariable Long courseId, @PathVariable Long customerId) {
+        log.debug("REST request to get most recent Section by Course ID: {}", courseId);
         log.debug("REST request to get most recent Section by Customer ID: {}", customerId);
         Customer customer = customerService.findOne(customerId).get();
-        Section section = sectionService.findOne(sectionId).get();
-        Optional<SectionHistory> tempOpt = sectionHistoryRepository.findTopByCustomerAndSectionOrderByIdDesc(customer, section);
+        Course course = courseService.findOne(courseId).get();
+        List<SectionHistory> tempOpt = sectionHistoryRepository.findSectionHistoriesByCustomerAndSection_CourseOrderByIdDesc(customer, course).orElse(null);
         SectionHistory tempSecHist;
-        if(tempOpt.orElse(null) == null) {
+        if(tempOpt == null) {
             tempSecHist = new SectionHistory();
             tempSecHist.setLastactivedate(Instant.now());
+            //first section of this course
+            Section section = sectionRepository.findSectionsByCourseOrderByIdAsc(course).get().get(0);
             tempSecHist.setSection(section);
             tempSecHist.setStartdate(Instant.now());
             tempSecHist.setWatched(false);
@@ -206,7 +208,7 @@ public class SectionHistoryResource {
                 sectionHistoryService.delete(temp.getId());
             }
         }
-        return tempOpt.get();
+        return tempOpt.get(0);
     }
 
     /**
@@ -245,7 +247,7 @@ public class SectionHistoryResource {
     public Section getRecentSectionHistory(@PathVariable Long customerid) {
         log.debug("REST request to get recent Section by customer : {}", customerid);
         Customer customer = customerService.findOne(customerid).get();
-        SectionHistory temp = sectionHistoryRepository.getTopByCustomerOrderByIdDesc(customer).orElse(null);
+        SectionHistory temp = sectionHistoryRepository.findSectionHistoriesByCustomerOrderByLastactivedateDesc(customer).orElse(null).get(0);
         if (temp == null) {
             Section tempSection = new Section();
             tempSection.setId(-1L);
@@ -270,7 +272,7 @@ public class SectionHistoryResource {
             Section lastSection = sectionRepository.getSectionsByQuiz(lastQuiz).get();
             List<SectionHistory> tempSectionhist = sectionHistoryRepository.findSectionHistoriesBySectionAndCustomerOrderByIdDesc(lastSection, tempCustomer).orElse(null);
             if (temp == null) return false;
-            if (tempSectionhist.get(0).isWatched() && temp.get(0).isPassed()) {
+            if (temp.get(0).isPassed()) {
                 Boolean flag_temp2 = checkInCourseHistory(tempSection, tempCustomer);
                 return flag_temp2;
             }
@@ -296,7 +298,7 @@ public class SectionHistoryResource {
         SectionHistory tempSecHist = temp.orElse(null);
 
         if(tempSecHist == null) {
-            List<Section> tempSec= sectionRepository.findSectionsByCourse(course).get();
+            List<Section> tempSec= sectionRepository.findSectionsByCourseOrderByIdAsc(course).get();
             SectionHistory temp2 = new SectionHistory();
             temp2.setLastactivedate(Instant.now());
             temp2.setSection(tempSec.get(0));

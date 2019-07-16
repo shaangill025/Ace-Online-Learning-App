@@ -1,5 +1,12 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import {
+    HttpErrorResponse, HttpEvent,
+    HttpHandler,
+    HttpHeaders,
+    HttpInterceptor,
+    HttpParams,
+    HttpRequest
+} from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
@@ -24,17 +31,17 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { updateSourceFile } from '@angular/compiler-cli/src/transformers/node_emitter';
-import { map } from 'rxjs/operators';
+import {finalize, map, tap} from 'rxjs/operators';
 import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import * as setInterval from 'core-js/library/fn/set-interval';
-import adBlocker from 'just-detect-adblock';
-import { NgxSpinnerService } from 'ngx-spinner';
+/*import adBlocker from 'just-detect-adblock';
+import { NgxSpinnerService } from 'ngx-spinner';*/
 
 @Component({
     selector: 'jhi-course',
     templateUrl: './course.component.html'
 })
-export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CourseComponent implements OnInit, OnDestroy {
     courses: ICourse[];
     currentAccount: Account;
     eventSubscriber: Subscription;
@@ -67,6 +74,7 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
     currentSearchTemp: string;
     errorAdBlock = false;
     regionOutside = false;
+    count = 0;
     @ViewChild('adsBanner') ads: ElementRef;
 
     constructor(
@@ -85,8 +93,8 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
         private navbarService: NavbarService,
         private http: HttpClient,
         private router: Router,
-        private location: Location,
-        private spinner: NgxSpinnerService
+        private location: Location
+        //private spinner: NgxSpinnerService
     ) {
         this.courses = [];
         this.message = '';
@@ -215,13 +223,6 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
         location.reload();
     }
 
-    ngAfterViewInit(): void {
-        this.spinner.show();
-        setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-        }, 4000);
-    }
 
     /*private isDetected() {
         let detected = false;
@@ -253,11 +254,12 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isCanada = this.navbarService.getifCanada();
         this.isUsa = this.navbarService.getifUSA();
         this.checkRegionUrl();
-        if (this.router.url.includes('/course', 0)) {
+        //uncomment to include adblock detect
+        /*if (this.router.url.includes('/course', 0)) {
             setInterval(() => {
                 this.checkAdBlock();
             }, 5000);
-        }
+        }*/
         if (this.courseService.getTopic() !== 'undefined') {
             this.search(this.courseService.getTopic());
             this.courseService.resetTopic();
@@ -268,7 +270,7 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
             this.currentAccount = account;
             this.userService.getuserbylogin(account.login).subscribe(users => {
                 this.userID = users;
-                this.customerService.getuser(this.userID).subscribe(customer => {
+                this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                     this.customer = customer;
                     this.cartService.check(this.customer.id).subscribe(carts => {
                         this.cart = carts;
@@ -310,9 +312,6 @@ export class CourseComponent implements OnInit, OnDestroy, AfterViewInit {
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
-    /** else if (this.courseService.check(course.id, this.customer.id)) {
-            this.message = 'You have already purchased this course';
-        }*/
 
     public addCourse(course: ICourse) {
         const resourceCheckUrl = SERVER_API_URL + 'api/check/courses';

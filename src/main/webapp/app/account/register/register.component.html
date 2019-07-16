@@ -127,29 +127,211 @@
                            [(ngModel)]="registerAccount.lastName" required/>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.show" for="field_show">Show</label>
+                    <label class="form-control-label" for="field_show">Would you like to include your business information to be showcased for networking and exploring opportunities?</label>
                     <input type="checkbox" class="form-control" name="show" id="field_show"
                            [(ngModel)]="registerAccount.show" />
                 </div>
                 <div *ngIf="registerAccount.show">
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="smartCpdApp.customer.areaserviced" for="field_areaserviced">Areaserviced</label>
-                        <input type="text" class="form-control" name="areaserviced" id="field_areaserviced"
-                               [(ngModel)]="registerAccount.areaserviced" required/>
+                    <div *ngIf="canadaDomain" class="form-group">
+                        <label class="form-control-label" for="field_areaservicedcanada">Location Serviced [Seattle, WA]</label>
+                        <input type="text" class="form-control" name="areaservicedcanada" id="field_areaservicedcanada" placeholder="City, State"
+                               [(ngModel)]="registerAccount.areaserviced" required pattern="/^[A-Za-z]+,[ ]?[A-Za-z]+{2,}$/"/>
                     </div>
-
+                    <div *ngIf="usaDomain" class="form-group">
+                        <label class="form-control-label" for="field_areaservicedusa">Location Serviced [Vancouver, BC]</label>
+                        <input type="text" class="form-control" name="areaservicedusa" id="field_areaservicedusa" placeholder="City, Province"
+                               [(ngModel)]="registerAccount.areaserviced" required pattern="/^[A-Za-z]+,[ ]?[A-Za-z]+{2,}$/"/>
+                    </div>
                     <div class="form-group">
                         <label class="form-control-label" jhiTranslate="smartCpdApp.customer.specialities" for="field_specialities">Specialities</label>
                         <select class="form-control" name="specialities" [(ngModel)]="registerAccount.specialities" id="field_specialities" required>
                             <option value="RESIDENCE">{{'smartCpdApp.TYPES.RESIDENCE' | translate}}</option>
                             <option value="COMMERCIAL">{{'smartCpdApp.TYPES.COMMERCIAL' | translate}}</option>
                             <option value="INDUSTRIAL">{{'smartCpdApp.TYPES.INDUSTRIAL' | translate}}</option>
+                            <option value="ALLOFABOVE">{{'smartCpdApp.TYPES.ALLOFABOVE' | translate}}</option>
+                            <option value="RESCOMMERCIAL">{{'smartCpdApp.TYPES.RESCOMMERCIAL' | translate}}</option>
+                            <option value="INDCOMMERCIAL">{{'smartCpdApp.TYPES.INDCOMMERCIAL' | translate}}</option>
+                            <option value="RESINDUSTRIAL">{{'smartCpdApp.TYPES.INDUSTRIAL' | translate}}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="smartCpdApp.customer.trades" for="field_trades">Trades</label>
-                        <input type="text" class="form-control" name="trades" id="field_trades"
-                               [(ngModel)]="registerAccount.trades" required/>
+                        <label class="form-control-label">Trades</label>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_archplan">Architect/Plan designer</label>
+                                <input type="checkbox" class="form-control" name="archplan" id="field_archplan"
+                                       [(ngModel)]="archplan" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_truss">Truss Manufacturer</label>
+                                <input type="checkbox" class="form-control" name="truss" id="field_truss"
+                                       [(ngModel)]="truss" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_insurance">Insurance Agent</label>
+                                <input type="checkbox" class="form-control" name="insurance" id="field_insurance"
+                                       [(ngModel)]="insurance" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_concrete">Concrete</label>
+                                <input type="checkbox" class="form-control" name="concrete" id="field_concrete"
+                                       [(ngModel)]="concrete" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_survey">Surveyor</label>
+                                <input type="checkbox" class="form-control" name="survey" id="field_survey"
+                                       [(ngModel)]="survey" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_excav">Excavation</label>
+                                <input type="checkbox" class="form-control" name="exvac" id="field_excav"
+                                       [(ngModel)]="excav" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_rebar">Rebar</label>
+                                <input type="checkbox" class="form-control" name="rebar" id="field_rebar"
+                                       [(ngModel)]="rebar" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_framer">Framer</label>
+                                <input type="checkbox" class="form-control" name="framer" id="field_framer"
+                                       [(ngModel)]="framer" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_damp">Damp Proofing</label>
+                                <input type="checkbox" class="form-control" name="damp" id="field_damp"
+                                       [(ngModel)]="damp" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_plumbing">Plumbing</label>
+                                <input type="checkbox" class="form-control" name="plumbing" id="field_plumbing"
+                                       [(ngModel)]="plumbing" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_realtor">Realtor</label>
+                                <input type="checkbox" class="form-control" name="realtor" id="field_realtor"
+                                       [(ngModel)]="realtor" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_roofer">Roofer</label>
+                                <input type="checkbox" class="form-control" name="roofer" id="field_roofer"
+                                       [(ngModel)]="roofer" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_dry">Dry Wall</label>
+                                <input type="checkbox" class="form-control" name="dry" id="field_dry"
+                                       [(ngModel)]="dry" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_windows">Windows Manufacturing</label>
+                                <input type="checkbox" class="form-control" name="windows" id="field_windows"
+                                       [(ngModel)]="windows" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_door">Door Manufacturing</label>
+                                <input type="checkbox" class="form-control" name="door" id="field_door"
+                                       [(ngModel)]="door" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_heating">Heating</label>
+                                <input type="checkbox" class="form-control" name="heating" id="field_heating"
+                                       [(ngModel)]="heating" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_electric">Electrician</label>
+                                <input type="checkbox" class="form-control" name="electric" id="field_electric"
+                                       [(ngModel)]="electric" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_Insulation">Insulation</label>
+                                <input type="checkbox" class="form-control" name="insulation" id="field_Insulation"
+                                       [(ngModel)]="insulation" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_stucco">Stucco</label>
+                                <input type="checkbox" class="form-control" name="stucco" id="field_stucco"
+                                       [(ngModel)]="stucco" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_sliding">Siding/Soffits/Gutter</label>
+                                <input type="checkbox" class="form-control" name="sliding" id="field_sliding"
+                                       [(ngModel)]="sliding" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_painter">Painter</label>
+                                <input type="checkbox" class="form-control" name="painter" id="field_painter"
+                                       [(ngModel)]="painter" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_woodwork">Wood Work</label>
+                                <input type="checkbox" class="form-control" name="woodwork" id="field_woodwork"
+                                       [(ngModel)]="woodwork" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_tile">Tile Work</label>
+                                <input type="checkbox" class="form-control" name="tile" id="field_tile"
+                                       [(ngModel)]="tile" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_counter">Counter Tops</label>
+                                <input type="checkbox" class="form-control" name="counter" id="field_counter"
+                                       [(ngModel)]="counter" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_garage">Garage Doors</label>
+                                <input type="checkbox" class="form-control" name="garage" id="field_garage"
+                                       [(ngModel)]="garage" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_floorsupp">Flooring(Suppliers)</label>
+                                <input type="checkbox" class="form-control" name="floorsupp" id="field_floorsupp"
+                                       [(ngModel)]="floorsupply" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_floorsins">Flooring(Installation)</label>
+                                <input type="checkbox" class="form-control" name="floorsins" id="field_floorsins"
+                                       [(ngModel)]="floorinstallation" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_buildmaterial">Building Material Suppliers</label>
+                                <input type="checkbox" class="form-control" name="buildmaterial" id="field_buildmaterial"
+                                       [(ngModel)]="buildingmaterial" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_sitesuper">Site Supervisor</label>
+                                <input type="checkbox" class="form-control" name="sitesuper" id="field_sitesuper"
+                                       [(ngModel)]="sitesupervisor" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_projectman">Project Manager</label>
+                                <input type="checkbox" class="form-control" name="projectman" id="field_projectman"
+                                       [(ngModel)]="projectmanager" />
+                            </div>
+                            <div class="col-3">
+                                <label class="form-control-label" for="field_other">Other</label>
+                                <input type="checkbox" class="form-control" name="other" id="field_other"
+                                       [(ngModel)]="other" />
+                            </div>
+                        </div>
+                        <div *ngIf="other" class="form-group">
+                            <label class="form-control-label" jhiTranslate="smartCpdApp.customer.trades" for="field_trades">Trades</label>
+                            <input type="text" class="form-control" name="trades" id="field_trades"
+                                   [(ngModel)]="otherTrades" required/>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" jhiTranslate="smartCpdApp.customer.company" for="field_company2">Company</label>
@@ -164,7 +346,7 @@
                     <span><strong>To add your company in our database, please click</strong></span><a routerLink="/company-request"> here</a>-->
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartCpdApp.customer.phone" for="field_phone">Phone</label>
+                    <label class="form-control-label" for="field_phone">Phone (123) 123-1234</label>
                     <input type="text" class="form-control" name="phone" id="field_phone" placeholder="(123) 123-1234"
                            [(ngModel)]="registerAccount.phone" required pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"/>
                 </div>
@@ -215,7 +397,7 @@
                        </div>
                        <div class="col-2"></div>
                        <div class="col-3">
-                           <label class="form-control-label" for="field_yearDOB">Year of DOB</label>
+                           <label class="form-control-label" for="field_yearDOB">Year of DOB [yyyy]</label>
                        </div>
                        <div class="col-4"></div>
                    </div>
@@ -273,10 +455,10 @@
                 <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary" jhiTranslate="register.form.button">Register</button>
             </form>
             <p></p>
-            <div class="alert alert-warning">
+            <!--<div class="alert alert-warning">
                 <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
                 <a class="alert-link" (click)="openLogin()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

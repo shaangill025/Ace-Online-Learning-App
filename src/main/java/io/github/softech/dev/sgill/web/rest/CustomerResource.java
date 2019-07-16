@@ -186,9 +186,10 @@ public class CustomerResource {
 
     @GetMapping("/user/customers/{userId}")
     @Timed
-    public Customer getUserCustomer(@PathVariable Long userId) {
+    public Customer getUserCustomer(@PathVariable String userId) {
         log.debug("REST request to get Customer by UserID: {}", userId);
-        return customerRepository.findCustomerByUserId(userId);
+        User user = userRepository.findOneByLogin(userId).get();
+        return customerRepository.findCustomersByUser(user);
     }
 
     @GetMapping("/area/customers/{area}")

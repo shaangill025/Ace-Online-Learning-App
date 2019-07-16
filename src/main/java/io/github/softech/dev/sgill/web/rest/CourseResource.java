@@ -128,7 +128,7 @@ public class CourseResource {
         Customer customer = customerService.findOne(customerId).orElse(null);
         Cart tempCart = cartService.findOne(cartId).orElse(null);
         List<CourseHistory> listHistory = courseHistoryRepository.findCourseHistoriesByCustomerAndCourseAndAccessAndIsactiveOrderByIdDesc(customer, course, true, true).orElse(null);
-        List<LegacyCourses> listLegacy = legacyCoursesRepository.findLegacyCoursesByCourseAndCustomer(course, customer).orElse(null);
+        List<LegacyCourses> listLegacy = legacyCoursesRepository.findLegacyCoursesByCustomerAndCourse_Topic(customer, course.getTopic()).orElse(null);
         CourseHistory temp;
         if (listHistory == null) {
             if (listLegacy != null) {

@@ -20,6 +20,8 @@ export class CertificateService {
     private resourceEmailUrl = SERVER_API_URL + 'api/_email/certificates/';
     private resourceAttachmentUrl = SERVER_API_URL + 'api/_attachment/certificates/';
     private resourceCustomerUrl = SERVER_API_URL + 'api/all/certificates';
+    private resourceCountUrl = SERVER_API_URL + 'api/count/certificates';
+
     constructor(private http: HttpClient) {}
 
     create(certificate: ICertificate): Observable<EntityResponseType> {
@@ -45,6 +47,10 @@ export class CertificateService {
 
     getcustomer(id: number): Observable<HttpResponse<ICertificate[]>> {
         return this.http.get<ICertificate[]>(`${this.resourceCustomerUrl}/${id}`, { observe: 'response' });
+    }
+
+    getCustomerCount(id: number): Observable<number> {
+        return this.http.get<number>(`${this.resourceCountUrl}/${id}`);
     }
 
     getbycustomercourse(courseHistId: number, custid: number): Observable<ICertificate> {

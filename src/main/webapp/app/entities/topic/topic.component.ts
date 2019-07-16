@@ -14,7 +14,7 @@ import { NavbarService } from 'app/layouts/navbar/navbar.service';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import * as setInterval from 'core-js/library/fn/set-interval';
-import adBlocker from 'just-detect-adblock';
+/*import adBlocker from 'just-detect-adblock';*/
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -73,6 +73,14 @@ export class TopicComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public reloadPage() {
         location.reload();
+    }
+
+    ngAfterViewInit(): void {
+        this.spinner.show();
+        setTimeout(() => {
+            // spinner ends after 5 seconds
+            this.spinner.hide();
+        }, 4000);
     }
 
     loadAll() {
@@ -145,23 +153,16 @@ export class TopicComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadAll();
     }
 
-    ngAfterViewInit(): void {
-        this.spinner.show();
-        setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-        }, 3000);
-    }
-
     ngOnInit() {
         this.isCanada = this.navbarService.getifCanada();
         this.isUSA = this.navbarService.getifUSA();
         this.checkRegionUrl();
-        if (this.router.url.includes('/topic', 0)) {
+        //unblock for ad block detect
+        /*if (this.router.url.includes('/topic', 0)) {
             setInterval(() => {
                 this.checkAdBlock();
             }, 5000);
-        }
+        }*/
         this.loadAll();
         this.principal.identity().then(account => {
             this.currentAccount = account;

@@ -5,7 +5,7 @@ import { CheckoutComponent, checkoutRoute } from './';
 import { NgxStripeModule } from 'ngx-stripe';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 const ENTITY_STATES = [...checkoutRoute];

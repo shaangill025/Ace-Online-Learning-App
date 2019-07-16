@@ -88,14 +88,6 @@ export class ServicelistComponent implements OnInit, OnDestroy, AfterViewInit {
             );
     }
 
-    ngAfterViewInit(): void {
-        this.spinner.show();
-        setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-        }, 2000);
-    }
-
     reset() {
         this.page = 0;
         this.servicelists = [];
@@ -117,6 +109,14 @@ export class ServicelistComponent implements OnInit, OnDestroy, AfterViewInit {
         this.reverse = true;
         this.currentSearch = '';
         this.loadAll();
+    }
+
+    ngAfterViewInit(): void {
+        this.spinner.show();
+        setTimeout(() => {
+            // spinner ends after 5 seconds
+            this.spinner.hide();
+        }, 4500);
     }
 
     search(query) {

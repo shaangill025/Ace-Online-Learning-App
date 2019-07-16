@@ -178,7 +178,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
             console.log('User Login' + this.currentAccount.login);
             this.userService.getuserbylogin(this.currentAccount.login).subscribe(users => {
                 this.userID = users;
-                this.customerService.getuser(this.userID).subscribe(customer => {
+                this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                     this.customer = customer;
                     this.cartService.check(this.customer.id).subscribe(carts => {
                         this.cart = carts;

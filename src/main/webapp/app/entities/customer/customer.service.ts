@@ -35,7 +35,7 @@ export class CustomerService {
     merge(oldid: number, newid: number): Observable<string> {
         return this.http.put<string>(`${SERVER_API_URL + 'api/merge/customers/old'}/${oldid}/${'new'}/${newid}`, {});
     }
-    getuser(id: number): Observable<ICustomer> {
+    getuser(id: string): Observable<ICustomer> {
         return this.http.get<ICustomer>(`${this.resourceUserUrl}/${id}`);
     }
 

@@ -22,6 +22,7 @@ import { AdsenseModule } from 'ng2-adsense';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
 import { NgxStripeModule } from 'ngx-stripe';
+import {NgxSpinnerInterceptor} from "app/blocks/interceptor/spinner.interceptor";
 /*import { QuizFinalComponent } from './quiz-final/quiz-final.component';*/
 
 @NgModule({
@@ -77,6 +78,11 @@ import { NgxStripeModule } from 'ngx-stripe';
             useClass: NotificationInterceptor,
             multi: true,
             deps: [Injector]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: NgxSpinnerInterceptor,
+            multi: true
         }
     ],
     bootstrap: [JhiMainComponent]

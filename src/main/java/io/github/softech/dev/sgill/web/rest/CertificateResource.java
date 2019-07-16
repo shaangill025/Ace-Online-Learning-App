@@ -172,6 +172,16 @@ public class CertificateResource {
         return tempList.get(0);
     }
 
+    @GetMapping("/count/certificates/{customerId}")
+    @Timed
+    public Long getCountCertificates(@PathVariable Long customerId) throws URISyntaxException {
+        Customer reqdCustomer = customerService.findOne(customerId).get();
+        log.debug("REST request to get all certificates for a customer : {}", reqdCustomer);
+        List<Certificate> tempList = certificateRepository.getCertificatesByCustomer(reqdCustomer).orElse(null);
+        if (tempList==null) return 0L;
+        else return (long) tempList.size();
+    }
+
     @GetMapping("/all/certificates/{customerId}")
     @Timed
     public ResponseEntity<List<Certificate>> getCustomerCertificates(@PathVariable Long customerId) throws URISyntaxException {

@@ -139,7 +139,7 @@ public class CourseHistoryResource {
     public ResponseEntity<Course> getRecentCourseHistory(@PathVariable Long customerid) {
         log.debug("REST request to get recent Course by customer : {}", customerid);
         Customer customer = customerService.findOne(customerid).get();
-        CourseHistory temp = courseHistoryRepository.findDistinctTopByCustomerAndIsactiveOrderByIdDesc(customer, true);
+        CourseHistory temp = courseHistoryRepository.findCourseHistoriesByCustomerAndIsactiveOrderByIdDesc(customer, true).orElse(null).get(0);
         //Optional<Course> tempCourse = courseService.findOne(temp.getCourse().getId());
         return ResponseUtil.wrapOrNotFound(courseService.findOne(temp.getCourse().getId()));
     }

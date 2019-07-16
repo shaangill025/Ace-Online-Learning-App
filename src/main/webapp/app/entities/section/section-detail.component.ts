@@ -31,12 +31,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CourseHistoryService } from 'app/entities/course-history';
 import { ICourseHistory } from 'app/shared/model/course-history.model';
 import { Moment } from 'moment';
+import {accountAliasListType} from "aws-sdk/clients/iam";
 
 @Component({
     selector: 'jhi-section-detail',
     templateUrl: './section-detail.component.html'
 })
-export class SectionDetailComponent implements OnInit, AfterViewInit {
+export class SectionDetailComponent implements OnInit {
     section: ISection;
     pageNum: number;
     lastpageNum: number;
@@ -73,6 +74,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
     courseIsActive = false;
     courseAccess = false;
     pdfSessionLoading = false;
+    showButton = false;
     courseHistory: ICourseHistory;
 
     constructor(
@@ -89,7 +91,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
         private questionService: QuestionService,
         private quizAppService: QuizAppService,
         private fileManagerService: FileManagerService,
-        private spinner: NgxSpinnerService,
+        //private spinner: NgxSpinnerService,
         private courseHistoryService: CourseHistoryService
     ) {
         this.logspdf = {};
@@ -108,20 +110,6 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
         this.isSaving = false;
     }
 
-    ngAfterViewInit(): void {
-        if (this.section.type === 'pdf') {
-            this.spinner.show();
-            setTimeout(() => {
-                this.spinner.hide();
-            }, 10000);
-        } else if (this.section.type === 'mp4') {
-            this.spinner.show();
-            setTimeout(() => {
-                this.spinner.hide();
-            }, 5000);
-        }
-    }
-
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ section }) => {
             this.section = section;
@@ -136,7 +124,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
         this.principal.identity().then(account => {
             this.custEmail = account.email;
             this.userService.getuserbylogin(account.login).subscribe(userId => {
-                this.customerService.getuser(userId).subscribe(customer => {
+                this.customerService.getuser(account.login).subscribe(customer => {
                     this.customer = customer;
                     this.sectionHistoryService.lastwatched(this.section.id, customer.id).subscribe(flag => {
                         console.log('flag - ' + flag);
@@ -154,7 +142,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
                             } else {
                                 this.accessFlag = true;
                                 this.accessErrorFlag = false;
-                                this.sectionHistoryService.getbycustomer(customer.id, this.section.id).subscribe(secHist => {
+                                this.sectionHistoryService.getbycustomer(customer.id, this.section.course.id).subscribe(secHist => {
                                     this.prevHistory = secHist;
                                     console.log('section history id is : ' + secHist.id);
                                     this.startHistDate = secHist.startdate;
@@ -182,17 +170,34 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
                                     if (this.section.type === 'pdf') {
                                         this.pdflink = this.section.pdfUrl;
                                         this.lastpageNum = this.section.totalPages;
-                                        if (this.prevHistory.stamp !== 0) {
-                                            this.pdfSessionLoading = true;
-                                            setTimeout(() => {
-                                                console.log('Stamp - Timer' + this.prevHistory.stamp);
-                                                this.pdfSessionLoading = false;
-                                                this.gotoSlide(this.prevHistory.stamp);
-                                                this.pageNum = this.prevHistory.stamp;
-                                            }, 8500);
+                                        if (this.prevHistory.section.id === this.section.id) {
+                                            if (this.prevHistory.stamp !== 0) {
+                                                this.pdfSessionLoading = true;
+                                                setTimeout(() => {
+                                                    console.log('Stamp - Timer' + this.prevHistory.stamp);
+                                                    this.pdfSessionLoading = false;
+                                                    this.showButton = true;
+                                                    this.gotoSlide(this.prevHistory.stamp);
+                                                    this.pageNum = this.prevHistory.stamp;
+                                                }, 10000);
+                                            } else {
+                                                this.pageNum = 1;
+                                                this.sectionHistoryService
+                                                    .updatepersistance(this.prevHistory.id, this.pageNum)
+                                                    .subscribe(dataTemp2 => {
+                                                        //console.log('Stamp is' + dataTemp2.stamp);
+                                                    });
+                                            }
                                         } else {
-                                            this.pageNum = 1;
+                                            this.prevHistory.section = this.section;
+                                            this.prevHistory.stamp = 1;
+                                            this.sectionHistoryService
+                                                .update(this.prevHistory)
+                                                .subscribe(dataTemp2 => {
+                                                    //console.log('Stamp is' + dataTemp2.stamp);
+                                                });
                                         }
+                                        this.flagCheck = true;
                                         setInterval(() => {
                                             if (this.router.url.includes('/section', 0)) {
                                                 if (!this.completeFlag) {
@@ -222,7 +227,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
                                                     this.sectionHistoryService
                                                         .updatepersistance(this.prevHistory.id, this.prevHistory.stamp)
                                                         .subscribe(dataTemp2 => {
-                                                            console.log('Stamp is' + dataTemp2.stamp);
+                                                            //console.log('Stamp is' + dataTemp2.stamp);
                                                         });
                                                     this.logspdf.timespent += 60;
                                                     this.logspdf.recorddate = this.timeCourseMoment;
@@ -240,14 +245,30 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
                                         }, 1000);
                                     } else {
                                         console.log('checking stamp value from persistance functions' + this.prevHistory.stamp);
-                                        if (this.prevHistory.stamp !== 0) {
-                                            this.ellapsed = this.prevHistory.stamp;
-                                            this.api.seekTime(this.prevHistory.stamp, false);
-                                            this.onPlay();
+                                        if (this.prevHistory.section.id === this.section.id) {
+                                            if (this.prevHistory.stamp !== 0) {
+                                                this.ellapsed = this.prevHistory.stamp;
+                                                this.api.seekTime(this.prevHistory.stamp, false);
+                                                this.onPlay();
+                                            } else {
+                                                this.ellapsed = 0;
+                                                this.sectionHistoryService
+                                                    .updatepersistance(this.prevHistory.id, this.ellapsed)
+                                                    .subscribe(dataTemp2 => {
+                                                        //console.log('Stamp is' + dataTemp2.stamp);
+                                                    });
+                                                this.onPlay();
+                                            }
                                         } else {
-                                            this.ellapsed = 0;
-                                            this.onPlay();
+                                            this.prevHistory.section = this.section;
+                                            this.prevHistory.stamp = 0;
+                                            this.sectionHistoryService
+                                                .update(this.prevHistory)
+                                                .subscribe(dataTemp2 => {
+                                                    //console.log('Stamp is' + dataTemp2.stamp);
+                                                });
                                         }
+                                        this.flagCheck = true;
                                         setInterval(() => {
                                             if (this.router.url.includes('/section', 0)) {
                                                 console.log('Required State -' + this.api.state.toString());
@@ -307,6 +328,17 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
                 });
             });
         });
+    }
+
+    loadPersistance() {
+        //this.gotoSlide(this.prevHistory.stamp);
+        this.pageNum++;
+        this.pageNum--;
+        this.showButton = false;
+    }
+
+    resetShowButton() {
+        this.showButton = false;
     }
 
     onPause() {
@@ -432,6 +464,7 @@ export class SectionDetailComponent implements OnInit, AfterViewInit {
     }
 
     moveToQuiz() {
+        this.flagCheck = false;
         this.prevHistory.watched = true;
         this.sectionHistoryService.update(this.prevHistory).subscribe(history => {
             this.tempQuizApp.currSection = history.body.section;

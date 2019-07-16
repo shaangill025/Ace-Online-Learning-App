@@ -17,6 +17,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { AddressComponent } from 'ngx-google-places-autocomplete/objects/addressComponent';
 import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
+import {Router} from "@angular/router";
 
 // import moment = require('moment');
 
@@ -46,7 +47,41 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     public yearDOB: string;
     public month: string;
     public license: string;
+    public canadaDomain = false;
+    public usaDomain = false;
     hidden: string;
+    archplan = false;
+    truss = false;
+    insurance = false;
+    concrete = false;
+    survey = false;
+    excav = false;
+    rebar = false;
+    framer = false;
+    damp = false;
+    plumbing = false;
+    realtor = false;
+    roofer = false;
+    dry = false;
+    windows = false;
+    door = false;
+    heating = false;
+    electric = false;
+    insulation = false;
+    stucco = false;
+    sliding = false;
+    painter = false;
+    woodwork = false;
+    tile = false;
+    counter = false;
+    garage = false;
+    floorsupply = false;
+    floorinstallation = false;
+    buildingmaterial = false;
+    sitesupervisor = false;
+    projectmanager = false;
+    other = false;
+    otherTrades = '';
     @ViewChild('search') public searchElement: ElementRef;
     @ViewChild('places') places: GooglePlaceDirective;
 
@@ -65,7 +100,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         private jhiAlertService: JhiAlertService,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone,
-        private http: HttpClient
+        private http: HttpClient,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -106,8 +142,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             });
         });
         this.loginService.logout();
+        if ((location.hostname + this.router.url).includes('aceaol.ca')) {
+            this.canadaDomain = true;
+        }
+        if ((location.hostname + this.router.url).includes('aceaol.com')) {
+            this.usaDomain = true;
+        }
         this.success = false;
         this.registerAccount = {};
+        this.registerAccount.trades = '';
         this.companyService.query().subscribe(
             (res: HttpResponse<ICompany[]>) => {
                 this.companies = res.body;
@@ -198,6 +241,220 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registerAccount.stateProvince = this.state;
         this.registerAccount.monthYear = this.month + '/' + this.yearDOB;
         this.registerAccount.postalcode = this.postCode;
+
+        if (this.archplan) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Architect/Plan designer';
+            } else {
+                this.registerAccount.trades += ', Architect/Plan designer';
+            }
+        }
+        if (this.truss) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Truss Manufacturer';
+            } else {
+                this.registerAccount.trades += ', Truss Manufacturer';
+            }
+        }
+        if (this.insulation) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Insulation';
+            } else {
+                this.registerAccount.trades += ', Insulation';
+            }
+        }
+        if (this.insurance) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Insurance Agent';
+            } else {
+                this.registerAccount.trades += ', Insurance Agent';
+            }
+        }
+        if (this.concrete) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Concrete';
+            } else {
+                this.registerAccount.trades += ', Concrete';
+            }
+        }
+        if (this.survey) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Surveyor';
+            } else {
+                this.registerAccount.trades += ', Surveyor';
+            }
+        }
+        if (this.excav) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Excavation';
+            } else {
+                this.registerAccount.trades += ', Excavation';
+            }
+        }
+        if (this.rebar) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Rebar';
+            } else {
+                this.registerAccount.trades += ', Rebar';
+            }
+        }
+        if (this.framer) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Framer';
+            } else {
+                this.registerAccount.trades += ', Framer';
+            }
+        }
+        if (this.damp) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Damp Proofing';
+            } else {
+                this.registerAccount.trades += ', Damp Proofing';
+            }
+        }
+        if (this.plumbing) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Plumbing';
+            } else {
+                this.registerAccount.trades += ', Plumbing';
+            }
+        }
+        if (this.realtor) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Realtor';
+            } else {
+                this.registerAccount.trades += ', Realtor';
+            }
+        }
+        if (this.roofer) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Roofer';
+            } else {
+                this.registerAccount.trades += ', Roofer';
+            }
+        }
+        if (this.dry) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Dry Wall';
+            } else {
+                this.registerAccount.trades += ', Dry Wall';
+            }
+        }
+        if (this.windows) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Windows Manufacturing';
+            } else {
+                this.registerAccount.trades += ', Windows Manufacturing';
+            }
+        }
+        if (this.door) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Door Manufacturing';
+            } else {
+                this.registerAccount.trades += ', Door Manufacturing';
+            }
+        }
+        if (this.heating) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Heating';
+            } else {
+                this.registerAccount.trades += ', Heating';
+            }
+        }
+        if (this.electric) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Electrician';
+            } else {
+                this.registerAccount.trades += ', Electrician';
+            }
+        }
+        if (this.stucco) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Stucco';
+            } else {
+                this.registerAccount.trades += ', Stucco';
+            }
+        }
+        if (this.sliding) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Siding/Soffits/Gutter';
+            } else {
+                this.registerAccount.trades += ', Siding/Soffits/Gutter';
+            }
+        }
+        if (this.painter) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Painter';
+            } else {
+                this.registerAccount.trades += ', Painter';
+            }
+        }
+        if (this.woodwork) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Wood Work';
+            } else {
+                this.registerAccount.trades += ', Wood Work';
+            }
+        }
+        if (this.tile) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Tile Work';
+            } else {
+                this.registerAccount.trades += ', Tile Work';
+            }
+        }
+        if (this.counter) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Counter Tops';
+            } else {
+                this.registerAccount.trades += ', Counter Tops';
+            }
+        }
+        if (this.garage) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Garage Doors';
+            } else {
+                this.registerAccount.trades += ', Garage Doors';
+            }
+        }
+        if (this.floorinstallation) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Flooring(Installation)';
+            } else {
+                this.registerAccount.trades += ', Flooring(Installation)';
+            }
+        }
+        if (this.floorsupply) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Flooring(Suppliers)';
+            } else {
+                this.registerAccount.trades += ', Flooring(Suppliers)';
+            }
+        }
+        if (this.buildingmaterial) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Building Material Suppliers';
+            } else {
+                this.registerAccount.trades += ', Building Material Suppliers';
+            }
+        }
+        if (this.sitesupervisor) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Site Supervisor';
+            } else {
+                this.registerAccount.trades += ', Site Supervisor';
+            }
+        }
+        if (this.projectmanager) {
+            if (this.registerAccount.trades === '') {
+                this.registerAccount.trades += 'Project Manager';
+            } else {
+                this.registerAccount.trades += ', Project Manager';
+            }
+        }
+        if (this.other) {
+            this.registerAccount.trades = this.otherTrades;
+        }
         // console.log('license Number' + this.registerAccount.licenseNumber);
         this.registerAccount.hidden =
             this.registerAccount.firstName +

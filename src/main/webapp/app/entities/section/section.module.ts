@@ -22,6 +22,7 @@ import {
     sectionRoute,
     sectionPopupRoute
 } from './';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const ENTITY_STATES = [...sectionRoute, ...sectionPopupRoute];
 

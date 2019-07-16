@@ -22,6 +22,6 @@ public interface CourseHistoryRepository extends JpaRepository<CourseHistory, Lo
     @Query(value = "SELECT * FROM course_history u WHERE u.customer_id = :customer_id AND u.isactive = TRUE ORDER BY u.id DESC limit 1", nativeQuery = true)
     CourseHistory findRecentCourseHistory(@Param("customer_id") Long id);
 
-    CourseHistory findDistinctTopByCustomerAndIsactiveOrderByIdDesc(Customer customer, boolean flag);
+    Optional<List<CourseHistory>> findCourseHistoriesByCustomerAndIsactiveOrderByIdDesc(Customer customer, boolean flag);
     Optional<List<CourseHistory>> findCourseHistoriesByCustomerAndCourseAndAccessAndIsactiveOrderByIdDesc(Customer customer, Course course, boolean access, boolean active);
 }

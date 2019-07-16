@@ -125,7 +125,7 @@ library.add(faUserAlt);
 
 import 'quill/dist/quill.js';
 import '../../../../node_modules/fullcalendar/dist/fullcalendar.js';
-import 'chart.js/src/chart.js';
+import '../../../../node_modules/chart.js/dist/Chart.js';
 import 'quill/dist/quill.js';
  import '../../../../node_modules/fullcalendar/dist/fullcalendar.js';
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

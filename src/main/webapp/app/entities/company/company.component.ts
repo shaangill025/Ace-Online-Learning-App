@@ -92,9 +92,9 @@ export class CompanyComponent implements OnInit, OnDestroy, AfterViewInit {
     ngAfterViewInit(): void {
         this.spinner.show();
         setTimeout(() => {
-            /** spinner ends after 5 seconds */
+            // spinner ends after 5 seconds
             this.spinner.hide();
-        }, 2000);
+        }, 4500);
     }
 
     clear() {

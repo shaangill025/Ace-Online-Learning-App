@@ -32,4 +32,6 @@ public interface SectionHistoryRepository extends JpaRepository<SectionHistory, 
     Optional<SectionHistory> getTopByCustomerAndSection_CourseOrderByIdDesc(Customer customer, Course course);
     Optional<SectionHistory> getCountByCustomerAndSection_CourseOrderByIdDesc(Customer customer, Course course);
     Optional<List<SectionHistory>> findSectionHistoriesBySectionAndCustomerOrderByIdDesc(Section section, Customer customer);
+    Optional<List<SectionHistory>> findSectionHistoriesByCustomerAndSection_CourseOrderByIdDesc(Customer customer, Course course);
+    Optional<List<SectionHistory>> findSectionHistoriesByCustomerOrderByLastactivedateDesc(Customer customer);
 }

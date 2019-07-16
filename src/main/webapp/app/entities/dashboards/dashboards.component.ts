@@ -23,8 +23,6 @@ import { IOrders } from 'app/shared/model/orders.model';
 import { OrdersService } from 'app/entities/orders';
 import { ICustomer } from 'app/shared/model/customer.model';
 // import moment = require("moment");
-import * as moment from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
     selector: 'jhi-dashboards',
@@ -74,8 +72,8 @@ export class DashboardsComponent implements OnInit {
         private courseHistoryService: CourseHistoryService,
         private sectionService: SectionService,
         private orderService: OrdersService,
-        private router: Router,
-        private spinner: NgxSpinnerService
+        private router: Router
+        //private spinner: NgxSpinnerService
     ) {
         this.dashboards = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -108,15 +106,15 @@ export class DashboardsComponent implements OnInit {
 
     ngOnInit() {
         this.principal.identity().then(account => {
-            this.spinner.show();
+            /*this.spinner.show();
             setTimeout(() => {
-                /** spinner ends after 5 seconds */
+                // spinner ends after 5 seconds
                 this.spinner.hide();
-            }, 5000);
+            }, 5000);*/
             this.currentAccount = account;
             this.custEmail = this.currentAccount.email;
             this.userService.getuserbylogin(this.currentAccount.login).subscribe(userId => {
-                this.customerService.getuser(userId).subscribe(customer => {
+                this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                     this.customer = customer;
                     this.cartService.getcustomer(customer.id).subscribe(cart => {
                         this.carts = cart.body;
@@ -141,8 +139,12 @@ export class DashboardsComponent implements OnInit {
                         }
                         console.log(this.courseHistory);
                     });
-                    this.certificateService.getcustomer(customer.id).subscribe(certData => {
-                        this.certificates = certData.body;
+                    this.certificateService.getCustomerCount(customer.id).subscribe(numCert => {
+                        if (numCert > 0) {
+                            this.certificateService.getcustomer(customer.id).subscribe(certData => {
+                                this.certificates = certData.body;
+                            });
+                        }
                     });
 
                     this.sectionHistoryService.getrecent(customer.id).subscribe(recentSecId => {

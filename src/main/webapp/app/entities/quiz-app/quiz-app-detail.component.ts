@@ -33,7 +33,7 @@ import { ICourseHistory } from 'app/shared/model/course-history.model';
     selector: 'jhi-quiz-app-detail',
     templateUrl: './quiz-app-detail.component.html'
 })
-export class QuizAppDetailComponent implements OnInit, AfterViewInit {
+export class QuizAppDetailComponent implements OnInit {
     quizApp: IQuizApp;
     quiz: IQuiz;
     questionList: IQuestion[];
@@ -62,6 +62,7 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
     completed = 0;
     accessMessage = '';
     accessFlag: boolean;
+    flagCheck = false;
 
     @ViewChildren('radioBtn') checkboxes: QueryList<ElementRef>;
     constructor(
@@ -77,7 +78,7 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
         private questionHistoryService: QuestionHistoryService,
         private questionService: QuestionService,
         private sectionService: SectionService,
-        private spinner: NgxSpinnerService,
+        //private spinner: NgxSpinnerService,
         private courseHistoryService: CourseHistoryService
     ) {
         this.currentQuestion = 1;
@@ -85,14 +86,6 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
         this.tempQuizHist = {};
         this.quesHistory = {};
         this.certificate = {};
-    }
-
-    ngAfterViewInit(): void {
-        this.spinner.show();
-        setTimeout(() => {
-            /** spinner ends after 5 seconds */
-            this.spinner.hide();
-        }, 2000);
     }
 
     ngOnInit() {
@@ -110,7 +103,7 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
             this.currentAccount = account;
             this.custEmail = this.currentAccount.email;
             this.userService.getuserbylogin(this.currentAccount.login).subscribe(userId => {
-                this.customerService.getuser(userId).subscribe(customer => {
+                this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                     this.customer = customer;
                     this.courseHistoryService
                         .getbycustomerandcourse(this.quizApp.currSection.course.id, customer.id)
@@ -127,6 +120,7 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
         this.questionService.findbyquiz(this.quiz.id).subscribe(data => {
             this.questionList = data.body;
         });
+        this.flagCheck = true;
         this.isselected = false;
         this.proceed = false;
         this.clearOptions();
@@ -141,6 +135,7 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
     }
 
     onSelect(question: IQuestion, option: IChoice) {
+        this.flagCheck = true;
         question.choices.forEach(x => {
             if (x.id === option.id) {
                 this.isselected = true;
@@ -149,13 +144,17 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
         if (this.isselected) {
             if (option.isanswer) {
                 this.proceed = true;
-                this.message = 'Q:' + this.currentQuestion + ' has been answered correctly, moving to the next question';
+                if (this.currentQuestion < this.questionList.length) {
+                    this.message = 'Q:' + this.currentQuestion + ' has been answered correctly, moving to the next question';
+                } else {
+                    this.message = 'Q:' + this.currentQuestion + ' has been answered correctly';
+                }
                 if (this.currentQuestion >= this.questionList.length) {
                     this.completed = this.ellapsed;
                     this.hasCompleted = true;
                     this.value = this.currentQuestion / this.questionList.length * 100;
                     this.userService.getuserbylogin(this.currentAccount.login).subscribe(userId => {
-                        this.customerService.getuser(userId).subscribe(customer => {
+                        this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
                             this.customer = customer;
                             this.reqdCourse = this.quizApp.currSection.course;
                             this.logs.timespent += this.ellapsed;
@@ -172,63 +171,46 @@ export class QuizAppDetailComponent implements OnInit, AfterViewInit {
                             });
                         });
                     });
+
                     if (this.quizApp.newSection === null) {
                         this.userService.getuserbylogin(this.currentAccount.login).subscribe(userId => {
-                            this.customerService.getuser(userId).subscribe(customer => {
-                                this.sectionHistoryService.getcount(customer.id, this.quizApp.currSection.course.id).subscribe(listHist => {
-                                    const count1: number = listHist.body.length;
-                                    this.sectionService.getcountbycourse(this.quizApp.currSection.course.id).subscribe(listSect => {
-                                        const count2: number = listSect.body.length;
-                                        if (count1 === count2) {
-                                            this.activatedRoute.data.subscribe(({ quizApp }) => {
-                                                this.certificate.courseHistory = this.courseHist;
-                                            });
-                                            this.certificate.timestamp = moment(new Date(), DATE_TIME_FORMAT);
-                                            this.certificate.customer = customer;
-                                            this.courseHistoryService
-                                                .getbycustomerandcourse(this.quizApp.currSection.course.id, customer.id)
-                                                .subscribe(courseHist => {
+                            this.customerService.getuser(this.currentAccount.login).subscribe(customer => {
+                                this.activatedRoute.data.subscribe(({ quizApp }) => {
+                                    this.certificate.courseHistory = this.courseHist;
+                                });
+                                this.certificate.timestamp = moment(new Date(), DATE_TIME_FORMAT);
+                                this.certificate.customer = customer;
+                                this.courseHistoryService.getbycustomerandcourse(this.quizApp.currSection.course.id, customer.id).subscribe(courseHist => {
                                                     courseHist.iscompleted = true;
                                                     courseHist.isactive = false;
                                                     courseHist.lastactivedate = moment(new Date(), DATE_TIME_FORMAT);
                                                     this.courseHistoryService.update(courseHist).subscribe(updated => {
                                                         console.log('Course History has been updated @' + updated.body.lastactivedate);
                                                     });
-                                                });
-                                            this.certificateService
-                                                .getbycustomercourse(this.courseHist.id, this.customer.id)
-                                                .subscribe(cert => {
-                                                    if (cert.id === -1) {
-                                                        this.certificateService.create(this.certificate).subscribe(tempCert => {
-                                                            this.message =
-                                                                'You have successfuly completed all the modules and quizes for this course, a certificate ' +
+                                    });
+                                this.certificateService.getbycustomercourse(this.courseHist.id, this.customer.id).subscribe(cert => {
+                                        if (cert.id === -1) {
+                                            this.certificateService.create(this.certificate).subscribe(tempCert => {
+                                                this.message = 'You have successfuly completed all the modules and quizes for this course, a certificate ' +
                                                                 'will be shortly generated [accessible on dashboard] and sent via email';
-                                                            setTimeout(
-                                                                function() {
-                                                                    this.router.navigateByUrl(
-                                                                        SERVER_API_URL +
+                                                setTimeout(
+                                                    function() {
+                                                        this.router.navigateByUrl(SERVER_API_URL +
                                                                             'certificate/' +
                                                                             tempCert.body.id.toString() +
                                                                             '/view'
-                                                                    );
-                                                                }.bind(this),
-                                                                6000
-                                                            );
-                                                        });
-                                                    } else {
-                                                        this.message =
-                                                            'You had already completed this course and a certificate for it was already issued. You will be redirected' +
-                                                            ' to the Dashboard shortly';
-                                                        setTimeout(
-                                                            function() {
-                                                                this.router.navigateByUrl(SERVER_API_URL + 'dashboards');
-                                                            }.bind(this),
-                                                            3000
                                                         );
-                                                    }
-                                                });
+                                                    }.bind(this),
+                                                    6000
+                                                );
+                                            });
+                                        } else {
+                                            this.message = 'You had already completed this course and a certificate for it was already issued. You will be redirected' +
+                                                            ' to the Dashboard shortly';
+                                            setTimeout(function() {
+                                                this.router.navigateByUrl(SERVER_API_URL + 'dashboards');
+                                            }.bind(this), 3000);
                                         }
-                                    });
                                 });
                             });
                         });

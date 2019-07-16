@@ -3,6 +3,7 @@ package io.github.softech.dev.sgill.repository;
 import io.github.softech.dev.sgill.domain.Course;
 import io.github.softech.dev.sgill.domain.Customer;
 import io.github.softech.dev.sgill.domain.LegacyCourses;
+import io.github.softech.dev.sgill.domain.Topic;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.stylesheets.LinkStyle;
@@ -19,4 +20,5 @@ import java.util.Optional;
 public interface LegacyCoursesRepository extends JpaRepository<LegacyCourses, Long>, JpaSpecificationExecutor<LegacyCourses> {
     Optional<List<LegacyCourses>> findLegacyCoursesByCourseAndCustomer(Course course, Customer customer);
     Optional<List<LegacyCourses>> findLegacyCoursesByCustomer(Customer customer);
+    Optional<List<LegacyCourses>> findLegacyCoursesByCustomerAndCourse_Topic(Customer customer, Topic topic);
 }

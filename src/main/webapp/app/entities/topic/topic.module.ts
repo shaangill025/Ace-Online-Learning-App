@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA, Injector} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SmartCpdSharedModule } from 'app/shared';
@@ -11,6 +11,7 @@ import {
     topicRoute,
     topicPopupRoute
 } from './';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const ENTITY_STATES = [...topicRoute, ...topicPopupRoute];
 

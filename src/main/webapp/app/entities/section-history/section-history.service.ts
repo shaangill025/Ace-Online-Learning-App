@@ -78,8 +78,9 @@ export class SectionHistoryService {
     lastwatched(sectionid: number, customerid: number): Observable<boolean> {
         return this.http.get<boolean>(`${SERVER_API_URL + 'api/check'}/${sectionid}/${'watched/section-history'}/${customerid}`);
     }
-    getbycustomer(customerid: number, sectionid: number): Observable<ISectionHistory> {
-        return this.http.get<ISectionHistory>(`${SERVER_API_URL + 'api'}/${sectionid}${'/section-history'}/${customerid}`);
+
+    getbycustomer(customerid: number, courseid: number): Observable<ISectionHistory> {
+        return this.http.get<ISectionHistory>(`${SERVER_API_URL + 'api'}/${courseid}${'/section-history'}/${customerid}`);
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {

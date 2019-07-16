@@ -15,6 +15,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlacesDirective } from './google-places.directive';
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const ENTITY_STATES = [...companyRoute, ...companyPopupRoute];
 
