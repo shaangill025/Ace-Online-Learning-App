@@ -1,5 +1,7 @@
 ## Development
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/shaangill025/Ace-Online-Learning-App.svg)](https://greenkeeper.io/)
+
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
 1. [Node.js][]: We use Node to run a development web server and build the project.
